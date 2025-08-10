@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\FileHelper;
 use App\Http\Traits\ResponseTrait;
+use App\Model\Admin\BannerGroup;
 use App\Model\Admin\Block;
 use App\Model\Admin\Category;
 use App\Model\Admin\CategorySpecial;
@@ -59,38 +60,21 @@ class FrontController extends Controller
             ->where('type', 20)
             ->where('show_home_page', 1)
             ->orderBy('order_number')->get();
-        $data['categorySpecial'] = CategorySpecial::query()->with([
-            'products' => function ($q) {
-                $q->with([
-                    'image',
-                    'galleries' => function ($q) {
-                        $q->select(['id', 'product_id', 'sort'])
-                            ->with(['image'])
-                            ->orderBy('sort', 'ASC');
-                    },
-                ])->where('status', 1)->inRandomOrder();
-            }
-        ])
-            ->has('products')
-            ->where('type', 10)
-            ->where('show_home_page', 1)
-            ->where('order_number', '!=', 1)
-            ->orderBy('order_number')->get()->map(function ($query) {
-                $query->setRelation('products', $query->products->where('status', 1)->take(12));
-                return $query;
-            });
 
+        // lấy danh mục đặc biệt flash sale (có end_date)
         $data['categorySpecialFlashsale'] = CategorySpecial::query()
-            ->has('products')
+            ->whereHas('products', function ($q) {
+                $q->where('status', 1);
+            })
             ->where('type', 10)
             ->where('show_home_page', 1)
-            ->where('order_number', 1)
             ->orderBy('order_number')
             ->with([
                 'products' => function ($query) {
                     $query->where('status', 1)
                         ->with([
                             'image',
+                            'category',
                             'galleries' => function ($q) {
                                 $q->select(['id', 'product_id', 'sort'])
                                     ->with(['image'])
@@ -99,7 +83,59 @@ class FrontController extends Controller
                         ])->inRandomOrder();
                 }
             ])
-            ->first();
+            ->whereNotNull('end_date')
+            ->get();
+
+        // lấy danh mục đặc biệt (end_date = null)
+        $data['categorySpecial'] = CategorySpecial::query()->with([
+            'products' => function ($q) {
+                $q->with([
+                    'image',
+                    'category',
+                    'galleries' => function ($q) {
+                        $q->select(['id', 'product_id', 'sort'])
+                            ->with(['image'])
+                            ->orderBy('sort', 'ASC');
+                    },
+                ])->where('status', 1)->inRandomOrder();
+            }
+        ])
+            ->whereHas('products', function ($q) {
+                $q->where('status', 1);
+            })
+            ->where('type', 10)
+            ->where('show_home_page', 1)
+            ->whereNull('end_date')
+            ->orderBy('order_number')->get()->map(function ($query) {
+                $query->setRelation('products', $query->products->where('status', 1)->take(12));
+                return $query;
+            });
+
+
+        // lấy danh mục sản phẩm
+        $data['productCategories'] = Category::query()
+            ->whereHas('products', function ($q) {
+                $q->where('status', 1);
+            })->with([
+            'products' => function ($query) {
+                $query->where('status', 1)
+                    ->with([
+                        'image',
+                        'category',
+                    ])->inRandomOrder();
+            }
+        ])->where(['show_home_page' => 1, 'level' => 1])
+            ->orderBy('order_number')->get()->map(function ($query) {
+                $query->setRelation('products', $query->products()->where('status', 1)
+                    ->inRandomOrder()
+                    ->take(12)->get());
+                return $query;
+            });
+        // 3 khối banner
+        $data['bannerGroups'] = BannerGroup::query()->with(['galleries.image'])->latest()->get();
+
+        // bài viết mới nhất
+        $data['posts'] = Post::query()->with(['image'])->latest()->get()->take(5);
 
         // $productCategories = Category::query()->with([
         //     'childs' => function ($q) {

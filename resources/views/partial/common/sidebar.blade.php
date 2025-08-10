@@ -22,10 +22,28 @@
                 <a href="#" class="nav-link active">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
-                        Trang chủ
+                      Dashboard
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
+            </li>
+
+            <li class="nav-item has-treeview  {{ request()->is('admin/banner-groups') ? 'menu-open' : '' }} ">
+                <a href="#" class="nav-link {{ request()->is('admin/banner-groups') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-info"></i>
+                    <p>
+                        Cấu hình trang chủ
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('banner-group.index') }}" class="nav-link {{ Request::routeIs('banner-group.index') ? 'active' : '' }}">
+                            <i class="far fas  fa-angle-right nav-icon"></i>
+                            <p>Khối banner</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item has-treeview">

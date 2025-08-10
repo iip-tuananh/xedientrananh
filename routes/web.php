@@ -152,6 +152,17 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/exportExcel','Admin\BlockController@exportExcel')->name('Block.exportExcel');
         });
 
+        Route::group(['prefix' => 'banner-groups'], function () {
+            Route::get('/', 'Admin\BannerGroupController@index')->name('banner-group.index');
+            Route::get('/searchData', 'Admin\BannerGroupController@searchData')->name('banner-group.searchData');
+            Route::get('/{id}/add-gallery', 'Admin\BannerGroupController@addGallery')->name('banner-group.addGallery');
+            Route::get('/create', 'Admin\BannerGroupController@create')->name('banner-group.create');
+            Route::post('/', 'Admin\BannerGroupController@store')->name('banner-group.store');
+            Route::post('/{id}/update', 'Admin\BannerGroupController@update')->name('banner-group.update');
+            Route::get('/{id}/delete', 'Admin\BannerGroupController@delete')->name('banner-group.delete');
+            Route::get('/{id}/getDataForEdit', 'Admin\BannerGroupController@getDataForEdit');
+        });
+
         // Customer Review
         Route::group(['prefix' => 'reviews'], function () {
             Route::get('/', 'Admin\ReviewController@index')->name('Review.index');

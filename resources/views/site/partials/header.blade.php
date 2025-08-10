@@ -374,214 +374,199 @@
                         <div class="sidebar-menu sidebar-menu--colum sidebar-menu--index">
                             <div class="main-menu mainMenujs">
                             <ul class="link-list list-root">
-                                <li class="item submenu " data-menu-root="104673962">
-                                    <a href="/pages/lien-he" title="Techgo">
-                                    Techgo
-                                    </a>
-                                    <div class="dropdown_menu">
-                                        <div class="d-flex flex-wrap">
-                                        <div class="col-lg-3">
-                                            <h3><a href="/collections/all" title="Sản phẩm mới">Sản phẩm mới</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/collections/hot-products" title="Sản phẩm bán chạy">Sản phẩm bán chạy</a></li>
-                                                <li><a href="/collections/onsale" title="Sản phẩm khuyến mãi">Sản phẩm khuyến mãi</a></li>
-                                                <li><a href="/collections/hot-products" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a></li>
-                                                <li><a href="/pages/landing-page" title="Landing Page">Landing Page</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/products/iphone-12-pro-max-128gb" title="Product Views">Product Views</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="https://techgo.myharavan.com/products/iphone-12-pro-max-128gb?view=style-01" title="Kiểu hiển thị 1">Kiểu hiển thị 1</a></li>
-                                                <li><a href="https://techgo.myharavan.com/products/iphone-12-pro-max-128gb?view=style-02" title="Kiểu hiển thị 2">Kiểu hiển thị 2</a></li>
-                                                <li><a href="https://techgo.myharavan.com/products/iphone-12-pro-max-128gb?view=style-03" title="Kiểu hiển thị 3">Kiểu hiển thị 3</a></li>
-                                                <li><a href="https://techgo.myharavan.com/products/iphone-12-pro-max-128gb?view=style-04" title="Kiểu hiển thị 4">Kiểu hiển thị 4</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/pages/about-us" title="Trang nội dung">Trang nội dung</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="https://techgo.myharavan.com/pages/about-us?view=about-01" title="Giới thiệu 01">Giới thiệu 01</a></li>
-                                                <li><a href="https://techgo.myharavan.com/pages/about-us?view=about-02" title="Giới thiêu 02">Giới thiêu 02</a></li>
-                                                <li><a href="https://techgo.myharavan.com/pages/about-us?view=about-03" title="Giới thiệu 03">Giới thiệu 03</a></li>
-                                                <li><a href="/pages/about-us" title="Về chúng tôi">Về chúng tôi</a></li>
-                                                <li><a href="/blogs/news" title="Tin tức">Tin tức</a></li>
-                                                <li><a href="/pages/he-thong-cua-hang" title="Hệ thống cửa hàng">Hệ thống cửa hàng</a></li>
-                                                <li><a href="/pages/lien-he" title="Liên hệ">Liên hệ</a></li>
-                                                <li><a href="/pages/landing-page" title="Landing Page">Landing Page</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/" title="Chính sách">Chính sách</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/pages/chinh-sach-doi-tra" title="Chính sách đổi trả">Chính sách đổi trả</a></li>
-                                                <li><a href="/pages/chinh-sach-bao-mat" title="Chính sách bảo mật">Chính sách bảo mật</a></li>
-                                                <li><a href="/pages/dieu-khoan-dich-vu" title="Điều khoản dịch vụ">Điều khoản dịch vụ</a></li>
-                                            </ul>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item submenu " data-menu-root="104380996">
-                                    <a href="/" title="Điện máy - Điện gia dụng">
-                                    Điện máy - Điện gia dụng
-                                    </a>
-                                    <div class="dropdown_menu">
-                                        <div class="d-flex flex-wrap">
-                                        <div class="col-lg-3">
-                                            <h3><a href="/" title="Điều hòa - Máy lạnh">Điều hòa - Máy lạnh</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="LG">LG</a></li>
-                                                <li><a href="/" title="Daikin">Daikin</a></li>
-                                                <li><a href="/" title="Toshiba">Toshiba</a></li>
-                                                <li><a href="/" title="Aqua">Aqua</a></li>
-                                                <li><a href="/" title="Asanzo">Asanzo</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/" title="Máy giặc">Máy giặc</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="LG">LG</a></li>
-                                                <li><a href="/" title="Samsung">Samsung</a></li>
-                                                <li><a href="/" title="Toshiba">Toshiba</a></li>
-                                                <li><a href="/" title="Panasonic">Panasonic</a></li>
-                                                <li><a href="/" title="Aqua">Aqua</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/" title="Tủ lạnh">Tủ lạnh</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="Toshiba">Toshiba</a></li>
-                                                <li><a href="/" title="Samsung">Samsung</a></li>
-                                                <li><a href="/" title="Aqua">Aqua</a></li>
-                                                <li><a href="/" title="Panasonic">Panasonic</a></li>
-                                            </ul>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/tivi" title="Tivi - Màn hình TV">
-                                    Tivi - Màn hình TV
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/dien-thoai" title="Điện thoại">
-                                    Điện thoại
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="PC - Máy tính đồng bộ">
-                                    PC - Máy tính đồng bộ
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="Màn hình máy tính">
-                                    Màn hình máy tính
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="Phụ kiện & Thiết bị ngoại vi">
-                                    Phụ kiện & Thiết bị ngoại vi
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="Máy ảnh">
-                                    Máy ảnh
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="Máy quay phim">
-                                    Máy quay phim
-                                    </a>
-                                </li>
-                                <li class="item ">
-                                    <a href="/collections/all" title="Thiết bị văn phòng">
-                                    Thiết bị văn phòng
-                                    </a>
-                                </li>
-                                <li class="item dnone">
-                                    <a href="/collections/all" title="Thiết bị thông minh">
-                                    Thiết bị thông minh
-                                    </a>
-                                </li>
-                                <li class="item submenu dnone" data-menu-root="104380997">
-                                    <a href="/" title="Laptop & Macbook">
-                                    Laptop & Macbook
-                                    </a>
-                                    <div class="dropdown_menu">
-                                        <div class="d-flex flex-wrap">
-                                        <div class="col-lg-3">
-                                            <h3><a href="/collections/all" title="Laptop theo thương hiệu">Laptop theo thương hiệu</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="Apple">Apple</a></li>
-                                                <li><a href="/" title="Dell">Dell</a></li>
-                                                <li><a href="/" title="Hp">Hp</a></li>
-                                                <li><a href="/" title="Asus">Asus</a></li>
-                                                <li><a href="/" title="Lenovo">Lenovo</a></li>
-                                                <li><a href="/" title="MSI">MSI</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/collections/all" title="Laptop theo giá">Laptop theo giá</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="Dưới 10 triệu">Dưới 10 triệu</a></li>
-                                                <li><a href="/" title="10 - 15 triệu">10 - 15 triệu</a></li>
-                                                <li><a href="/" title="15 - 20 triệu">15 - 20 triệu</a></li>
-                                                <li><a href="/" title="20 - 25 triệu">20 - 25 triệu</a></li>
-                                                <li><a href="/" title="25 - 30 triệu">25 - 30 triệu</a></li>
-                                                <li><a href="/" title="Trên 30 triệu">Trên 30 triệu</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/collections/all" title="Laptop theo kích thước">Laptop theo kích thước</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="Dưới 13 inch">Dưới 13 inch</a></li>
-                                                <li><a href="/" title="13 - 15 inch">13 - 15 inch</a></li>
-                                                <li><a href="/" title="Trên 15 inch">Trên 15 inch</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h3><a href="/collections/all" title="Linh kiện laptop">Linh kiện laptop</a></h3>
-                                            <ul class="has_submenu">
-                                                <li><a href="/" title="Bàn phím laptop">Bàn phím laptop</a></li>
-                                                <li><a href="/" title="Pin laptop">Pin laptop</a></li>
-                                                <li><a href="/" title="Sạc laptop">Sạc laptop</a></li>
-                                            </ul>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item dnone">
-                                    <a href="/collections/all" title="Giải pháp doanh nghiệp">
-                                    Giải pháp doanh nghiệp
-                                    </a>
-                                </li>
-                                <li class="item dnone">
-                                    <a href="/collections/all" title="Đồng hồ thông minh">
-                                    Đồng hồ thông minh
-                                    </a>
-                                </li>
-                                <li class="item dnone">
-                                    <a href="/collections/all" title="Linh kiện máy tính">
-                                    Linh kiện máy tính
-                                    </a>
-                                </li>
-                                <li class="item dnone">
-                                    <a href="/collections/all" title="Thiết bị mạng">
-                                    Thiết bị mạng
-                                    </a>
-                                </li>
-                                <li class="item load-more" data-limit="10">
-                                    <svg class="icon-more" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="9" y="1" width="1" height="17"></rect>
-                                        <rect x="1" y="9" width="17" height="1"></rect>
-                                    </svg>
-                                    <svg class="icon-less" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <rect height="1" width="18" y="9" x="1"></rect>
-                                    </svg>
-                                    <span>Xem thêm</span>
-                                </li>
+
+                                @foreach($productCategories as $productCategory)
+                                    @if($productCategory->childs()->count())
+                                        <li class="item submenu " data-menu-root="104673962">
+                                            <a href="#" title="{{ $productCategory->name }}">
+                                                {{ $productCategory->name }}
+                                            </a>
+                                            <div class="dropdown_menu">
+                                                <div class="d-flex flex-wrap">
+                                                    @foreach($productCategory->childs->chunk(6) as $childChunk)
+                                                        <div class="col-lg-3">
+                                                            <ul class="has_submenu">
+                                                                @foreach($childChunk as $childCate)
+                                                                    <li><a href="#" title="{{ $childCate->name }}">{{ $childCate->name }}</a></li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @else
+                                        <li class="item ">
+                                            <a href="#" title="{{ $productCategory->name }}">
+                                                {{ $productCategory->name }}
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+
+{{--                                <li class="item submenu " data-menu-root="104380996">--}}
+{{--                                    <a href="/" title="Điện máy - Điện gia dụng">--}}
+{{--                                    Điện máy - Điện gia dụng--}}
+{{--                                    </a>--}}
+{{--                                    <div class="dropdown_menu">--}}
+{{--                                        <div class="d-flex flex-wrap">--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/" title="Điều hòa - Máy lạnh">Điều hòa - Máy lạnh</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="LG">LG</a></li>--}}
+{{--                                                <li><a href="/" title="Daikin">Daikin</a></li>--}}
+{{--                                                <li><a href="/" title="Toshiba">Toshiba</a></li>--}}
+{{--                                                <li><a href="/" title="Aqua">Aqua</a></li>--}}
+{{--                                                <li><a href="/" title="Asanzo">Asanzo</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/" title="Máy giặc">Máy giặc</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="LG">LG</a></li>--}}
+{{--                                                <li><a href="/" title="Samsung">Samsung</a></li>--}}
+{{--                                                <li><a href="/" title="Toshiba">Toshiba</a></li>--}}
+{{--                                                <li><a href="/" title="Panasonic">Panasonic</a></li>--}}
+{{--                                                <li><a href="/" title="Aqua">Aqua</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/" title="Tủ lạnh">Tủ lạnh</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="Toshiba">Toshiba</a></li>--}}
+{{--                                                <li><a href="/" title="Samsung">Samsung</a></li>--}}
+{{--                                                <li><a href="/" title="Aqua">Aqua</a></li>--}}
+{{--                                                <li><a href="/" title="Panasonic">Panasonic</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                                --}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/dien-thoai" title="Điện thoại">--}}
+{{--                                    Điện thoại--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="PC - Máy tính đồng bộ">--}}
+{{--                                    PC - Máy tính đồng bộ--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="Màn hình máy tính">--}}
+{{--                                    Màn hình máy tính--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="Phụ kiện & Thiết bị ngoại vi">--}}
+{{--                                    Phụ kiện & Thiết bị ngoại vi--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="Máy ảnh">--}}
+{{--                                    Máy ảnh--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="Máy quay phim">--}}
+{{--                                    Máy quay phim--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item ">--}}
+{{--                                    <a href="/collections/all" title="Thiết bị văn phòng">--}}
+{{--                                    Thiết bị văn phòng--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item dnone">--}}
+{{--                                    <a href="/collections/all" title="Thiết bị thông minh">--}}
+{{--                                    Thiết bị thông minh--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item submenu dnone" data-menu-root="104380997">--}}
+{{--                                    <a href="/" title="Laptop & Macbook">--}}
+{{--                                    Laptop & Macbook--}}
+{{--                                    </a>--}}
+{{--                                    <div class="dropdown_menu">--}}
+{{--                                        <div class="d-flex flex-wrap">--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/collections/all" title="Laptop theo thương hiệu">Laptop theo thương hiệu</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="Apple">Apple</a></li>--}}
+{{--                                                <li><a href="/" title="Dell">Dell</a></li>--}}
+{{--                                                <li><a href="/" title="Hp">Hp</a></li>--}}
+{{--                                                <li><a href="/" title="Asus">Asus</a></li>--}}
+{{--                                                <li><a href="/" title="Lenovo">Lenovo</a></li>--}}
+{{--                                                <li><a href="/" title="MSI">MSI</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/collections/all" title="Laptop theo giá">Laptop theo giá</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="Dưới 10 triệu">Dưới 10 triệu</a></li>--}}
+{{--                                                <li><a href="/" title="10 - 15 triệu">10 - 15 triệu</a></li>--}}
+{{--                                                <li><a href="/" title="15 - 20 triệu">15 - 20 triệu</a></li>--}}
+{{--                                                <li><a href="/" title="20 - 25 triệu">20 - 25 triệu</a></li>--}}
+{{--                                                <li><a href="/" title="25 - 30 triệu">25 - 30 triệu</a></li>--}}
+{{--                                                <li><a href="/" title="Trên 30 triệu">Trên 30 triệu</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/collections/all" title="Laptop theo kích thước">Laptop theo kích thước</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="Dưới 13 inch">Dưới 13 inch</a></li>--}}
+{{--                                                <li><a href="/" title="13 - 15 inch">13 - 15 inch</a></li>--}}
+{{--                                                <li><a href="/" title="Trên 15 inch">Trên 15 inch</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-3">--}}
+{{--                                            <h3><a href="/collections/all" title="Linh kiện laptop">Linh kiện laptop</a></h3>--}}
+{{--                                            <ul class="has_submenu">--}}
+{{--                                                <li><a href="/" title="Bàn phím laptop">Bàn phím laptop</a></li>--}}
+{{--                                                <li><a href="/" title="Pin laptop">Pin laptop</a></li>--}}
+{{--                                                <li><a href="/" title="Sạc laptop">Sạc laptop</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                                <li class="item dnone">--}}
+{{--                                    <a href="/collections/all" title="Giải pháp doanh nghiệp">--}}
+{{--                                    Giải pháp doanh nghiệp--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item dnone">--}}
+{{--                                    <a href="/collections/all" title="Đồng hồ thông minh">--}}
+{{--                                    Đồng hồ thông minh--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item dnone">--}}
+{{--                                    <a href="/collections/all" title="Linh kiện máy tính">--}}
+{{--                                    Linh kiện máy tính--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                                <li class="item dnone">--}}
+{{--                                    <a href="/collections/all" title="Thiết bị mạng">--}}
+{{--                                    Thiết bị mạng--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+
+
+
+{{--                                <li class="item load-more" data-limit="10">--}}
+{{--                                    <svg class="icon-more" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                        <rect x="9" y="1" width="1" height="17"></rect>--}}
+{{--                                        <rect x="1" y="9" width="17" height="1"></rect>--}}
+{{--                                    </svg>--}}
+{{--                                    <svg class="icon-less" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                        <rect height="1" width="18" y="9" x="1"></rect>--}}
+{{--                                    </svg>--}}
+{{--                                    <span>Xem thêm</span>--}}
+{{--                                </li>--}}
+
+
+
                             </ul>
                             <ul class="link-list list-child" id="104673962">
                                 <li><a href="javascript:;"><i class="fa fa-angle-left" aria-hidden="true"></i>Quay về</a></li>
@@ -885,9 +870,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="box-live">
-                        <button type="button" class="btn-live">Live stream</button>
-                    </div>
+{{--                    <div class="box-live">--}}
+{{--                        <button type="button" class="btn-live">Live stream</button>--}}
+{{--                    </div>--}}
                 </div>
                 </div>
             </div>

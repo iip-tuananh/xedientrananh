@@ -196,6 +196,7 @@ class FileHelper
                 unlink($path);
             }
         }
+
         File::query()
             ->where('model_id', $id)
             ->where('model_type', $class)
