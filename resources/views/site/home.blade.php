@@ -11,6 +11,7 @@
 @section('css')
 @endsection
 @section('content')
+
 <div class="section-main section-main--index">
     <div class="container">
     <div class="row">
@@ -64,6 +65,7 @@
     </div>
     </div>
 </div>
+
 <main class="wrapperMain_content">
     <section class="home-category">
 

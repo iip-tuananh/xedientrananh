@@ -5,11 +5,11 @@
 @endsection
 
 @section('title')
-Chỉnh sửa danh mục hàng hóa
+Chỉnh sửa danh mục sản phẩm
 @endsection
 
 @section('page_title')
-Chỉnh sửa danh mục hàng hóa
+Chỉnh sửa danh mục sản phẩm
 @endsection
 
 @section('content')
@@ -28,7 +28,6 @@ Chỉnh sửa danh mục hàng hóa
             {'name': 'không', 'value': '0'},
         ];
 
-    $scope.form.all_categories = @json($categories);
     $scope.loading = {};
     $scope.submit = function() {
       $scope.loading.submit = true;

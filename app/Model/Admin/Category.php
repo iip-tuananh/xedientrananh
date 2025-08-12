@@ -119,28 +119,30 @@ class Category extends BaseModel
         return self::orderby('sort_order')->get();
     }
 
-    public static function getForSelect()
+    public static function getForSelect($getParent = false)
     {
-        $all = self::select(['id', 'name', 'sort_order', 'level', 'parent_id'])
-            ->orderBy('sort_order', 'asc')
-            ->get()->toArray();
+        $all = self::select(['id', 'name', 'sort_order', 'level'])
+            ->orderBy('sort_order', 'asc');
+
+        if($getParent) {
+            $all = $all->where('parent_id', 0);
+        }
+
+        $all = $all->get()->toArray();
+
         $result = [];
         $result = array_map(function ($value) {
             if ($value['level'] == 1) {
-                $parent = self::where('id', $value['parent_id'])->first();
-                $value['name'] = ' |-- ' . $value['name'] . ' ' . ($parent ? '(' . $parent->name . ')' : '');
+                $value['name'] = ' |-- ' . $value['name'];
             }
             if ($value['level'] == 2) {
-                $parent = self::where('id', $value['parent_id'])->first();
-                $value['name'] = ' |-- |-- ' . $value['name'] . ' ' . ($parent ? '(' . $parent->name . ')' : '');
+                $value['name'] = ' |-- |-- ' . $value['name'];
             }
             if ($value['level'] == 3) {
-                $parent = self::where('id', $value['parent_id'])->first();
-                $value['name'] = ' |-- |-- |-- ' . $value['name'] . ' ' . ($parent ? '(' . $parent->name . ')' : '');
+                $value['name'] = ' |-- |-- |-- ' . $value['name'];
             }
             if ($value['level'] == 4) {
-                $parent = self::where('id', $value['parent_id'])->first();
-                $value['name'] = ' |-- |-- |-- | --' . $value['name'] . ' ' . ($parent ? '(' . $parent->name . ')' : '');
+                $value['name'] = ' |-- |-- |-- | --' . $value['name'];
             }
             return $value;
         }, $all);

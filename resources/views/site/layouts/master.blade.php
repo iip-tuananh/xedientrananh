@@ -45,7 +45,7 @@
      </script>
     {{-- <link href="//theme.hstatic.net/200000516791/1001206835/14/app-combo.js?v=162" rel="preload" as="script" type="text/javascript"> --}}
 </head>
-<body class="mainBody-theme  template-index">
+<body class="mainBody-theme template-index" ng-app="App">
     <div class="mainBody-theme-container mainBody-modalshow     layoutProduct_scroll ">
         @include('site.partials.header')
         @yield('content')
@@ -356,53 +356,6 @@
             </div>
             </div>
         </div>
-        <div id="popup-contact" class="modal fade modal-popupContact popupForm" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content lazyload">
-                <div class="modal-wrapper-contact">
-                    <button type="button" class="close close-popup-contact" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
-                            <g>
-                                <path d="M294.111,256.001L504.109,46.003c10.523-10.524,10.523-27.586,0-38.109c-10.524-10.524-27.587-10.524-38.11,0L256,217.892    L46.002,7.894c-10.524-10.524-27.586-10.524-38.109,0s-10.524,27.586,0,38.109l209.998,209.998L7.893,465.999    c-10.524,10.524-10.524,27.586,0,38.109c10.524,10.524,27.586,10.523,38.109,0L256,294.11l209.997,209.998    c10.524,10.524,27.587,10.523,38.11,0c10.523-10.524,10.523-27.586,0-38.109L294.111,256.001z" />
-                            </g>
-                        </svg>
-                        </span>
-                    </button>
-                    <h3 class="title-popup-contact">Hãy đến với chúng tôi</h3>
-                    <div class="message-popup-contact">
-                        <div class="title-adv-popup-contact">Chúng tôi sẽ cập nhật các chương trình khuyến mãi đến bạn.</div>
-                        <ul class="list-adv-popup-contact">
-                        <li>Giảm giá sản phẩm</li>
-                        <li>Sản phẩm mới</li>
-                        <li>Sản phẩm bán chạy</li>
-                        </ul>
-                    </div>
-                    <div class="popup-form-customer">
-                        <form accept-charset='UTF-8' action='/account/contact' class='contact-form' method='post'>
-                        <input name='form_type' type='hidden' value='customer'>
-                        <input name='utf8' type='hidden' value='✓'>
-                        <div class="input-group">
-                            <input type="hidden" id="contact_tags" name="contact[tags]" value="Đăng ký nhận tin">
-                            <input required="" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="contact_email" name="contact[email]" class="form-control form-email-popup-contact" placeholder="Nhập email đăng ký nhận thông tin" aria-label="Đăng ký nhận thông tin" >
-                        </div>
-                        <button type="submit" class="input-group-addon button btn-reg-popup-contact">Đăng ký</button>
-                        <div class="sitebox-recaptcha d-none">
-                            This site is protected by reCAPTCHA and the Google
-                            <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
-                            and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
-                        </div>
-                        <input name='__RequestVerificationToken' type='hidden' value='CfDJ8FyFPV59mBtNhmQGz0fYZt9Y033wH19q7XfXlnAPp5J5eMKYDyJsKcTePTDSM9Gu_UBrQcEsOrh9x4aXtcq3n6Gd0Wq1IMAumvlRSWYhpDrExVU6vy-2Cq1_V87BSvM3A8EGK-ohXTCuDLO6jnk16pg'>
-                        <input id='ba3bd91a276f4f7685c776884e271e60' name='g-recaptcha-response' type='hidden'>
-                        <noscript data-src='https://www.google.com/recaptcha/api.js?render=6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s'></noscript>
-                        <noscript>let recaptchaElm=document.getElementById('ba3bd91a276f4f7685c776884e271e60');let recaptchaForm=recaptchaElm.parentNode;recaptchaForm.addEventListener("submit",function(formEvent){if(!recaptchaElm.value){formEvent.preventDefault();grecaptcha.ready(function(){grecaptcha.execute('6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s',{action:'submit'}).then(function(token){recaptchaElm.value=token;recaptchaForm.requestSubmit(formEvent.submitter)})})}})</noscript>
-                        </form>
-                        <p class="succes-popup"></p>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
         <div class="modal-live d-none d-lg-block">
             <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FLazadaVietnam%2Fvideos%2F1699075170452462%2F&show_text=0&width=267" width="267" height="476" style="border:none;overflow:hidden" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             <div class="box-close">
@@ -592,5 +545,10 @@
             });
         });
     </script>
+
+
+    @include('site.partials.angular_mix')
+
+    @stack('scripts')
 </body>
 </html>

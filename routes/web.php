@@ -61,6 +61,23 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('/{id}/deleteFile', 'Admin\ProductController@deleteFile')->name('products.deleteFile');
         });
 
+        Route::group(['prefix' => 'product-variants'], function () {
+            Route::get('/', 'Admin\ProductVariantController@index')->name('product_variants.index');
+            Route::get('/create', 'Admin\ProductVariantController@create')->name('product_variants.create')->middleware('checkPermission:Thêm hàng hóa');
+            Route::post('/', 'Admin\ProductVariantController@store')->name('product_variants.store')->middleware('checkPermission:Thêm hàng hóa');
+            Route::post('/{id}/update', 'Admin\ProductVariantController@update')->name('product_variants.update')->middleware('checkPermission:Sửa hàng hóa');
+            Route::get('/{id}/edit', 'Admin\ProductVariantController@edit')->name('product_variants.edit')->middleware('checkPermission:Sửa hàng hóa');
+            Route::get('/{id}/delete', 'Admin\ProductVariantController@delete')->name('product_variants.delete')->middleware('checkPermission:Xóa hàng hóa');
+            Route::get('/searchData', 'Admin\ProductVariantController@searchData')->name('product_variants.searchData');
+            Route::get('/{id}/getData', 'Admin\ProductVariantController@getData')->name('product_variants.getData');
+            Route::post('/{id}/toggle-default', 'Admin\ProductVariantController@toggleDefault')->name('product_variants.toggleDefault');
+            Route::post('/add-category-special', 'Admin\ProductVariantController@addToCategorySpecial')->name('product_variants.add.category.special');
+
+            Route::get('/act-delete', 'Admin\ProductVariantController@actDelete')->name('product_variants.delete.multi');
+            Route::post('/{id}/deleteFile', 'Admin\ProductVariantController@deleteFile')->name('products.deleteFile');
+        });
+
+
         // Đánh giá sản phẩm
         Route::group(['prefix' => 'product-rates'], function () {
             Route::get('/', 'Admin\ProductRateController@index')->name('product_rates.index');
@@ -308,6 +325,17 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/{id}/delete', 'Admin\AttributeController@delete')->name('attributes.delete');
             Route::get('/{id}/getDataForEdit', 'Admin\AttributeController@getDataForEdit');
             Route::get('/exportExcel','Admin\AttributeController@exportExcel')->name('attributes.exportExcel');
+        });
+
+        // nhóm thuộc tính
+        Route::group(['prefix' => 'attribute-groups'], function () {
+            Route::get('/', 'Admin\AttributeGroupController@index')->name('attributeGroups.index');
+            Route::get('/searchData', 'Admin\AttributeGroupController@searchData')->name('attributeGroups.searchData');
+            Route::get('/create', 'Admin\AttributeGroupController@create')->name('attributeGroups.create');
+            Route::post('/', 'Admin\AttributeGroupController@store')->name('attributeGroups.store');
+            Route::post('/{id}/update', 'Admin\AttributeGroupController@update')->name('attributeGroups.update');
+            Route::get('/{id}/delete', 'Admin\AttributeGroupController@delete')->name('attributeGroups.delete');
+            Route::get('/{id}/getDataForEdit', 'Admin\AttributeGroupController@getDataForEdit');
         });
 
         // ql đơn hàng

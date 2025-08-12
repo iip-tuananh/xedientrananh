@@ -6,20 +6,25 @@
 @endsection
 
 @section('page_title')
-    Quản lý hàng hóa
+    Quản lý serial sản phẩm {{ $product ? $product->name : '' }}
 @endsection
 
 @section('title')
-    Quản lý hàng hóa
+    Quản lý serial sản phẩm {{ $product ? $product->name : '' }}
 @endsection
 
 @section('buttons')
-    @if(Auth::guard('admin')->user()->type == App\Model\Common\User::QUAN_TRI_VIEN || Auth::guard('admin')->user()->type == App\Model\Common\User::SUPER_ADMIN)
-        <a href="{{ route('Product.create') }}" class="btn btn-outline-success btn-sm" class="btn btn-info"><i
-                class="fa fa-plus"></i> Thêm mới</a>
+    @if(Auth::user()->type == App\Model\Common\User::QUAN_TRI_VIEN || Auth::user()->type == App\Model\Common\User::SUPER_ADMIN)
+        <a
+            href="{{ route('product_variants.create') }}?product-id={{ request()->get('product-id') }}"
+            class="btn btn-outline-success btn-sm"
+        >
+            <i class="fa fa-plus"></i> Thêm mới
+        </a>
         {{-- <a href="javascript:void(0)" target="_blank" data-href="{{ route('Product.exportExcel') }}" class="btn btn-info export-button btn-sm"><i class="fas fa-file-excel"></i> Xuất file excel</a>
         <a href="javascript:void(0)" target="_blank" data-href="{{ route('Product.exportPDF') }}" class="btn btn-warning export-button btn-sm"><i class="far fa-file-pdf"></i> Xuất file pdf</a> --}}
     @endif
+
 @endsection
 
 @section('content')
@@ -34,59 +39,28 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="modal fade" id="add-to-category-special" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="semi-bold">Thêm vào danh mục đặc biệt</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-group custom-group" ng-cloak>
-                                                <label class="form-label required-label">Danh mục đặc biệt</label>
-
-                                                <ui-select remove-selected="false" multiple ng-model="product.category_special_ids">
-                                                    <ui-select-match placeholder="Chọn danh mục đặc biệt">
-                                                        <% $item.name %>
-                                                    </ui-select-match>
-                                                    <ui-select-choices
-                                                        repeat="item.id as item in (categorieSpeicals | filter: $select.search)">
-                                                        <span ng-bind="item.name"></span>
-                                                    </ui-select-choices>
-                                                </ui-select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success btn-cons" ng-click="submit()"
-                                    ng-disabled="loading.submit">
-                                <i ng-if="!loading.submit" class="fa fa-save"></i>
-                                <i ng-if="loading.submit" class="fa fa-spin fa-spinner"></i>
-                                Lưu
-                            </button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                                    class="fas fa-window-close"></i> Hủy
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-
         </div>
     </div>
 
+    <style>
+        .badge-xl {
+            font-size: 0.7rem;      /* chữ to hơn */
+            padding: 0.5em 1em;     /* padding dày hơn */
+        }
+
+        .btn-sm.toggle-default {
+            font-size: 0.75rem;      /* giảm size chữ */
+            padding: 0.2rem 0.4rem;  /* giảm padding */
+        }
+
+        .badge-status{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .6rem;border-radius:999px;font-weight:600}
+        .badge-dot{width:.5rem;height:.5rem;border-radius:50%;display:inline-block;background:currentColor;opacity:.9}
+
+        /* màu mềm */
+        .badge-soft-success{color:#198754;background:rgba(25,135,84,.12);border:1px solid rgba(25,135,84,.22)}
+        .badge-soft-danger{color:#dc3545;background:rgba(220,53,69,.12);border:1px solid rgba(220,53,69,.22)}
+
+    </style>
 
     @include('common.units.createUnit')
 @endsection
@@ -97,79 +71,88 @@
 
     @include('admin.products.Product')
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('product-id');
+
         let datatable = new DATATABLE('table-list', {
+            pageLength: 30,
             ajax: {
-                url: '/admin/products/searchData',
+                url: '/admin/product-variants/searchData',
                 data: function (d, context) {
                     DATATABLE.mergeSearch(d, context);
+                    d.product_id = productId;
                 }
-            },
-            stateSave: true,
-            columnDefs: [
-                {
-                    'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }
-            ],
-            select: {
-                'style': 'multi'
             },
             columns: [
-                {data: 'id', orderable: false},
                 {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
-                {data: 'name', title: 'Tên'},
-                {data: 'base_price', title: "Đơn giá chưa giảm"},
-                {data: 'price', title: "Đơn giá bán"},
-                {data: 'unit_id', title: "Đơn vị tính"},
-                {data: 'cate_id', title: 'Danh mục'},
-                {data: 'category_special', title: 'Danh mục đặc biệt'},
-                {data: 'tags', title: 'Thẻ tags phân loại', style: 'width: 15%'},
+                {
+                    data: 'sku',
+                    title: 'Biến thể',
+                    className: 'text-start',
+                    render: function(sku, type, row) {
+                        if (type === 'display') {
+                            return `
+        <div class="d-flex align-items-center">
+          <img src="${row.image ? row.image.path :  ''}"
+               alt="${row.name}"
+               style="width:60px; height:60px; object-fit:cover; border-radius:4px; margin-right:8px;">
+          <div>
+            <div class="fw-semibold">${row.name}</div>
+            <div class="text-muted" style="font-size:0.9em;">${sku}</div>
+          </div>
+        </div>`;
+                        }
+                        return sku;
+                    }
+                },
+                {data: 'product_id', title: 'Sản phẩm'},
+                {
+                    data: 'is_default',
+                    title: 'Mặc định',
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            const btnClass = data == 1
+                                ? 'btn-success'
+                                : 'btn-secondary';
+                            const text = data == 1
+                                ? 'Mặc định'
+                                : 'Không';
+                            return `
+                                <button
+                                  class="btn btn-sm toggle-default ${btnClass} px-2 py-1"
+                                  data-id="${row.id}"
+                                  data-default="${data}">
+                                  ${text}
+                                </button>`;
+                        }
+                        return data;
+                    }
+                },
                 {
                     data: 'status',
-                    title: "Trạng thái",
-                    render: function (data) {
-                        if (data == 0) {
-                            return `<span class="badge badge-danger">Nháp</span>`;
-                        } else {
-                            return `<span class="badge badge-success">Xuất bản</span>`;
+                    title: 'Trạng thái',
+                    className: 'text-center',
+                    render: function (data, type, row) {
+                        const v = (data === 1 || data === '1' || data === true) ? 1 : 0;
+
+                        if (type === 'display') {
+                            return v === 1
+                                ? '<span class="badge badge-soft-success badge-status"><span class="badge-dot"></span>Còn hàng</span>'
+                                : '<span class="badge badge-soft-danger badge-status"><span class="badge-dot"></span>Hết hàng</span>';
                         }
-                    },
-                    className: "text-center"
+                        return v;
+                    }
                 },
-                {
-                    data: 'state',
-                    title: "Tình trạng",
-                    render: function (data) {
-                        if (data == 1) {
-                            return `<span class="badge badge-success">Còn hàng</span>`;
-                        } else {
-                            return `<span class="badge badge-warning">Hết hàng</span>`;
-                        }
-                    },
-                    className: "text-center"
-                },
-                {data: 'action', orderable: false, title: "Hành động"}
+                {data: 'updated_at', title: 'Ngày cập nhật', className: "text-center"},
+                {data: 'action', orderable: false, title: "Hành động", className: "text-center"}
             ],
             search_columns: [
-                {data: 'name', search_type: "text", placeholder: "Tên hàng hóa"},
+                {data: 'keyword', search_type: "text", placeholder: "Tên hoặc mã biến thể"},
                 {
-                    data: 'status', search_type: "select", placeholder: "Trạng thái",
-                    column_data: [{id: 1, name: "Xuất bản"}, {id: 0, name: "Nháp"}]
+                    data: 'is_default', search_type: "select", placeholder: "Đặt làm mặc định",
+                    column_data: [{id: 1, name: "Mặc định"}, {id: 0, name: "Không"}]
                 },
-                {
-                    data: 'state', search_type: "select", placeholder: "Tình trạng",
-                    column_data: [{id: 1, name: "Còn hàng"}, {id: 2, name: "Hết hàng"}]
-                },
-                {
-                    data: 'cate_id', search_type: "select", placeholder: "Danh mục",
-                    column_data: @json(App\Model\Admin\Category::getForSelect())
-                },
-                {
-                    data: 'cate_special_id', search_type: "select", placeholder: "Danh mục đặc biệt",
-                    column_data: @json(App\Model\Admin\CategorySpecial::getForSelectForProduct())
-                }
             ],
             act: true,
         }).datatable;
@@ -180,6 +163,7 @@
             $scope.categorieSpeicals = @json(\App\Model\Admin\CategorySpecial::getForSelectForProduct());
             $scope.loading = {};
             $scope.arrayInclude = arrayInclude;
+            $scope.productId = params.get('product-id');
 
             $rootScope.$on("createdProductCategory", function (event, data) {
                 $scope.formEdit.all_categories.push(data);
@@ -275,6 +259,33 @@
                 $('#add-to-category-special').modal('show');
             })
 
+            $('#table-list').on('click', '.toggle-default', function() {
+                const $btn = $(this);
+                const id = $btn.data('id');
+                const current = parseInt($btn.data('default'), 10);
+                const nextValue = current === 1 ? 0 : 1;
+
+                $.ajax({
+                    url: `/admin/product-variants/${id}/toggle-default`,
+                    type: 'POST',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        is_default: nextValue
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Reload lại table hoặc chỉ cập nhật cell
+                            datatable.ajax.reload(null, false);
+                        } else {
+                            alert('Cập nhật thất bại');
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra, vui lòng thử lại');
+                    }
+                });
+            });
+
             $scope.submit = function () {
                 let url = "/admin/products/add-category-special";
                 $scope.loading.submit = true;
@@ -293,8 +304,7 @@
                         if (response.success) {
                             $('#add-to-category-special').modal('hide');
                             toastr.success(response.message);
-                            datatable.ajax.reload(null, false);
-                            // window.location.href = "{{ route('Product.index') }}";
+                            datatable.ajax.reload();
                         } else {
                             $scope.errors = response.errors;
                             toastr.warning(response.message);
@@ -337,7 +347,7 @@
                 closeOnConfirm: false
             }, function(isConfirm) {
                 if (isConfirm) {
-                    window.location.href = "{{route('products.delete.multi')}}?product_ids="+product_ids;
+                    window.location.href = "{{route('product_variants.delete.multi')}}?product_ids="+product_ids;
                 }
             })
         }

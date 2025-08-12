@@ -70,9 +70,6 @@ class ProductController extends Controller
             ->addColumn('category_special', function ($object) {
                 return $object->category_specials->implode('name', ', ');
             })
-            ->editColumn('unit_id', function ($object) {
-                return $object->unit ? $object->unit->name : '';
-            })
             ->editColumn('tags', function ($object) {
 				return $object->tags->map(function ($tag) {
 					return '<span class="badge badge-light" style="font-size: 12px;">'.$tag->name.'</span>';
@@ -92,6 +89,7 @@ class ProductController extends Controller
                     $result = $result . ' <a href="' . route($this->route.'.delete', $object->id) . '" title="xóa" class="dropdown-item confirm"><i class="fa fa-angle-right"></i>Xóa</a>';
 
                 }
+                $result = $result . ' <a href="' . route('product_variants.index').'?product-id='.$object->id . '" title="Quản lý biến thể" class="dropdown-item" target="_blank"><i class="fa fa-angle-right"></i>Quản lý biến thể</a>';
 
                 $result = $result . ' <a href="" title="thêm vào danh mục đặc biệt" class="dropdown-item add-category-special"><i class="fa fa-angle-right"></i>Thêm vào danh mục đặc biệt</a>';
                 $result = $result . '</div></div>';
@@ -116,55 +114,30 @@ class ProductController extends Controller
 		DB::beginTransaction();
 		try {
 			$object = new ThisModel();
-            $object->type = $request->type;
 			$object->name = $request->name;
+			$object->code = $request->code;
 			$object->cate_id = $request->cate_id;
 			$object->intro = $request->intro;
 			$object->short_des = $request->short_des;
 			$object->body = $request->body;
 			$object->base_price = $request->base_price;
-			$object->revenue_price = $request->revenue_price;
-            $object->revenue_percent_5 = $request->revenue_percent_5;
-            $object->revenue_percent_4 = $request->revenue_percent_4;
-            $object->revenue_percent_3 = $request->revenue_percent_3;
-            $object->revenue_percent_2 = $request->revenue_percent_2;
-            $object->revenue_percent_1 = $request->revenue_percent_1;
 			$object->price = $request->price;
 			$object->status = $request->status;
 			$object->manufacturer_id = $request->manufacturer_id;
-			$object->origin_id = $request->origin_id;
-            $object->url_custom = $request->url_custom;
             $object->state = $request->state ?? Product::CON_HANG;
-            $object->is_pin = $request->is_pin ?? Product::NOT_PIN;
-            $object->origin = $request->origin;
-            $object->origin_link = $request->origin_link;
-            $object->aff_link = $request->aff_link;
-            $object->short_link = $request->short_link;
-            $object->person_in_charge = $request->person_in_charge;
-            $object->button_type = $request->button_type ?? 0;
-            $object->gift = $request->gift;
-            $object->unit_id = $request->unit_id;
+
 			$object->save();
 
-			FileHelper::uploadFile($request->image, 'products', $object->id, ThisModel::class, 'image',99);
+//			FileHelper::uploadFile($request->image, 'products', $object->id, ThisModel::class, 'image',99);
 
-			$object->syncGalleries($request->galleries);
-			$object->syncDocuments($request->attachments, 'products/attachments/');
+//			$object->syncGalleries($request->galleries);
+
             if($request->tag_ids) $object->addTags($request->tag_ids);
 
-            if($request->input('attributes')) {
-                $object->syncAttributes($request->input('attributes'));
+            if($request->input('attrs')) {
+                $object->syncAttributes($request->input('attrs'));
             }
 
-            if(isset($request->all()['videos'])) {
-                foreach ($request->all()['videos'] as $video) {
-                    ProductVideo::query()->create([
-                        'link' => $video['link'],
-                        'video' => $video['video'],
-                        'product_id' => $object->id,
-                    ]);
-                }
-            }
 
 			DB::commit();
 			$json->success = true;
@@ -180,7 +153,6 @@ class ProductController extends Controller
 	{
 		$object = ThisModel::getDataForEdit($id);
         $tags = Tag::query()->where('type', Tag::TYPE_PRODUCT)->latest()->get();
-        $config = Config::query()->first(['revenue_percent_1', 'revenue_percent_2', 'revenue_percent_3', 'revenue_percent_4', 'revenue_percent_5']);
         $object->tag_ids = $object->tags->pluck('id')->toArray();
 
         return view($this->view.'.edit', compact('object','tags'));
@@ -200,64 +172,40 @@ class ProductController extends Controller
 				return Response::json($json);
 			}
 
-            $object->type = $request->type;
 			$object->name = $request->name;
+			$object->code = $request->code;
 			$object->cate_id = $request->cate_id;
 			$object->intro = $request->intro;
 			$object->short_des = $request->short_des;
 			$object->body = $request->body;
 			$object->base_price = $request->base_price;
 			$object->price = $request->price;
-			$object->revenue_price = $request->revenue_price;
-            $object->revenue_percent_5 = $request->revenue_percent_5;
-            $object->revenue_percent_4 = $request->revenue_percent_4;
-            $object->revenue_percent_3 = $request->revenue_percent_3;
-            $object->revenue_percent_2 = $request->revenue_percent_2;
-            $object->revenue_percent_1 = $request->revenue_percent_1;
 			$object->status = $request->status;
 			$object->manufacturer_id = $request->manufacturer_id;
 			$object->origin_id = $request->origin_id;
-            $object->url_custom = $request->url_custom;
             $object->state = $request->state ?? Product::CON_HANG;
-            $object->is_pin = $request->is_pin ?? Product::NOT_PIN;
-            $object->origin = $request->origin;
-            $object->origin_link = $request->origin_link;
-            $object->aff_link = $request->aff_link;
-            $object->short_link = $request->short_link;
-            $object->person_in_charge = $request->person_in_charge;
-            $object->button_type = $request->button_type ?? 0;
-            $object->gift = $request->gift;
-            $object->unit_id = $request->unit_id;
+
 			$object->save();
 
-			if($request->image) {
-				if($object->image) {
-					FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
-				}
-				FileHelper::uploadFile($request->image, 'products', $object->id, ThisModel::class, 'image',99);
-			}
+//			if($request->image) {
+//				if($object->image) {
+//					FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
+//				}
+//				FileHelper::uploadFile($request->image, 'products', $object->id, ThisModel::class, 'image',99);
+//			}
 
-			$object->syncGalleries($request->galleries);
-            $object->syncDocuments($request->attachments, 'products/attachments/');
+//			$object->syncGalleries($request->galleries);
 
             if($request->tag_ids) $object->updateTags($request->tag_ids);
-            if($request->input('attributes')) {
-                $object->syncAttributes($request->input('attributes'));
+
+            AttributeValue::query()->where('product_id', $object->id)->delete();
+
+            if($request->input('attrs')) {
+                $object->syncAttributes($request->input('attrs'));
             }
 
-            if(isset($request->all()['videos'])) {
-                ProductVideo::query()->where('product_id', $object->id)->delete();
-                foreach ($request->all()['videos'] as $video) {
-                    ProductVideo::query()->create([
-                        'link' =>$video['link'],
-                        'video' => $video['video'],
-                        'product_id' => $object->id,
-                    ]);
-                }
-            }
 
 			DB::commit();
-			ActivityLog::createRecord("Cập nhật hàng hóa thành công", route('Product.edit', $object->id, false));
 			$json->success = true;
 			$json->message = "Thao tác thành công!";
 			return Response::json($json);

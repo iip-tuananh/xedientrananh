@@ -52,24 +52,12 @@ Quản lý danh mục hãng sản xuất
                 DATATABLE.mergeSearch(d, context);
             }
         },
-        columnDefs: [
-            {
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
-                }
-            }
-        ],
-        select: {
-            'style': 'multi'
-        },
+
         columns: [
-            {data: 'id', orderable: false},
             {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
             {data: 'code', title: 'Mã'},
             {data: 'name', title: 'Tên hãng sản xuất'},
-            {data: 'image', title: 'Ảnh đại diện'},
-            {data: 'products', title: 'Sản phẩm'},
+            {data: 'products', title: 'Sản phẩm', className: "text-center"},
             {data: 'updated_at', title: 'Ngày cập nhật'},
             {data: 'updated_by', title: 'Người cập nhật'},
             {data: 'action', orderable: false, title: "Hành động"}
@@ -77,7 +65,6 @@ Quản lý danh mục hãng sản xuất
         search_columns: [
             {data: 'name', search_type: "text", placeholder: "Tên hãng"},
         ],
-        act: true,
     }).datatable;
 
     createReviewCallback = (response) => {

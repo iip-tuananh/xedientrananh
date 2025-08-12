@@ -29,26 +29,36 @@ class CategoryController extends Controller
 		return view($this->view.'.index', compact('categories'));
 	}
 
-	public function nestedSort(Request $request)
+    public function nestedSort(Request $request)
     {
         if ($request->ajax()) {
-			$json = new stdClass();
+            $json = new stdClass();
             $data = $request->get('dataString');
             $data = json_decode($data['data']);
             $readbleArray = $this->parseJsonArray($data);
             $i=0;
             foreach($readbleArray as $row){
-				if($row['parentID']) {
-					$level = ThisModel::where('id', $row['parentID'])->first()->level + 1;
-				} else {
-					$level = 0;
-				}
+                $parentID = $row['parentID'];
+
+                if($row['parentID']) {
+                    $parent = ThisModel::find($parentID);
+                    $level = ThisModel::where('id', $row['parentID'])->first()->level + 1;
+                } else {
+                    $level = 0;
+                }
                 $i++;
-                DB::table('categories')->where('id',$row['id'])->update(['sort_order' => $i]);
+
+                if ($level > 1) {
+                    $level  = 1;
+                    $parentID = $parent->parent_id;
+                }
+
+                DB::table('categories')->where('id',$row['id'])->update(['parent_id' => $parentID, 'sort_order' => $i, 'level' => $level]);
             }
-			$json->success = true;
-			$json->message = "Xắp xếp thành công";
-			return Response::json($json);
+
+            $json->success = true;
+            $json->message = "Sắp xếp thành công";
+            return Response::json($json);
         }
     }
 
@@ -73,87 +83,87 @@ class CategoryController extends Controller
 		return view($this->view.'.create',compact('categories'));
 	}
 
-	public function store(Request $request)
-	{
-		$validate = Validator::make(
-			$request->all(),
-			[
-				'parent_id' => 'nullable|exists:categories,id',
-				'name' => 'required|max:255',
-				'short_des' => 'nullable',
-				'intro' => 'nullable',
-				'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
-				'banner' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
+    public function store(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255',
+                'code' => 'required|max:255|unique:categories,code',
+                'short_des' => 'nullable',
+                'intro' => 'nullable',
+                'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
+            ]
+        );
+        $json = new stdClass();
 
-			]
-		);
-		$json = new stdClass();
-
-		if ($validate->fails()) {
-			$json->success = false;
+        if ($validate->fails()) {
+            $json->success = false;
             $json->errors = $validate->errors();
             $json->message = "Thao tác thất bại!";
             return Response::json($json);
-		}
+        }
 
-		DB::beginTransaction();
-		try {
-			$object = new ThisModel();
+        DB::beginTransaction();
+        try {
+            $object = new ThisModel();
 
-			if($request->parent_id) {
-				$parent = ThisModel::where('id',$request->parent_id)->first();
-				if($parent->level + 1 > 3) {
-					$json->success = false;
-					$json->message = "Menu không được quá 3 cấp cha con!";
-					return Response::json($json);
-				}
-				$stt = ThisModel::where('parent_id', $request->parent_id)->count();
-				if($stt > 0) {
-					$stt += $stt;
-				} else {
-					$stt = $parent->sort_order + 1;
-				}
-				$object->parent_id = $request->parent_id;
-				$object->level = $parent->level + 1;
-				$object->sort_order = $stt;
-			} else {
-				$object->level = 0;
-				$object->sort_order = 0;
-			}
-			$object->name = $request->name;
-			$object->intro = $request->intro;
-			$object->icon = $request->icon;
-			$object->short_des = $request->short_des;
-			$object->show_home_page = $request->show_home_page ?? 0;
-			$object->link = $request->link;
-			$object->save();
+            if($request->parent_id) {
+                $parent = ThisModel::where('id',$request->parent_id)->first();
+                if($parent->level + 1 > 3) {
+                    $json->success = false;
+                    $json->message = "Menu không được quá 3 cấp cha con!";
+                    return Response::json($json);
+                }
+                $stt = ThisModel::where('parent_id', $request->parent_id)->count();
+                if($stt > 0) {
+                    $stt += $stt;
+                } else {
+                    $stt = $parent->sort_order + 1;
+                }
+                $stt = $parent->sort_order + 1;
+                $object->parent_id = $request->parent_id;
+                $object->level = $parent->level + 1;
+                $object->sort_order = $stt;
+            } else {
+                $object->level = 0;
+                $object->sort_order = 0;
+            }
 
-			// Cập nhật lại stt các danh mục có stt lớn hơn
-			if($request->parent_id) {
-				foreach(ThisModel::where('sort_order','>=',$stt)->where('id','<>', $object->id)->orderBy('sort_order','asc')->get() as $item) {
-					$item->sort_order = $item->sort_order + 1;
-					$item->save();
-				}
-			}
+            $object->name = $request->name;
+            $object->intro = $request->intro;
+            $object->short_des = $request->short_des;
+            $object->code = $request->code;
+//			$object->show_home_page = $request->show_home_page ?? 0;
+            $object->save();
 
-			if($request->image) {
-				FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
-			}
+            // Cập nhật lại stt các danh mục có stt lớn hơn
+            if($request->parent_id) {
+                foreach(ThisModel::where('sort_order','>=',$stt)->where('id','<>', $object->id)->orderBy('sort_order','asc')->get() as $item) {
+                    $item->sort_order = $item->sort_order + 1;
+                    $item->save();
+                }
+            }
 
-			if($request->banner) {
-				FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner', 99);
-			}
+            if($request->image) {
+                FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
+            }
 
-			DB::commit();
-			$json->success = true;
-			$json->message = "Thao tác thành công!";
-			$json->data = $object;
-			return Response::json($json);
-		} catch (Exception $e) {
+            if($request->banner) {
+                FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner', 99);
+            }
+
+
+            DB::commit();
+            $json->success = true;
+            $json->message = "Thao tác thành công!";
+            $json->data = $object;
+            return Response::json($json);
+        } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
         }
-	}
+    }
 
 	public function show(Request $request,$id)
 	{
@@ -170,101 +180,90 @@ class CategoryController extends Controller
 		return view($this->view.'.edit', compact('object','categories'));
 	}
 
-	public function update(Request $request, $id)
-	{
-		$validate = Validator::make(
-			$request->all(),
-			[
-				'parent_id' => 'nullable',
-				'name' => 'required|max:255',
-				'short_des' => 'nullable',
-				'intro' => 'nullable',
-				'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
-				'banner' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
-			]
-		);
-		$json = new stdClass();
+    public function update(Request $request, $id)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255',
+                'short_des' => 'nullable',
+                'code' => 'required|unique:categories,code,' . $id,
+                'intro' => 'nullable',
+                'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
+                'banner' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:3000',
+            ]
+        );
+        $json = new stdClass();
 
-		if ($validate->fails()) {
-			$json->success = false;
-			$json->errors = $validate->errors();
-			$json->message = "Thao tác thất bại!";
-			return Response::json($json);
-		}
+        if ($validate->fails()) {
+            $json->success = false;
+            $json->errors = $validate->errors();
+            $json->message = "Thao tác thất bại!";
+            return Response::json($json);
+        }
 
-		DB::beginTransaction();
-		try {
-			$object = ThisModel::find($id);
+        DB::beginTransaction();
+        try {
+            $object = ThisModel::find($id);
 
-			if($request->parent_id) {
-                $parent = ThisModel::where('id',$request->parent_id)->first();
-                if($parent->level + 1 > 3) {
-                    $json->success = false;
-                    $json->message = "Menu không được quá 3 cấp cha con!";
-                    return Response::json($json);
-                }
-                $stt = ThisModel::where('parent_id', $request->parent_id)->count();
-                if($stt > 0) {
-                    $stt += $stt;
-                } else {
+            if($request->parent_id) {
+                if($request->parent_id != $object->parent_id) {
+                    $parent = ThisModel::where('id',$request->parent_id)->first();
+                    if($parent->level + 1 > 3) {
+                        $json->success = false;
+                        $json->message = "Menu không được quá 3 cấp cha con!";
+                        return Response::json($json);
+                    }
+
                     $stt = $parent->sort_order + 1;
+                    $object->parent_id = $request->parent_id;
+                    $object->level = $parent->level + 1;
+                    $object->sort_order = $stt;
+
+                    // Cập nhật lại stt các danh mục có stt lớn hơn
+                    foreach(ThisModel::where('sort_order','>=',$stt)->where('id','<>', $object->id)->orderBy('sort_order','asc')->get() as $item) {
+                        $item->sort_order = $item->sort_order + 1;
+                        $item->save();
+                    }
                 }
-                $object->parent_id = $request->parent_id;
-                $object->level = $parent->level + 1;
-                $object->sort_order = $stt;
+            } else {
+                $object->level = 0;
+                $object->parent_id = 0;
+                $object->sort_order = 0;
+            }
 
-			} else {
-                if($object->parent_id == 0) {
-                    $object->level = 0;
-                    $object->sort_order = 0;
-                } else {
-                    $sort_order_max = Category::query()->orderBy('sort_order', 'desc')->first()->sort_order;
-                    $object->parent_id = 0;
-                    $object->level = 0;
-                    $object->sort_order = $sort_order_max + 1;
+            $object->name = $request->name;
+            $object->code = $request->code;
+            $object->intro = $request->intro;
+            $object->short_des = $request->short_des;
+//			$object->show_home_page = $request->show_home_page ?? 0;
+            $object->save();
+
+            if($request->image) {
+                if($object->image) {
+                    FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
                 }
-			}
+                FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
+            }
 
-			$object->name = $request->name;
-			$object->intro = $request->intro;
-			$object->short_des = $request->short_des;
-            $object->icon = $request->icon;
-			$object->show_home_page = $request->show_home_page ?? 0;
-			$object->link = $request->link;
-			$object->save();
+            if($request->banner) {
+                if($object->banner) {
+                    FileHelper::forceDeleteFiles($object->banner->id, $object->id, ThisModel::class, 'banner');
+                }
+                FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner',99);
+            }
 
-			// Cập nhật lại stt các danh mục có stt lớn hơn
-			if($request->parent_id) {
-				foreach(ThisModel::where('sort_order','>=',$stt)->where('id','<>', $object->id)->orderBy('sort_order','asc')->get() as $item) {
-					$item->sort_order = $item->sort_order + 1;
-					$item->save();
-				}
-			}
+            DB::commit();
+            $json->success = true;
+            $json->message = "Thao tác thành công!";
+            $json->data = $object;
+            return Response::json($json);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 
-			if($request->image) {
-				if($object->image) {
-					FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
-				}
-				FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
-			}
-
-			if($request->banner) {
-				if($object->banner) {
-					FileHelper::forceDeleteFiles($object->banner->id, $object->id, ThisModel::class, 'banner');
-				}
-				FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner',99);
-			}
-
-			DB::commit();
-			$json->success = true;
-			$json->message = "Thao tác thành công!";
-			$json->data = $object;
-			return Response::json($json);
-		} catch (Exception $e) {
-			DB::rollBack();
-			throw new Exception($e->getMessage());
-		}
-	}
 
 	public function delete($id)
     {

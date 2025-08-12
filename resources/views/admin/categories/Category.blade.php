@@ -1,17 +1,16 @@
 <script>
     class Category extends BaseClass {
         no_set = [];
-        all_categories = @json(\App\Model\Admin\Category::getForSelect());
+        all_categories = @json(\App\Model\Admin\Category::getForSelect(true));
 
         before(form) {
             this.image = {};
             this.banner = {};
+            this.show_home_page = 1;
         }
 
         after(form) {
-            if(this.categories) {
-                this.all_categories = this.categories;
-            }
+
         }
 
 
@@ -49,19 +48,17 @@
 
         get submit_data() {
             let data = {
-                name: this.name,
                 parent_id: this._parent_id,
+                code: this.code,
+                name: this.name,
                 intro: this.intro,
                 short_des: this.short_des,
                 icon: this.icon,
-                show_home_page: this.show_home_page,
-                link: this.link,
+                // show_home_page: this.show_home_page,
             }
             data = jsonToFormData(data);
             let image = this.image.submit_data;
             let banner = this.banner.submit_data;
-            console.log(image);
-            console.log(banner);
             if (image) data.append('image', image);
             if (banner) data.append('banner', banner);
 

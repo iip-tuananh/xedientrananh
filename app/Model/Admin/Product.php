@@ -108,7 +108,7 @@ class Product extends BaseModel
         return $this->belongsToMany(Post::class, 'product_posts', 'product_id', 'post_id')->withTimestamps();
     }
 
-    public function attributeValues()
+    public function attrs()
     {
         return $this->belongsToMany(Attribute::class, 'attribute_values', 'product_id', 'attribute_id')->withPivot('value');
     }
@@ -133,14 +133,10 @@ class Product extends BaseModel
         return $this->hasMany(ProductVideo::class, 'product_id');
     }
 
-    public function vouchers()
-    {
-        return $this->belongsToMany(Voucher::class, 'product_vouchers', 'product_id', 'voucher_id');
-    }
 
-    public function unit()
+    public function variants()
     {
-        return $this->belongsTo(Unit::class, 'unit_id');
+        return $this->hasMany(ProductVariant::class, 'product_id');
     }
 
     public function getLinkAttribute()
@@ -212,24 +208,40 @@ class Product extends BaseModel
                 'image',
                 'manufacturer',
                 'videos',
+                'variants',
                 'galleries' => function ($q) {
                     $q->select(['id', 'product_id', 'sort'])
                         ->with(['image'])
                         ->orderBy('sort', 'ASC');
                 },
-                'attributeValues'
+                'attrs'
             ])
             ->firstOrFail();
 
         $product->category_special_ids = $product->category_specials->pluck('id')->toArray();
-        $product->attributeValues->map(function ($attribute) {
-            $attribute->attribute_id = $attribute->id;
-            $attribute->value = $attribute->pivot->value;
-            return $attribute;
-        });
+
+
+
+        $attributesArr = [];
+        $attributesGroup = $product->attrs->groupBy('id');
+
+        foreach ($attributesGroup as $k => $attGroup) {
+            $values = [];
+            foreach ($attGroup as $attr) {
+                $values[] = ['value' => $attr['pivot']['value']];
+            }
+            $attributesArr[$k] = [
+                'id' => $k,
+                'name' => $attGroup[0]['name'],
+                'values' => $values,
+            ];
+        }
+
+        $product->setRelation('attrs', array_values($attributesArr));
+        $product->attrs = array_values($attributesArr);
+
 
         $tags = $product->tags->map(function ($tag) {
-            // $tag->name = '<a href="'.route('front.search').'?keyword='.$tag->name.'">'.$tag->name.'</a>' ;
             return $tag;
         });
 
@@ -283,9 +295,17 @@ class Product extends BaseModel
 
     public function syncAttributes($attributes)
     {
-        $this->attributeValues()->detach();
         foreach ($attributes as $attribute) {
-            $this->attributeValues()->attach($attribute['attribute_id'], ['value' => $attribute['value']]);
+            if(@$attribute['values']) {
+                foreach ($attribute['values'] as $values) {
+                    $attValue = new AttributeValue();
+                    $attValue->product_id = $this->id;
+                    $attValue->attribute_id = $attribute['id'];
+                    $attValue->value = $values['value'];
+
+                    $attValue->save();
+                }
+            }
         }
     }
 

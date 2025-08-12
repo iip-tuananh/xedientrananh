@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('title')
-Quản lý danh mục hàng hóa
+Quản lý danh mục sản phẩm
 @endsection
 
 @section('page_title')
-Quản lý danh mục hàng hóa
+Quản lý danh mục sản phẩm
 @endsection
 
 @section('css')

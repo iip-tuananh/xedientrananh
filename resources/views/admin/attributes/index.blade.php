@@ -47,6 +47,7 @@ Quản lý danh mục thuộc tính
         columns: [
             {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
             {data: 'name', title: 'Tên thuộc tính'},
+            {data: 'group_id', title: 'Nhóm thuộc tính'},
             {data: 'products', title: 'Sản phẩm đã áp dụng'},
             {data: 'updated_at', title: 'Ngày cập nhật'},
             {data: 'action', orderable: false, title: "Hành động"}

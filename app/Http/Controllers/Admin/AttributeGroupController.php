@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Model\Admin\Attribute;
-use App\Model\Admin\AttributeValue;
+use App\Model\Admin\Category;
+use App\Model\Admin\Manufacturer;
+use App\Model\Admin\AttributeGroup;
 use Illuminate\Http\Request;
-use App\Model\Admin\Attribute as ThisModel;
+use App\Model\Admin\AttributeGroup as ThisModel;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -21,14 +22,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Common\Customer;
 
-class AttributeController extends Controller
+class AttributeGroupController extends Controller
 {
-    protected $view = 'admin.attributes';
-    protected $route = 'attributes';
+    protected $view = 'admin.attribute_groups';
+    protected $route = 'attributeGroups';
 
     public function index()
     {
-        return view($this->view.'.index');
+        return view($this->view . '.index');
     }
 
     // Hàm lấy data cho bảng list
@@ -36,31 +37,29 @@ class AttributeController extends Controller
     {
         $objects = ThisModel::searchByFilter($request);
         return Datatables::of($objects)
+            ->editColumn('updated_by', function ($object) {
+                return $object->user_update->name ?? '';
+            })
+            ->editColumn('created_by', function ($object) {
+                return $object->user_update->name ?? '';
+            })
             ->editColumn('updated_at', function ($object) {
                 return formatDate($object->updated_at);
-            })
-            ->editColumn('group_id', function ($object) {
-               return $object->group->name ?? '';
-            })
-            ->addColumn('products', function ($object) {
-                return '<button class="btn btn-info btn-sm btn-branch" type="button">
-                        ' . $object->products()->count() . '
-                </button>';
             })
             ->addColumn('action', function ($object) {
                 $result = '';
                 $result .= '<a href="javascript:void(0)" title="Sửa" class="btn btn-sm btn-primary edit"><i class="fas fa-pencil-alt"></i></a> ';
-                $result .= '<a href="'.route('attributes.delete', $object->id).'" title="Xóa" class="btn btn-sm btn-danger remove-att"><i class="fas fa-times"></i></a>';
+                $result .= '<a href="' . route($this->route.'.delete', $object->id) . '" title="Xóa" class="btn btn-sm btn-danger confirm"><i class="fas fa-times"></i></a>';
                 return $result;
             })
             ->addIndexColumn()
-            ->rawColumns(['name','action','products'])
+            ->rawColumns(['name', 'action', 'image', 'products'])
             ->make(true);
     }
 
     public function create()
     {
-        return view($this->view.'.create');
+        return view($this->view . '.create');
     }
 
     public function store(Request $request)
@@ -68,8 +67,7 @@ class AttributeController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                'name' => 'required|max:255',
-                'group_id' => 'required',
+                'name' => 'required',
             ]
         );
         $json = new stdClass();
@@ -86,8 +84,10 @@ class AttributeController extends Controller
             $object = new ThisModel();
 
             $object->name = $request->name;
-            $object->group_id = $request->group_id;
+            $object->sort_order = $request->sort_order;
+            $object->created_by = auth()->id();
             $object->save();
+
 
             DB::commit();
             $json->success = true;
@@ -100,22 +100,20 @@ class AttributeController extends Controller
         }
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
         $object = ThisModel::findOrFail($id);
         if (!$object->canview()) return view('not_found');
         $object = ThisModel::getDataForShow($id);
-        return view($this->view.'.show', compact('object'));
+        return view($this->view . '.show', compact('object'));
     }
 
     public function update(Request $request, $id)
     {
-
         $validate = Validator::make(
             $request->all(),
             [
-                'name' => 'required|max:255',
-                'group_id' => 'required',
+                'name' => 'required',
             ]
         );
         $json = new stdClass();
@@ -131,14 +129,17 @@ class AttributeController extends Controller
         try {
             $object = ThisModel::findOrFail($id);
             $object->name = $request->name;
-            $object->group_id = $request->group_id;
+            $object->sort_order = $request->sort_order;
 
             $object->save();
+
 
             DB::commit();
             $json->success = true;
             $json->message = "Thao tác thành công!";
             $json->data = $object;
+
+
             return Response::json($json);
         } catch (Exception $e) {
             DB::rollBack();
@@ -149,48 +150,29 @@ class AttributeController extends Controller
     public function delete($id)
     {
         $object = ThisModel::findOrFail($id);
-        if (!$object->canDelete()) {
+
+        if ($object->attributes()->count()) {
             $message = array(
-                "message" => "Không thể xóa!",
-                "alert-type" => "warring"
+                "message" => "Nhóm đã thuộc tính được gán. Không thể xóa!",
+                "alert-type" => "warning"
             );
-        } else {
-            AttributeValue::query()->where('attribute_id', $object->id)->delete();
+          } else {
             $object->delete();
             $message = array(
                 "message" => "Thao tác thành công!",
                 "alert-type" => "success"
             );
-        }
+          }
 
-        return redirect()->route($this->route.'.index')->with($message);
+        return redirect()->route($this->route . '.index')->with($message);
     }
 
-    public function getDataForEdit($id) {
+    public function getDataForEdit($id)
+    {
         $json = new stdclass();
         $json->success = true;
         $json->data = ThisModel::getDataForEdit($id);
         return Response::json($json);
     }
 
-    // Xuất Excel
-    public function exportExcel(Request $request)
-    {
-        return (new FastExcel(ThisModel::searchByFilter($request)))->download('danh_sach_lich_hen.xlsx', function ($object) {
-            return [
-                'Khách hàng' => $object->customer->name,
-                'SĐT khách' => $object->customer->mobile,
-                'Giờ hẹn' => \Carbon\Carbon::parse($object->booking_time)->format('H:m d/m/Y'),
-                'Ghi chú' => $object->note,
-                'Trạng thái' => $object->status == 0 ? 'Khóa' : 'Hoạt động',
-            ];
-        });
-    }
-
-    // Xuất PDF
-    public function exportPDF(Request $request) {
-        $data = ThisModel::searchByFilter($request);
-        $pdf = \Barryvdh\DomPDF\PDF::loadView($this->view.'.pdf', compact('data'));
-        return $pdf->download('danh_sach_lich_hen.pdf');
-    }
 }

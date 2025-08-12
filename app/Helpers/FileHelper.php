@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Storage;
 use Image;
+use App\Services\CloudflareImageService;
 
 class FileHelper
 {
@@ -18,6 +19,63 @@ class FileHelper
      * @param null $class
      * @return array
      */
+    protected $cloudflareService;
+
+    public function __construct(CloudflareImageService $cloudflareService)
+    {
+        $this->cloudflareService = $cloudflareService;
+    }
+
+    public static function uploadFileToCloudflare($file, $id = null, $class = null, $custom = null)
+    {
+        $instance = app(self::class);
+        if($file){
+            $response = $instance->cloudflareService->uploadImage($file);
+            $file_data = [
+                'name' => $file->getClientOriginalName(),
+                'path' => $response['result']['variants'][0],
+                'custom_field' => $custom,
+            ];
+
+            if ($id && $class) {
+                self::saveFile($file_data, $id, $class);
+            }
+
+            return $file_data;
+        }else{
+            return [
+                'name' => 'Lỗi',
+                'path' => 'Không tải được file lên Cloudflare',
+                'custom_field' => $custom,
+            ];
+        }
+    }
+
+    public static function deleteFileFromCloudflare($file, $id, $class, $custom = null)
+    {
+        $instance = app(self::class);
+        if (!empty($file->path)) {
+            $urlimg = $file->path;
+
+            // Kiểm tra xem có phải đường dẫn Cloudflare Image hay không
+//            if (filter_var($urlimg, FILTER_VALIDATE_URL) &&
+//                preg_match('/^https:\/\/imagedelivery\.net\/[A-Za-z0-9_-]+\/[A-Za-z0-9-]+\/(public|private)$/', $urlimg)) {
+//                $instance->cloudflareService->deleteImage($urlimg);
+//            }
+
+        }
+        if (!is_array($file->id)) {
+            $fileIds = [$file->id];
+        }
+        File::query()
+            ->where('model_id', $id)
+            ->where('model_type', $class)
+            ->where('custom_field', $custom)
+            ->whereIn('id', $fileIds)
+            ->delete();
+        // todo: xóa file khỏi hệ thống
+    }
+
     public static function uploadFiles($files, $folder, $id = null, $class = null, $custom = null)
     {
         $rsl = [];
@@ -67,7 +125,7 @@ class FileHelper
                         $constraint->aspectRatio();
                     })
                     ->resizeCanvas(600, 600)
-                ->save($destinationPath . DIRECTORY_SEPARATOR . $destinationFile);
+                    ->save($destinationPath . DIRECTORY_SEPARATOR . $destinationFile);
 
             } else if ($type == 2) {
                 Image::make($file)->resize(120, 120)->save($destinationPath . DIRECTORY_SEPARATOR . $destinationFile);
@@ -184,19 +242,6 @@ class FileHelper
         if (!is_array($fileIds)) {
             $fileIds = [$fileIds];
         }
-        $files = File::query()
-            ->where('model_id', $id)
-            ->where('model_type', $class)
-            ->where('custom_field', $custom)
-            ->whereIn('id', $fileIds)
-            ->get();
-        foreach ($files as $file) {
-            $path = public_path($file->path);
-            if (file_exists($path)) {
-                unlink($path);
-            }
-        }
-
         File::query()
             ->where('model_id', $id)
             ->where('model_type', $class)

@@ -1,18 +1,18 @@
 @include('admin.products.ProductGallery')
-@include('admin.products.ProductAttribute')
 @include('admin.products.ProductVideo')
+@include('admin.products.Attri')
+
 <script>
     class Product extends BaseClass {
         no_set = [];
         all_categories = @json(\App\Model\Admin\Category::getForSelect());
-        all_units = @json(\App\Model\Common\Unit::getForSelect());
+        all_manufacture = @json(\App\Model\Admin\Manufacturer::getForSelect());
+        all_attributes = @json(\App\Model\Admin\Attribute::getForSelect());
 
         before(form) {
             this.image = {};
             this.status = 0;
-            if (!this.type) this.type = 0;
-            this.attribute_values = form.attribute_values || [];
-            this.videos = form.videos || [];
+            this._attrs = [];
         }
 
         after(form) {
@@ -37,54 +37,6 @@
             this._price = value;
         }
 
-        get revenue_price() {
-            return this._revenue_price ? this._revenue_price.toLocaleString('en') : '';
-        }
-
-        set revenue_price(value) {
-            value = parseNumberString(value);
-            this._revenue_price = value;
-        }
-
-        get revenue_percent_5() {
-            return this._revenue_percent_5;
-        }
-
-        set revenue_percent_5(value) {
-            this._revenue_percent_5= value || 0;
-        }
-
-        get revenue_percent_4() {
-            return this._revenue_percent_4;
-        }
-
-        set revenue_percent_4(value) {
-            this._revenue_percent_4= value || 0;
-        }
-
-        get revenue_percent_3() {
-            return this._revenue_percent_3;
-        }
-
-        set revenue_percent_3(value) {
-            this._revenue_percent_3= value || 0;
-        }
-
-        get revenue_percent_2() {
-            return this._revenue_percent_2;
-        }
-
-        set revenue_percent_2(value) {
-            this._revenue_percent_2= value || 0;
-        }
-
-        get revenue_percent_1() {
-            return this._revenue_percent_1;
-        }
-
-        set revenue_percent_1(value) {
-            this._revenue_percent_1= value || 0;
-        }
 
         get image() {
             return this._image;
@@ -117,21 +69,31 @@
             this._galleries.splice(index, 1);
         }
 
-        set attribute_values(value) {
-            this._attributes = (value || []).map(val => new ProductAttribute(val, this));
+        // attribute
+        set attrs(value) {
+            this._attrs = (value || []).map(val => new Attri(val, this))
         }
 
-        get attribute_values() {
-            return this._attributes;
+        get attrs() {
+            return this._attrs || []
         }
 
-        addAttribute() {
-            this._attributes.push(new ProductAttribute({}, this));
+        addAttributes(value) {
+            const exists = this._attrs.some(attrWrapper =>
+                attrWrapper.id === value.id
+            );
+            if (exists) {
+                toastr.warning('Thuộc tính này đã được thêm');
+                return;
+            }
+
+            this._attrs.push(new Attri(value, this));
         }
 
-        removeAttribute(index) {
-            this._attributes.splice(index, 1);
+        removeAttributes(index) {
+            this._attrs.splice(index, 1)
         }
+        // end attribute
 
         set videos(value) {
             this._videos = (value || []).map(val => new ProductVideo(val, this));
@@ -194,6 +156,7 @@
             let data = {
                 cate_id: this.cate_id,
                 name: this.name,
+                code: this.code,
                 base_price: this._base_price,
                 price: this._price,
                 short_des: this.short_des,
@@ -202,30 +165,10 @@
                 status: this.status,
                 type: this.type,
                 manufacturer_id: this.manufacturer_id,
-                origin_id: this.origin_id,
-                title_seo: this.title_seo,
-                content_seo: this.content_seo,
-                use_url_custom: this.use_url_custom,
-                url_custom: this.url_custom,
                 tag_ids: this.tag_ids,
-                state: this.state,
+                // state: this.state,
                 is_pin: this.is_pin,
-                attributes: this.attribute_values.map(val => val.submit_data),
-                videos: this.videos.map(val => val.submit_data),
-                revenue_price: this._revenue_price,
-                revenue_percent_5: this.revenue_percent_5,
-                revenue_percent_4: this.revenue_percent_4,
-                revenue_percent_3: this.revenue_percent_3,
-                revenue_percent_2: this.revenue_percent_2,
-                revenue_percent_1: this.revenue_percent_1,
-                origin: this.origin,
-                origin_link: this.origin_link,
-                aff_link: this.aff_link,
-                short_link: this.short_link,
-                person_in_charge: this.person_in_charge,
-                button_type: this.button_type,
-                gift: this.gift,
-                unit_id: this.unit_id,
+                attrs: this._attrs.map(val => val.submit_data),
             }
 
             data = jsonToFormData(data);

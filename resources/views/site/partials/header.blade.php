@@ -371,7 +371,7 @@
                             </svg>
                             <span>Danh mục sản phẩm</span>
                         </div>
-                        <div class="sidebar-menu sidebar-menu--colum sidebar-menu--index">
+                        <div class="sidebar-menu sidebar-menu--colum {{ request()->routeIs('front.home-page') ? 'sidebar-menu--index' : '' }}">
                             <div class="main-menu mainMenujs">
                             <ul class="link-list list-root">
 

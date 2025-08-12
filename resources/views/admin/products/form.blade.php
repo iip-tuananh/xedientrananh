@@ -52,18 +52,45 @@
             </span>
         </div> --}}
         <div class="form-group custom-group mb-4">
-            <label class="form-label" ng-class="{'required-label': form.type == 0}">Danh mục sản phẩm</label>
-            <ui-select class="" remove-selected="true" ng-model="form.cate_id" theme="select2" ng-change="changeCategory(form.cate_id)">
+            <label class="form-label required-label">Danh mục sản phẩm</label>
+            <ui-select class="" remove-selected="true" ng-model="form.cate_id" theme="select2">
                 <ui-select-match placeholder="Chọn danh mục">
                     <% $select.selected.name %>
                 </ui-select-match>
-                <ui-select-choices repeat="t.id as t in (form.all_categories | filter: $select.search)">
+                <ui-select-choices repeat="t.id as t in (form.all_categories | filter: $select.search)" ui-disable-choice="! t.level">
                     <span ng-bind="t.name"></span>
                 </ui-select-choices>
             </ui-select>
             <span class="invalid-feedback d-block" role="alert">
                 <strong>
                     <% errors.cate_id[0] %>
+                </strong>
+            </span>
+        </div>
+
+        <div class="form-group custom-group mb-4">
+            <label class="form-label required-label">Danh mục hãng sản xuất</label>
+            <ui-select class="" remove-selected="true" ng-model="form.manufacturer_id" theme="select2">
+                <ui-select-match placeholder="Chọn hãng sản xuất">
+                    <% $select.selected.name %>
+                </ui-select-match>
+                <ui-select-choices repeat="t.id as t in (form.all_manufacture | filter: $select.search)">
+                    <span ng-bind="t.name"></span>
+                </ui-select-choices>
+            </ui-select>
+            <span class="invalid-feedback d-block" role="alert">
+                <strong>
+                    <% errors.manufacturer_id[0] %>
+                </strong>
+            </span>
+        </div>
+
+        <div class="form-group custom-group mb-4">
+            <label class="form-label required-label">Mã hàng hóa</label>
+            <input class="form-control " type="text" ng-model="form.code">
+            <span class="invalid-feedback d-block" role="alert">
+                <strong>
+                    <% errors.code[0] %>
                 </strong>
             </span>
         </div>
@@ -97,113 +124,8 @@
                 </strong>
             </span>
         </div>
-        {{-- <div class="form-group">
-            <label class="form-label">Cấu hình phần trăm hoa hồng sản phẩm</label>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="form-group custom-group">
-                        <label class="form-label">Người mua hàng (%)</label>
-                        <input class="form-control" ng-model="form.revenue_percent_5" type="text" ng-change="form.updateRevenuePrice()">
-                        <span class="invalid-feedback d-block" role="alert">
-                            <strong>
-                                <% errors.revenue_percent_5[0] %>
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group custom-group">
-                        <label class="form-label">Cấp 4 (%)</label>
-                        <input class="form-control" ng-model="form.revenue_percent_4" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-                            <strong>
-                                <% errors.revenue_percent_4[0] %>
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group custom-group">
-                        <label class="form-label">Cấp 3 (%)</label>
-                        <input class="form-control" ng-model="form.revenue_percent_3" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-                            <strong>
-                                <% errors.revenue_percent_3[0] %>
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group custom-group">
-                        <label class="form-label">Cấp 2 (%)</label>
-                        <input class="form-control" ng-model="form.revenue_percent_2" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-                            <strong>
-                                <% errors.revenue_percent_2[0] %>
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group custom-group">
-                        <label class="form-label">Cấp 1 (%)</label>
-                        <input class="form-control" ng-model="form.revenue_percent_1" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-                            <strong>
-                                <% errors.revenue_percent_1[0] %>
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group custom-group mb-4">
-            <label class="form-label" ng-class="{'required-label': form.type == 1}">Link gốc sản phẩm</label>
-            <input class="form-control " type="text" ng-model="form.origin_link">
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.origin_link[0] %>
-                </strong>
-            </span>
-        </div>
-        <div class="form-group custom-group mb-4">
-            <label class="form-label" ng-class="{'required-label': form.type == 1}">Link affiliate</label>
-            <input class="form-control " type="text" ng-model="form.aff_link">
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.aff_link[0] %>
-                </strong>
-            </span>
-        </div>
-        <div class="form-group custom-group mb-4">
-            <label class="form-label" ng-class="{'required-label': form.type == 1}">Link rút gọn</label>
-            <input class="form-control " type="text" ng-model="form.short_link">
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.short_link[0] %>
-                </strong>
-            </span>
-        </div> --}}
     </div>
     <div class="col-sm-4">
-        {{-- <div class="form-group custom-group mb-4">
-            <label class="form-label" ng-class="{'required-label': form.type == 0}">Người phụ trách (email)</label>
-            <input class="form-control " type="text" ng-model="form.person_in_charge">
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.person_in_charge[0] %>
-                </strong>
-            </span>
-        </div> --}}
-        <div class="form-group custom-group mb-4">
-            <label class="form-label">Nguồn gốc</label>
-            <input class="form-control " type="text" ng-model="form.origin">
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.origin[0] %>
-                </strong>
-            </span>
-        </div>
         <div class="form-group custom-group mb-4">
             <label class="form-label">Giá trước giảm</label>
             <input class="form-control " type="text" ng-model="form.base_price">
@@ -222,15 +144,7 @@
                 </strong>
             </span>
         </div>
-        <div class="form-group custom-group mb-4">
-            <label class="form-label">Đơn vị tính</label>
-            <select class="form-control" select2 style="width: 100%;" name="status" ng-model="form.unit_id">
-                <option value="">Chọn đơn vị tính</option>
-                <option value="1" ng-repeat="unit in form.all_units" ng-value="unit.id" ng-selected="form.unit_id == unit.id">
-                    <% unit.name %>
-                </option>
-            </select>
-        </div>
+
         {{-- <div class="form-group custom-group mb-4">
             <label class="form-label">Hoa hồng (người mua hàng có thể nhận) / sản phẩm</label>
             <input class="form-control " type="text" ng-model="form.revenue_price" disabled>
@@ -241,34 +155,86 @@
             </span>
         </div> --}}
 
-        <div class="col-md-12">
-            <div class="form-group">
-                <label>Phân loại sản phẩm <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Dành cho các sản phẩm có nhiều loại (phân loại, màu sắc, kích thước ...)"></i></label>
-                <button class="btn btn-info btn-sm float-right" ng-click="form.addAttribute()">
-                    <i class="fa fa-plus"></i> Thêm
-                </button>
-                <div class="d-flex mt-2" ng-repeat="attribute in form.attribute_values track by $index">
-                    <div class="form-group">
-                        <ui-select class="" remove-selected="true" ng-model="attribute.attribute_id" theme="select2">
-                            <ui-select-match placeholder="Chọn phân loại">
-                                <% $select.selected.name %>
-                            </ui-select-match>
-                            <ui-select-choices repeat="t.id as t in (attributes | filter: $select.search)">
-                                <span ng-bind="t.name"></span>
-                            </ui-select-choices>
-                        </ui-select>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Thuộc tính</h5>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="attribute.value" placeholder="Giá trị">
-                    </div>
-                    <div>
-                        <button class="btn btn-danger btn-sm p-2" ng-click="form.removeAttribute($index)">
-                            <i class="fa fa-times"></i> Xóa
-                        </button>
+                    <div class="card-body">
+                        <!-- Chọn và thêm thuộc tính -->
+                        <div class="d-flex mb-3">
+                            <select class="form-control me-2"
+                                    ng-model="selectedAttribute"
+                                    ng-options="attr as attr.name for attr in form.all_attributes">
+                                <option value="">-- Chọn thuộc tính --</option>
+                            </select>
+                            <button class="btn btn-primary"
+                                    ng-click="form.addAttributes(selectedAttribute)"
+                                    ng-disabled="!selectedAttribute">
+                                Thêm
+                            </button>
+                        </div>
+                        <span class="text-danger small" ng-if="errors.attrs.length">
+         <% errors.attrs[0] %>
+        </span>
+
+                        <!-- Danh sách thuộc tính -->
+                        <ul class="list-group">
+                            <li class="list-group-item p-3" ng-repeat="attrObj in form.attrs track by $index">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong><% attrObj.name %></strong>
+                                    <button class="btn btn-sm btn-danger"
+                                            ng-click="form.removeAttributes($index)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Bảng giá trị -->
+                                <table class="table table-sm mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Giá trị</th>
+                                        <th class="text-end">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="(vIndex, item) in attrObj.values">
+                                        <td>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   ng-model="item.value"
+                                                   placeholder="Nhập giá trị...">
+                                            <span class="text-danger">
+                                                <% errors['attrs.' + $parent.$index + '.values.' + $index + '.value'][0]%>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <button class="btn btn-outline-danger btn-sm"
+                                                    ng-click="attrObj.removeValues(vIndex)">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-center">
+                                            <button class="btn btn-sm btn-secondary"
+                                                    ng-click="attrObj.addValues()">
+                                                <i class="fa fa-plus"></i> Thêm giá trị
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="form-group custom-group mb-4">
             <label class="form-label">Chọn tags</label>
             <ui-select remove-selected="false" multiple ng-model="form.tag_ids">
@@ -281,6 +247,7 @@
                 </ui-select-choices>
             </ui-select>
         </div>
+
         <div class="form-group custom-group mb-4">
             <label class="form-label required-label">Trạng thái</label>
             <select id="my-select" class="form-control custom-select" ng-model="form.status">
@@ -295,109 +262,79 @@
             </span>
         </div>
 
-        <div class="form-group custom-group mb-4">
-            <label class="form-label">Tình trạng</label>
-            <select id="my-select" class="form-control custom-select" ng-model="form.state">
-                <option value="">Chọn tình trạng hàng hóa</option>
-                <option value="1">Còn hàng</option>
-                <option value="2">Hết hàng</option>
-            </select>
-        </div>
-
-        <div class="form-group custom-group mb-4">
-            <label class="form-label">Sản phẩm kèm quà tặng</label>
-            <select id="my-select" class="form-control custom-select" ng-model="form.button_type">
-                <option value="0">Không có</option>
-                <option value="1">Có</option>
-            </select>
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.button_type[0] %>
-                </strong>
-            </span>
-        </div>
-
-        <div class="form-group custom-group mb-4" ng-if="form.button_type == 1">
-            <label class="form-label required-label">Quà tặng (mỗi phần quà tặng nhập vào 1 dòng)</label>
-            <textarea class="form-control" ng-model="form.gift" rows="5"></textarea>
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.gift[0] %>
-                </strong>
-            </span>
-        </div>
-
 {{--        <div class="form-group custom-group mb-4">--}}
-{{--            <label class="form-label">Ghim sản phẩm</label>--}}
-{{--            <select id="my-select" class="form-control custom-select" ng-model="form.is_pin">--}}
-{{--                <option value="2">Không ghim</option>--}}
-{{--                <option value="1">Ghim</option>--}}
+{{--            <label class="form-label">Tình trạng</label>--}}
+{{--            <select id="my-select" class="form-control custom-select" ng-model="form.state">--}}
+{{--                <option value="">Chọn tình trạng hàng hóa</option>--}}
+{{--                <option value="1">Còn hàng</option>--}}
+{{--                <option value="2">Hết hàng</option>--}}
 {{--            </select>--}}
 {{--        </div>--}}
 
-        <div class="form-group text-center">
-            <div class="main-img-preview">
-                <p class="help-block-img">* Ảnh định dạng: jpg, png không quá 2MB.</p>
-                <img class="thumbnail img-preview" ng-src="<% form.image.path %>">
-            </div>
-            <div class="input-group" style="width: 100%; text-align: center">
-                <div class="input-group-btn" style="margin: 0 auto">
-                    <div class="fileUpload fake-shadow cursor-pointer">
-                        <label class="mb-0" for="<% form.image.element_id %>">
-                            <i class="glyphicon glyphicon-upload"></i> Chọn ảnh
-                        </label>
-                        <input class="d-none" id="<% form.image.element_id %>" type="file" class="attachment_upload" accept=".jpg,.jpeg,.png">
-                    </div>
-                </div>
-            </div>
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>
-                    <% errors.image[0] %>
-                </strong>
-            </span>
-        </div>
-        <hr>
-        <div class="form-group text-center">
-            <label for="">Gallery ảnh</label>
-            <div class="row gallery-area border">
-                <div class="col-md-4 p-2" ng-repeat="g in form.galleries">
-                    <div class="gallery-item">
-                        <button class="btn btn-sm btn-danger remove" ng-click="form.removeGallery($index)">
-                            <i class="fa fa-times mr-0"></i>
-                        </button>
-                        <div class="form-group">
-                            <div class="img-chooser" title="Chọn ảnh">
-                                <label for="<% g.image.element_id %>">
-                                    <img ng-src="<% g.image.path %>">
-                                    <input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="<% g.image.element_id %>">
-                                </label>
-                            </div>
-                            <span class="invalid-feedback d-block" role="alert" ng-if="!errors['galleries.' + $index + '.image_obj']">
-                                <strong>
-                                    <% errors['galleries.' + $index + '.image' ][0] %>
-                                </strong>
-                            </span>
-                            <span class="invalid-feedback">
-                                <strong>
-                                    <% errors['galleries.' + $index + '.image_obj' ][0] %>
-                                </strong>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-2">
-                    <label class="gallery-item d-flex align-items-center justify-content-center cursor-pointer" for="gallery-chooser">
-                        <i class="fa fa-plus fa-2x text-secondary"></i>
-                    </label>
-                    <input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="gallery-chooser" multiple>
-                </div>
-            </div>
-            <span class="invalid-feedback">
-                <strong>
-                    <% errors.galleries[0] %>
-                </strong>
-            </span>
-        </div>
+
+{{--        <div class="form-group text-center">--}}
+{{--            <div class="main-img-preview">--}}
+{{--                <p class="help-block-img">* Ảnh định dạng: jpg, png không quá 2MB.</p>--}}
+{{--                <img class="thumbnail img-preview" ng-src="<% form.image.path %>">--}}
+{{--            </div>--}}
+{{--            <div class="input-group" style="width: 100%; text-align: center">--}}
+{{--                <div class="input-group-btn" style="margin: 0 auto">--}}
+{{--                    <div class="fileUpload fake-shadow cursor-pointer">--}}
+{{--                        <label class="mb-0" for="<% form.image.element_id %>">--}}
+{{--                            <i class="glyphicon glyphicon-upload"></i> Chọn ảnh--}}
+{{--                        </label>--}}
+{{--                        <input class="d-none" id="<% form.image.element_id %>" type="file" class="attachment_upload" accept=".jpg,.jpeg,.png">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <span class="invalid-feedback d-block" role="alert">--}}
+{{--                <strong>--}}
+{{--                    <% errors.image[0] %>--}}
+{{--                </strong>--}}
+{{--            </span>--}}
+{{--        </div>--}}
+{{--        <hr>--}}
+{{--        <div class="form-group text-center">--}}
+{{--            <label for="">Gallery ảnh</label>--}}
+{{--            <div class="row gallery-area border">--}}
+{{--                <div class="col-md-4 p-2" ng-repeat="g in form.galleries">--}}
+{{--                    <div class="gallery-item">--}}
+{{--                        <button class="btn btn-sm btn-danger remove" ng-click="form.removeGallery($index)">--}}
+{{--                            <i class="fa fa-times mr-0"></i>--}}
+{{--                        </button>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <div class="img-chooser" title="Chọn ảnh">--}}
+{{--                                <label for="<% g.image.element_id %>">--}}
+{{--                                    <img ng-src="<% g.image.path %>">--}}
+{{--                                    <input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="<% g.image.element_id %>">--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <span class="invalid-feedback d-block" role="alert" ng-if="!errors['galleries.' + $index + '.image_obj']">--}}
+{{--                                <strong>--}}
+{{--                                    <% errors['galleries.' + $index + '.image' ][0] %>--}}
+{{--                                </strong>--}}
+{{--                            </span>--}}
+{{--                            <span class="invalid-feedback">--}}
+{{--                                <strong>--}}
+{{--                                    <% errors['galleries.' + $index + '.image_obj' ][0] %>--}}
+{{--                                </strong>--}}
+{{--                            </span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-4 p-2">--}}
+{{--                    <label class="gallery-item d-flex align-items-center justify-content-center cursor-pointer" for="gallery-chooser">--}}
+{{--                        <i class="fa fa-plus fa-2x text-secondary"></i>--}}
+{{--                    </label>--}}
+{{--                    <input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="gallery-chooser" multiple>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <span class="invalid-feedback">--}}
+{{--                <strong>--}}
+{{--                    <% errors.galleries[0] %>--}}
+{{--                </strong>--}}
+{{--            </span>--}}
+{{--        </div>--}}
 
 {{--        <div class="col-md-12">--}}
 {{--            <div class="form-group">--}}

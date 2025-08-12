@@ -61,4 +61,9 @@ class Attribute extends Model
     {
         return $this->hasMany(Tag::class, 'attribute_id', 'id');
     }
+
+    public function group() {
+        return $this->belongsTo(AttributeGroup::class, 'group_id', 'id');
+    }
+
 }

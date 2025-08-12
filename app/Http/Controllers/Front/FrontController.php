@@ -9,6 +9,7 @@ use App\Model\Admin\Block;
 use App\Model\Admin\Category;
 use App\Model\Admin\CategorySpecial;
 use App\Model\Admin\Product;
+use App\Model\Admin\ProductVariant;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -205,69 +206,73 @@ class FrontController extends Controller
 
     public function showProductDetail($slug)
     {
-        // try {
-        $categories = Category::getAllCategory();
-        $product = Product::with([
-            'product_rates' => function ($q) {
-                $q->where('status', 2);
-            }
-        ])->where('slug', $slug)->first();
-        $attributes = [];
-        foreach ($product->attributeValues as $attribute) {
-            if (!isset($attributes[$attribute->id])) {
-                $attributes[$attribute->id] = [
-                    'name' => $attribute->name,
-                    'values' => [$attribute->pivot->value]
+        $data['product'] = Product::with(['category', 'attrs.group', 'manufacturer', 'variants' => function ($q) {
+            $q->with(['image', 'galleries.image']);
+        }])->where('slug', $slug)->first();
+
+        $data['variantDefault'] = ProductVariant::query()->with(['image', 'galleries.image'])
+            ->where('product_id', $data['product']->id)
+            ->where('is_default', 1)
+            ->first();
+
+        $groups = [];
+
+        foreach ($data['product']->attrs as $a) {
+            $val = isset($a['pivot']['value']) ? trim((string)$a['pivot']['value']) : '';
+            if ($val === '') continue;
+
+            $g    = isset($a['group']) ? $a['group'] : [];
+            $gid  = isset($g['id']) ? $g['id'] : 0;
+            $gname = isset($g['name']) ? $g['name'] : 'Khác';
+            $gsort = isset($g['sort_order']) ? (int)$g['sort_order'] : 9999;
+
+            if (!isset($groups[$gid])) {
+                $groups[$gid] = [
+                    'id'         => $gid,
+                    'name'       => $gname,
+                    'sort_order' => $gsort,
+                    'items'      => [] // key theo attribute id
                 ];
-            } else {
-                $attributes[$attribute->id]['values'][] = $attribute->pivot->value;
             }
-        }
-        $product->attributes = $attributes;
 
-        // sản phẩm tương tự
-        $productsRelated = $product->category->products()->with([
-            'product_rates' => function ($q) {
-                $q->where('status', 2);
+            $attrId   = isset($a['id']) ? $a['id'] : md5(isset($a['name']) ? $a['name'] : '');
+            $attrName = isset($a['name']) ? $a['name'] : '';
+
+            if (!isset($groups[$gid]['items'][$attrId])) {
+                $groups[$gid]['items'][$attrId] = [
+                    'label'  => $attrName,
+                    'values' => []
+                ];
             }
-        ])->whereNotIn('id', [$product->id])->orderBy('created_at', 'desc')->get();
 
-        $bestSellerProducts = Product::query()->with([
-            'product_rates' => function ($q) {
-                $q->where('status', 2);
-            }
-        ])->where('status', 1)->inRandomOrder()->limit(6)->get();
-
-        $category = Category::query()->where('id', $product->cate_id)->first();
-
-        $arr_product_rate_images = [];
-        foreach ($product->product_rates as $rate) {
-            foreach ($rate->galleries as $gallery) {
-                $arr_product_rate_images[] = $gallery->image ? $gallery->image->path : null;
+            // thêm giá trị nếu chưa có (tránh trùng)
+            if (!in_array($val, $groups[$gid]['items'][$attrId]['values'], true)) {
+                $groups[$gid]['items'][$attrId]['values'][] = $val;
             }
         }
 
-        $canReview = false;
-        if (\Auth::guard('client')->check()) {
-            $existsOrder = OrderDetail::where('product_id', $product->id)
-                ->leftJoin('orders', 'order_details.order_id', '=', 'orders.id')
-                ->where('orders.customer_email', \Auth::guard('client')->user()->email)
-                ->where('orders.status', Order::THANH_CONG)->exists();
-            if ($existsOrder) {
-                $canReview = true;
-            }
+        // chuyển items về mảng tuần tự + sort
+        $out = array_values($groups);
+        foreach ($out as &$gr) {
+            $gr['items'] = array_values($gr['items']);
+
+            // sort item trong group theo label (tùy chọn)
+            usort($gr['items'], function($x,$y){
+                return strnatcasecmp($x['label'], $y['label']);
+            });
         }
-        $voucher_ids = $product->vouchers()->pluck('vouchers.id')->toArray();
-        $vouchers = Voucher::query()->where('status', 1)->where('quantity', '>', 0)->where('to_date', '>=', now())->where(function ($query) use ($voucher_ids) {
-            $query->whereIn('id', $voucher_ids)->orWhere('is_all_product', 1);
-        })->orderBy('created_at', 'desc')->get();
+        unset($gr);
 
+        // sort group theo sort_order rồi name
+        usort($out, function ($a, $b) {
+            $so = $a['sort_order'] <=> $b['sort_order'];
+            if ($so !== 0) return $so;
+            return strnatcasecmp($a['name'], $b['name']);
+        });
 
-        return view('site.products.product_detail', compact('categories', 'product', 'productsRelated', 'category', 'arr_product_rate_images', 'bestSellerProducts', 'canReview', 'vouchers'));
-        // } catch (\Exception $exception) {
-        //     return view('site.errors');
-        //     Log::error($exception);
-        // }
+        $data['attributes'] = $out;
+
+        return view('site.products.product_detail', $data);
     }
 
 
