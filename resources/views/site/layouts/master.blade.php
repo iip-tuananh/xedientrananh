@@ -16,6 +16,7 @@
         arrowRight: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="24" height="24" x="0" y="0" viewBox="0 0 24 24" xml:space="preserve"><g><path xmlns="http://www.w3.org/2000/svg" d="m4 13c-.26901 0-.50292-.0994-.70175-.2982-.19883-.1989-.29825-.4328-.29825-.7018 0-.2807.09942-.5146.29825-.7018.19883-.1988.43274-.2982.70175-.2982h16c.2807 0 .5146.0994.7018.2982.1988.1872.2982.4211.2982.7018 0 .269-.0994.5029-.2982.7018-.1872.1988-.4211.2982-.7018.2982zm9.7018 6.7018c-.1755.1988-.4094.2982-.7018.2982-.269 0-.5029-.0994-.7018-.2982-.1988-.1989-.2982-.4328-.2982-.7018 0-.2924.0994-.5263.2982-.7018l6.8948-6.8947c.0585-.0585.0994.0292.1228.2632.0234.2222.0234.4503 0 .6842-.0234.2222-.0643.3041-.1228.2456l-6.8948-6.89475c-.1988-.18713-.2982-.42105-.2982-.70175s.0994-.51462.2982-.70176c.1989-.19882.4328-.29824.7018-.29824.2924 0 .5263.09942.7018.29824l6.8947 6.89476c.2222.2105.3333.4795.3333.807 0 .3158-.1111.5848-.3333.807z"></path></g></svg>',
         };
     </script>
+
     {{-- <link href="https://cdn.hstatic.net/shared/api.jquery.js" rel="preload" as="script" type="text/javascript"> --}}
     <link href="/site/js/scripts.js?v=162" rel="preload" as="script" type="text/javascript">
     <link href="/site/js/jquery-3.5.1.min.js?v=162" rel="preload" as="script">
@@ -44,8 +45,10 @@
 
      </script>
     {{-- <link href="//theme.hstatic.net/200000516791/1001206835/14/app-combo.js?v=162" rel="preload" as="script" type="text/javascript"> --}}
+    @include('site.partials.angular_mix')
+
 </head>
-<body class="mainBody-theme template-index" ng-app="App">
+<body class="mainBody-theme {{ Route::currentRouteName() == 'front.home-page' ? 'template-index' : 'template-page' }}" ng-app="App" ng-cloak>
     <div class="mainBody-theme-container mainBody-modalshow     layoutProduct_scroll ">
         @include('site.partials.header')
         @yield('content')
@@ -481,7 +484,7 @@
     </script>
     <script src="/site/js/scripts.js?v=162" defer></script>
     <!-- POPUP LOAD -->
-    <script>
+    {{-- <script>
         jQuery(document).ready(function(){
 
 
@@ -544,10 +547,7 @@
                 }
             });
         });
-    </script>
-
-
-    @include('site.partials.angular_mix')
+    </script> --}}
 
     @stack('scripts')
 </body>

@@ -1,76 +1,64 @@
-<div class="sticky">
-    <div class="aside-content aside-content-blog">
-        <div class="title-head">
-            Danh mục tin tức
+<aside class="sidebar-page">
+    <!-- Menu sidebar  -->
+    <div class="group-sidebox">
+        <div class="sidebox-title ">
+            <h3 class="htitle">
+                Danh mục bài viết
+            </h3>
         </div>
-        <nav class="nav-category">
-            <ul class="nav navbar-pills">
-                <li class="nav-item  relative">
-                    <a title="Trang chủ" class="nav-link" href="{{ route('front.home-page') }}">Trang chủ</a>
+        <div class="sidebox-content sidebox-content-togged">
+            <ul class="menuList-links">
+                <li class=""><a href="{{ route('front.home-page') }}" title="Trang chủ"><span>Trang chủ</span></a>
                 </li>
-                <li class="nav-item  relative">
-                    <a title="Giới thiệu" class="nav-link" href="{{ route('front.about-us') }}">Giới thiệu</a>
+                <li class=""><a href="{{ route('front.about-us') }}" title="Giới thiệu"><span>Giới
+                            thiệu</span></a>
                 </li>
-                <li class="nav-item  relative">
-                    <a title="Sản phẩm" href="javascript:void(0)" class="nav-link pr-5">Sản phẩm</a>
-                    <i class="open_mnu down_icon"></i>
-                    <ul class="menu_down" style="display:none;">
-                        @foreach ($productCategories as $productCategory)
-                            <li class="dropdown-submenu nav-item  relative">
-                                <a title="{{ $productCategory->name }}" class="nav-link pr-5"
-                                    href="{{ route('front.show-product-category', $productCategory->slug) }}">{{ $productCategory->name }}</a>
-                                @if ($productCategory->childs->count() > 0)
-                                    <i class="open_mnu down_icon"></i>
-                                    <ul class="menu_down" style="display:none;">
-                                        @foreach ($productCategory->childs as $child)
-                                        <li class="nav-item">
-                                            <a title="{{ $child->name }}" class="nav-link pl-4" href="{{ route('front.show-product-category', $child->slug) }}">{{ $child->name }}
-                                            </a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
+                <li class="has-submenu level0 ">
+                    <a href="javascript:void(0)" title="Sản phẩm">Sản phẩm <span
+                            class="icon-plus-submenu plus-nClick1"></span></a>
+                    <ul class="submenu-links">
+                        @foreach ($productCategories as $category)
+                            <li class="has-submenu level1">
+                                <a href="{{ route('front.show-product-category', $category->slug) }}">{{ $category->name }}
+                                    @if ($category->childs->count() > 0)
+                                        <span class="icon-plus-submenu plus-nClick2"></span>
+                                    @endif
+                                </a>
+                                @if ($category->childs->count() > 0)
+                                <ul class="submenu-links">
+                                    @foreach ($category->childs as $child)
+                                        <li class=""><a
+                                                href="{{ route('front.show-product-category', $child->slug) }}"
+                                                title="{{ $child->name }}">{{ $child->name }}</a></li>
+                                    @endforeach
+                                </ul>
                                 @endif
                             </li>
                         @endforeach
                     </ul>
                 </li>
-                @foreach ($categories as $cate)
-                <li class="nav-item active relative">
-                    <a title="{{ $cate->name }}" class="nav-link" href="{{ route('front.list-blog', $cate->slug) }}">{{ $cate->name }}</a>
-                </li>
+                @foreach ($postCategories as $category)
+                    <li class="has-submenu level0 ">
+                        <a href="{{ route('front.list-blog', $category->slug) }}"
+                            title="{{ $category->name }}">{{ $category->name }}
+                            @if ($category->getChilds()->count() > 0)
+                                <span class="icon-plus-submenu plus-nClick1"></span>
+                            @endif
+                        </a>
+                        @if ($category->getChilds()->count() > 0)
+                            <ul class="submenu-links">
+                                @foreach ($category->getChilds() as $child)
+                                    <li><a href="{{ route('front.list-blog', $child->slug) }}"
+                                            title="{{ $child->name }}">{{ $child->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
                 @endforeach
-                <li class="nav-item  relative">
-                    <a title="Liên hệ" class="nav-link" href="{{ route('front.contact-us') }}">Liên hệ</a>
-                </li>
+
+                <li class=""><a href="{{ route('front.contact-us') }}" title="Liên hệ"><span>Liên
+                            hệ</span></a></li>
             </ul>
-        </nav>
-    </div>
-    <script>
-        $(".open_mnu").click(function() {
-            $(this).toggleClass('active').next().slideToggle();
-        });
-    </script>
-    <div class="blog_noibat">
-        <h2 class="h2_sidebar_blog">
-            <a href="javascript:void(0)" title="Tin tức nổi bật">Tin tức nổi bật</a>
-        </h2>
-        <div class="blog_content">
-            @foreach ($newBlogs as $blog)
-            <div class="item clearfix">
-                <div class="post-thumb">
-                    <a class="image-blog scale_hover" href="{{ route('front.detail-blog', $blog->slug) }}"
-                        title="New collection – dreamy art">
-                        <img class="img_blog lazyload"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
-                            data-src="{{ $blog->image ? $blog->image->path : 'https://placehold.co/600x400' }}"
-                            alt="{{ $blog->name }}">
-                    </a>
-                </div>
-                <div class="contentright">
-                    <h3><a title="{{ $blog->name }}" href="{{ route('front.detail-blog', $blog->slug) }}">{{ $blog->name }}</a></h3>
-                </div>
-            </div>
-            @endforeach
         </div>
     </div>
-</div>
+</aside>

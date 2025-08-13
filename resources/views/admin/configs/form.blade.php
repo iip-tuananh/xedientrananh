@@ -80,6 +80,10 @@
 					</span>
 				</div>
 				<div class="form-group custom-group">
+                    <label class="form-label">Thời gian làm việc</label>
+                    <textarea class="form-control" ng-model="form.working_time" rows="3"></textarea>
+                </div>
+				<div class="form-group custom-group">
 					<label class="form-label required-label">Fanpage Facebook</label>
 					<input class="form-control" ng-model="form.facebook" type="text">
 					<span class="invalid-feedback d-block" role="alert">

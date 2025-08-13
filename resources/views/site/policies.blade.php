@@ -10,41 +10,53 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('site/css/style_page.scss.css') }}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{{ asset('site/css/breadcrumb_style.scss.css') }}" rel="stylesheet" type="text/css" media="all" />
 @endsection
 
 @section('content')
-    <section class="bread-crumb"
-        style="background: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0)),  url(/site/images/bg_footer.jpg?1721988795194) center no-repeat;">
-        <div class="container">
-            <div class="title-bread-crumb"> {{ $title }}
-            </div>
-            <ul class="breadcrumb">
-                <li class="home">
-                    <a href="{{ route('front.home-page') }}"><span>Trang chủ</span></a>
-                    <span class="mr_lr">/</span>
-                </li>
-                <li><strong><span>{{ $title }}</span></strong></li>
-            </ul>
+<div class="section-main ">
+    <div class="container">
+        <div class="row">
         </div>
-    </section>
-    <section class="page">
-        <div class="container">
-            <div class="pg_page padding-top-15">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title category-title">
-                            <h1 class="title-head"><a href="{{ route('front.policy-detail', $policy->slug) }}" title="{{ $policy->title }}">{{ $policy->title }}</a></h1>
-                        </div>
-                        <div class="content-page rte">
-                            {!! $policy->content !!}
-                        </div>
-                    </div>
+    </div>
+</div>
+<main class="wrapperMain_content">
+    <div class="layout-pageDetail">
+        <div class="breadcrumb-shop">
+            <div class="container">
+                <div class="breadcrumb-list  ">
+                    <ol class="breadcrumb breadcrumb-arrows" itemscope itemtype="http://schema.org/BreadcrumbList">
+                        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <a href="{{ route('front.home-page') }}" target="_self" itemprop="item"><span itemprop="name">Trang chủ</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="item" content="{{ route('front.about-us') }}"><strong
+                                    itemprop="name">{{ $title }}</strong></span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-8 col-12">
+                    <div class="wrapper-pageDetail">
+                        <div class="heading-pageDetail">
+                            <h1>{{ $title }}</h1>
+                        </div>
+                        <div class="content-pageDetail typeList-style">
+                            {!! $content !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-12">
+                    @include('site.blogs.nav-blog')
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 @endsection
 
 @push('script')

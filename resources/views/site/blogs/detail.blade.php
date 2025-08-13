@@ -10,88 +10,161 @@
 @endsection
 
 @section('css')
-    <link href="/site/css/breadcrumb_style.scss.css?1743048451127" rel="stylesheet" type="text/css" media="all" />
-    <link href="/site/css/blog_article_style.scss.css?1743048451127" rel="stylesheet" type="text/css" media="all" />
-    <style>
-        .text-limit-3-line {
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style>
 @endsection
 
 @section('content')
-    <section class="bread-crumb">
+    <div class="section-main ">
         <div class="container">
-            <ul class="breadcrumb">
-                <li class="home">
-                    <a href="{{ route('front.home-page') }}" title="Trang chủ">
-                        <span>Trang chủ</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('front.list-blog', $blog->category->slug) }}" title="Tin tức">
-                        <span>Tin tức</span>
-                    </a>
-                </li>
-                <li>
-                    <strong>{{ $blog_title }}</strong>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <section class="blogpage">
-        <div class="container layout-article">
-                <article class="article-main">
-                    <div class="row">
-                        <div class="right-content col-lg-9 col-12">
-                            <div class="bg-article">
-                                <div class="article-details clearfix">
-                                    <h1 class="title">{{ $blog_title }}</h1>
-                                    <div class="posts">
-                                        <div class="time-post">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
-                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                class="svg-inline--fa fa-user fa-w-14">
-                                                <path fill="currentColor"
-                                                    d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                                                    class=""></path>
-                                            </svg>
-                                            <span>By Admin </span>
-                                        </div>
-                                        <div class="time-post f">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="clock"
-                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                class="svg-inline--fa fa-clock fa-w-16">
-                                                <path fill="currentColor"
-                                                    d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                                                    class=""></path>
-                                            </svg>
-                                            <span>Ngày</span>
-                                            {{ $blog->created_at->format('d/m/Y') }}
-                                        </div>
-                                    </div>
-                                    <div class="rte">
-                                        {!! $blog->body !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="blog_left_base col-lg-3 col-12">
-                            @include('site.blogs.nav-blog', [
-                                'categories' => $categories,
-                                'productCategories' => $productCategories,
-                                'newBlogs' => $newBlogs,
-                            ])
-                        </div>
-                    </div>
-                </article>
+            <div class="row">
             </div>
         </div>
-    </section>
+    </div>
+    <main class="wrapperMain_content">
+        <div class="layout-article" id="article">
+            <div class="breadcrumb-shop">
+                <div class="container">
+                    <div class="breadcrumb-list blog-breadcrumb ">
+                        <ol class="breadcrumb breadcrumb-arrows" itemscope itemtype="http://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a href="{{ route('front.home-page') }}" target="_self" itemprop="item"><span
+                                        itemprop="name">Trang chủ</span></a>
+                                <meta itemprop="position" content="1" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a href="{{ route('front.list-blog', $category->slug) }}" itemprop="item">
+                                    <span itemprop="name">{{ $cate_title }}</span>
+                                </a>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <span itemprop="item" content="{{ route('front.detail-blog', $blog_slug) }}"><strong
+                                        itemprop="name">{{ $blog_title }}</strong></span>
+                                <meta itemprop="position" content="3" />
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper-contentArticle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-12 boxAricle-left">
+                            <div class="inforArticle-content">
+                                <div class="boxArticle-detail">
+                                    <div class="heading-article">
+                                        <h1>{{ $blog_title }}</h1>
+                                        <div class="article-post-meta">
+                                            <span class="author">bởi:
+                                                {{ $blog->created_user ? $blog->created_user->name : 'Admin' }}</span>
+                                            <span class="date">
+                                                <time>{{ $blog->created_at->format('d') }} Tháng
+                                                    {{ $blog->created_at->format('m') }},
+                                                    {{ $blog->created_at->format('Y') }}</time>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="article-content">
+                                        <div class="box-article-heading clearfix">
+                                            <div class="background-img">
+                                                <img src="{{ $blog->image ? $blog->image->path : 'https://placehold.co/600x400' }}"
+                                                    width="100%" alt="{{ $blog_title }}" loading="lazy">
+                                            </div>
+                                        </div>
+                                        <div class="box-article-detail article-body article-table-contents typeList-style">
+                                            {!! $blog->body !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="article-related">
+                                    <h3 class="title-blog-related">
+                                        <span>
+                                            Bài viết liên quan </span>
+                                    </h3>
+                                    <div class="content-blogs-related">
+                                        <div
+                                            class="list-blogs-related list-article-content owl-carousel owlCarousel-style icon-arrow owlCarousel-dfex">
+                                            @foreach ($other_blogs as $other_blog)
+                                                <article class="article-loop">
+                                                    <div class="article-inner">
+                                                        <div class="article-image">
+                                                            <a href="{{ route('front.detail-blog', $other_blog->slug) }}"
+                                                                class="blog-post-thumbnail" title="{{ $other_blog->name }}"
+                                                                rel="nofollow">
+                                                                <img class="lazyload"
+                                                                    data-src="{{ $other_blog->image ? $other_blog->image->path : 'https://placehold.co/600x400' }}"
+                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                                                    alt="{{ $other_blog->name }}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="article-detail">
+                                                            <div class="article-title">
+                                                                <h3 class="post-title">
+                                                                    <a href="{{ route('front.detail-blog', $other_blog->slug) }}"
+                                                                        title="{{ $other_blog->name }}">{{ $other_blog->name }}</a>
+                                                                </h3>
+                                                            </div>
+                                                            <p class="entry-content">{!! $other_blog->intro !!}</p>
+                                                            <div class="article-post-meta">
+                                                                <span class="date">
+                                                                    <time>{{ $other_blog->created_at->format('d') }} Tháng
+                                                                        {{ $other_blog->created_at->format('m') }},
+                                                                        {{ $other_blog->created_at->format('Y') }}</time>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-12 boxAricle-right">
+                            <aside class="sidebar-blogs blogs-aside--sticky">
+                                <!-- Bai viet moi nhat -->
+                                <div class="group-sidebox">
+                                    <div class="sidebox-title ">
+                                        <h3 class="htitle">Bài viêt mới nhất</h3>
+                                    </div>
+                                    <div class="sidebox-content sidebox-content-togged">
+                                        <div class="list-blogs-latest">
+                                            @foreach ($newBlogs as $newBlog)
+                                                <div class="item-article clearfix ">
+                                                    <div class="post-image">
+                                                        <a href="{{ route('front.detail-blog', $newBlog->slug) }}">
+                                                            <img class="lazyload"
+                                                                data-src="{{ $newBlog->image ? $newBlog->image->path : 'https://placehold.co/600x400' }}"
+                                                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                                                alt="{{ $newBlog->name }}" /></a>
+                                                    </div>
+                                                    <div class="post-content">
+                                                        <h3><a
+                                                                href="{{ route('front.detail-blog', $newBlog->slug) }}">{{ $newBlog->name }}</a>
+                                                        </h3>
+                                                        <p class="post-meta">
+                                                            <span class="cate">{{ $newBlog->category->name }}</span>
+                                                            <span class="author d-none"><a
+                                                                    href="{{ route('front.detail-blog', $newBlog->slug) }}">{{ $newBlog->created_by ? $newBlog->created_by->name : 'Admin' }}</a></span>
+                                                            <span class="date">{{ $newBlog->created_at->format('d') }}
+                                                                Tháng {{ $newBlog->created_at->format('m') }},
+                                                                {{ $newBlog->created_at->format('Y') }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Menu bai viet -->
+                                @include('site.blogs.nav-blog')
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 @endsection
 
 @push('script')

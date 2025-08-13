@@ -529,27 +529,14 @@ class FrontController extends Controller
         $data['blogs'] = Post::with(['image'])->where(['status' => 1, 'cate_id' => $category->id])
             ->orderBy('id', 'DESC')
             ->select(['id', 'name', 'intro', 'created_at', 'slug'])
-            ->paginate(99999);
+            ->paginate(6);
 
         $data['cate_title'] = $category->name;
-        $data['categories'] = PostCategory::with([
-            'posts' => function ($query) {
-                $query->where(['status' => 1])->get();
-            }
-        ])->where(['parent_id' => 0, 'show_home_page' => 1])->latest()->get();
-        $data['newBlogs'] = Post::with(['image'])->where(['status' => 1])
+        $data['newBlogs'] = Post::with(['image', 'category'])->where(['status' => 1])
             ->orderBy('id', 'DESC')
-            ->select(['id', 'name', 'slug', 'created_at'])
-            ->limit(6)->get();
+            ->select(['id', 'name', 'slug', 'created_at', 'cate_id'])
+            ->limit(4)->get();
 
-        $data['productCategories'] = Category::query()->with([
-            'childs' => function ($query) {
-                $query->with(['childs']);
-            }
-        ])
-            ->where(['type' => 1, 'parent_id' => 0])
-            ->orderBy('sort_order')
-            ->get();
         return view('site.blogs.list', $data);
     }
 
@@ -578,33 +565,22 @@ class FrontController extends Controller
     {
         $blog = Post::with(['image', 'user_create'])->where('slug', $slug)->first();
         $category = PostCategory::where('id', $blog->cate_id)->first();
-        $data['other_blogs'] = Post::with(['image'])->where(['status' => 1, 'cate_id' => $blog->cate_id])
-            ->where('id', '!=', $blog->id)
-            ->select(['id', 'name', 'intro', 'created_at', 'slug', 'cate_id'])
-            ->limit(16)->inRandomOrder()->get();
+
         $data['blog_title'] = $blog->name;
         $data['blog_des'] = $blog->intro;
-        $data['categories'] = PostCategory::with([
-            'posts' => function ($query) {
-                $query->where(['status' => 1])->get();
-            }
-        ])->where(['parent_id' => 0, 'show_home_page' => 1])->latest()->get();
-        $data['newBlogs'] = Post::with(['image'])->where(['status' => 1])
-            ->orderBy('id', 'DESC')
-            ->select(['id', 'name', 'slug', 'created_at'])
-            ->limit(6)->get();
         $data['blog'] = $blog;
         $data['blog_slug'] = $blog->slug;
         $data['cate_title'] = $category->name;
         $data['category'] = $category;
-        $data['productCategories'] = Category::query()->with([
-            'childs' => function ($query) {
-                $query->with(['childs']);
-            }
-        ])
-            ->where(['type' => 1, 'parent_id' => 0])
-            ->orderBy('sort_order')
-            ->get();
+
+        $data['newBlogs'] = Post::with(['image', 'category'])->where(['status' => 1])
+        ->orderBy('id', 'DESC')
+        ->select(['id', 'name', 'slug', 'created_at', 'cate_id'])
+        ->limit(4)->get();
+        $data['other_blogs'] = Post::with(['image'])->where(['status' => 1, 'cate_id' => $blog->cate_id])
+        ->where('id', '!=', $blog->id)
+        ->select(['id', 'name', 'intro', 'created_at', 'slug', 'cate_id'])
+        ->limit(16)->inRandomOrder()->get();
 
         return view('site.blogs.detail', $data);
     }
