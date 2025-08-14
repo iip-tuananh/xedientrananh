@@ -1,4 +1,4 @@
-<div class="product-loop" data-id="1086987155">
+{{-- <div class="product-loop" data-id="1086987155"> --}}
     <div class="product-inner" data-proid="1039990487" id="section_1_loop_1">
         <div class="proloop-image">
             <div class="gift product_gift_label d-none" data-id="1039990487">
@@ -12,30 +12,16 @@
                         $imageSecond = @$variant->galleries[0]->image->path ?? (@$variant->image->path ?? '');
                     @endphp
                     <picture>
-<<<<<<< HEAD
                         <source media="(max-width: 480px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
                         <source media="(min-width: 481px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
                         <img class="lazyload img-loop " data-src="{{ $img }}"
-=======
-                        <source media="(max-width: 480px)" data-srcset="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
-                                srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <source media="(min-width: 481px)" data-srcset="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
-                                srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <img class="lazyload img-loop " data-src="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
->>>>>>> 1ed09bb (xedien)
                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                              alt=" {{ $product->name }}"  />
                     </picture>
                 </div>
                 <div class="lazy-img second-image hovered-img d-none d-lg-block">
-<<<<<<< HEAD
-=======
-                    @php
-                        $imageSecond = @$product->galleries[0] ? $product->galleries[0]->image->path : ($product->image ? $product->image->path : "https://placehold.co/600x400");
-                    @endphp
->>>>>>> 1ed09bb (xedien)
                     <picture>
                         <source media="(min-width: 481px) and (max-width:767px)" data-srcset="{{ $imageSecond ? $imageSecond : "https://placehold.co/600x400" }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
@@ -129,4 +115,4 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}

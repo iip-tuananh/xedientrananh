@@ -1,16 +1,10 @@
-<div class="products-view products-view-grid list_hover_pro">
-    <div class="row">
-        @foreach ($products as $product)
-        <div class="col-6 col-xl-4 col-lg-4 col-md-4">
-            @include('site.products.product_item', [
-                'product' => $product,
-            ])
-        </div>
-        @endforeach
+<div class="row listProduct-row listProduct-filter">
+    @foreach ($products as $product)
+    <div class="col-lg-3 col-md-6 col-6 product-loop" data-id="{{ $product->id }}">
+        @include('site.products.product_item', ['product' => $product])
     </div>
-    <div class="text-center">
-        <nav class="clearfix relative nav_pagi w_100 ">
-            {{$products->links()}}
-        </nav>
-    </div>
+    @endforeach
+</div>
+<div class="collection-loadmore text-center">
+    {{ $products->links() }}
 </div>
