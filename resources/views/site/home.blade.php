@@ -76,7 +76,7 @@
     </div>
 </div>
 
-<main class="wrapperMain_content">
+<main class="wrapperMain_content" ng-controller="homePage">
     <section class="home-category">
 
         @if(@$bannerGroups[0] && $bannerGroups[0]->galleries->count())
@@ -455,5 +455,82 @@
             // Nếu bạn render DOM động (Ajax/Angular), gọi lại: initCountdowns();
         })();
     </script>
+    <script>
+        app.controller('homePage', function ($rootScope, $scope, $interval, compareItemSync, cartItemSync) {
 
+            // click thêm sp vào list so sánh
+            $scope.addToCompareList = function (productId) {
+                url = "{{route('compare.add.item', ['productId' => 'productId'])}}";
+                url = url.replace('productId', productId);
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': 1
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            $interval.cancel($rootScope.promise);
+
+                            $rootScope.promise = $interval(function () {
+                                compareItemSync.items = response.compareItems;
+                                compareItemSync.count = response.count;
+                            }, 1000);
+                        } else {
+                            toastr.warning(response.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.toastr('Thao tác thất bại !');
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
+            }
+
+            $scope.addToCart = function (productId, variantId) {
+                url = "{{route('cart.add.item', ['productId' => 'productId', 'variantId' => 'variantId'])}}";
+                url = url.replace('productId', productId);
+                url = url.replace('variantId', variantId);
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': 1
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $interval.cancel($rootScope.promise);
+                            $rootScope.promise = $interval(function () {
+                                cartItemSync.items = response.items;
+                                cartItemSync.total = response.total;
+                                cartItemSync.count = response.count;
+                            }, 1000);
+
+                            toastr.success('Đã thêm sản phẩm vào giỏ hàng');
+
+                        }
+                    },
+                    error: function () {
+                        jQuery.toast('Thao tác thất bại !')
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
+            }
+
+        })
+    </script>
 @endpush

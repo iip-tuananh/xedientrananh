@@ -202,7 +202,7 @@
                                 <div class="collection-heading">
                                     <div class="collection-heading__banner">
                                         <img class="lazyload"
-                                            data-src="{{$category->banner ? $category->banner->path : "https://placehold.co/1920x400"}}"
+                                            data-src="{{$banner ?? "https://placehold.co/1920x400"}}"
                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                             alt="{{ $title }}" />
                                     </div>
@@ -520,7 +520,7 @@
 
 @push('scripts')
     <script>
-        app.controller('ProductCategoryController', function($scope, $http) {
+        app.controller('ProductCategoryController', function($scope, $http, $interval, $rootScope, cartItemSync) {
             $scope.category = @json($category ?? null);
             $scope.filter_sort = 'asc';
             $scope.filterSort = function(sort) {
@@ -564,6 +564,81 @@
                     .replace(
                         ':categorySlug', slug);
                 window.location.href = url;
+            }
+
+
+
+            // click thêm sp vào list so sánh
+            $scope.addToCompareList = function (productId) {
+                url = "{{route('compare.add.item', ['productId' => 'productId'])}}";
+                url = url.replace('productId', productId);
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': 1
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            $interval.cancel($rootScope.promise);
+
+                            $rootScope.promise = $interval(function () {
+                                compareItemSync.items = response.compareItems;
+                                compareItemSync.count = response.count;
+                            }, 1000);
+                        } else {
+                            toastr.warning(response.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.toastr('Thao tác thất bại !');
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
+            }
+
+            $scope.addToCart = function (productId, variantId) {
+                url = "{{route('cart.add.item', ['productId' => 'productId', 'variantId' => 'variantId'])}}";
+                url = url.replace('productId', productId);
+                url = url.replace('variantId', variantId);
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': 1
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $interval.cancel($rootScope.promise);
+                            $rootScope.promise = $interval(function () {
+                                cartItemSync.items = response.items;
+                                cartItemSync.total = response.total;
+                                cartItemSync.count = response.count;
+                            }, 1000);
+
+                            toastr.success('Đã thêm sản phẩm vào giỏ hàng');
+
+                        }
+                    },
+                    error: function () {
+                        jQuery.toast('Thao tác thất bại !')
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
             }
         });
     </script>

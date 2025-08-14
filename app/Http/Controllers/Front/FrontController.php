@@ -274,6 +274,9 @@ class FrontController extends Controller
             $products = Product::with([
                 'product_rates' => function ($q) {
                     $q->where('status', 2);
+                },
+                'variants' => function ($q) {
+                    $q->with(['image', 'galleries.image'])->where('is_default', 1);
                 }
             ])
                 ->where(function ($q) use ($request_product_ids) {
@@ -288,6 +291,9 @@ class FrontController extends Controller
             $products = $category->products()->with([
                 'product_rates' => function ($q) {
                     $q->where('status', 2);
+                },
+                'variants' => function ($q) {
+                    $q->with(['image', 'galleries.image'])->where('is_default', 1);
                 }
             ])
                 ->where(function ($q) use ($request_product_ids) {
@@ -320,7 +326,13 @@ class FrontController extends Controller
             return view('site.errors');
         }
 
-        return view('site.products.product_category', compact('categories', 'category', 'sort', 'categorySpecial', 'products', 'title', 'short_des', 'title_sub', 'vouchers', 'attributes'));
+        $banner = $category->image->path ?? '';
+        if($category->parent_id) {
+            $parentCate = Category::query()->where('id', $category->parent_id)->first();
+            $banner = $parentCate->image->path ?? '';
+        }
+
+        return view('site.products.product_category', compact('categories', 'category', 'sort', 'categorySpecial', 'products', 'title', 'short_des', 'title_sub', 'vouchers', 'attributes', 'banner'));
     }
 
     public function filterProduct(Request $request)

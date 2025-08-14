@@ -11,11 +11,18 @@
         }
 
         get end_date() {
-            return this._end_date ? moment(this._end_date).toDate() : '';
+            // return this._end_date ? moment(this._end_date).toDate() : '';
+
+            return this._end_date
+                ? moment(this._end_date, 'YYYY-MM-DD HH:mm:ss').toDate()  // cho input hiển thị
+                : null;
         }
 
         set end_date(value) {
-            this._end_date = value ? moment(value).format('YYYY-MM-DD') : '';
+            // this._end_date = value ? moment(value).format('YYYY-MM-DD') : '';
+            this._end_date = value
+                ? moment(value).format('YYYY-MM-DD HH:mm:ss')             // luôn giữ H:i:s
+                : null;
         }
 
         // Ảnh đại diện

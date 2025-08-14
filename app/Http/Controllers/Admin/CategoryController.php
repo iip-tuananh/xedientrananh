@@ -146,12 +146,9 @@ class CategoryController extends Controller
             }
 
             if($request->image) {
-                FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
+                FileHelper::uploadFileToCloudflare($request->image, $object->id, ThisModel::class, 'image');
             }
 
-            if($request->banner) {
-                FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner', 99);
-            }
 
 
             DB::commit();
@@ -241,17 +238,11 @@ class CategoryController extends Controller
 
             if($request->image) {
                 if($object->image) {
-                    FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
+                    FileHelper::deleteFileFromCloudflare($object->image, $object->id, ThisModel::class, 'image');
                 }
-                FileHelper::uploadFile($request->image, 'categories', $object->id, ThisModel::class, 'image', 99);
+                FileHelper::uploadFileToCloudflare($request->image, $object->id, ThisModel::class, 'image');
             }
 
-            if($request->banner) {
-                if($object->banner) {
-                    FileHelper::forceDeleteFiles($object->banner->id, $object->id, ThisModel::class, 'banner');
-                }
-                FileHelper::uploadFile($request->banner, 'category_banners', $object->id, ThisModel::class, 'banner',99);
-            }
 
             DB::commit();
             $json->success = true;
