@@ -51,7 +51,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group custom-group">
                     <label class="form-label">Áp dụng đến ngày</label>
-                    <input class="form-control " type="date" ng-model="form.end_date">
+                    <input class="form-control " type="datetime-local" ng-model="form.end_date">
                 </div>
             </div>
 
