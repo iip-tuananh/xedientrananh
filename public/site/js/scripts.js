@@ -2137,13 +2137,13 @@ HRT.Main = {
 HRT.Index = {
 	init: function() {
 		var that = this;
-		// that.sliderBannerTop();
-		// that.sliderBannerRight();
-		// that.sliderCollection_1();
-		// that.sliderCollection_2();
+		that.sliderBannerTop();
+		that.sliderBannerRight();
+		that.sliderCollection_1();
+		that.sliderCollection_2();
 		that.collectionTab1();
-		// that.sliderCollection_3();
-		// that.sliderLatestBlog();
+		that.sliderCollection_3();
+		that.sliderLatestBlog();
 		that.hiddenSeeMore();
 	},
 	sliderBannerTop: function(){

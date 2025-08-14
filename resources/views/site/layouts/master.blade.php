@@ -53,6 +53,7 @@
         @include('site.partials.header')
         @yield('content')
         @include('site.partials.footer')
+
         <div class="d-none">
             <div class="cpi-tooltip__info" id="cp-tooltip-1">
             <div class="popover-content__coupon" >
@@ -554,7 +555,7 @@
         var CSRF_TOKEN = "{{ csrf_token() }}";
     </script>
 
-    @include('site.partials.angular_mix')
+{{--    @include('site.partials.angular_mix')--}}
      <script>
          app.controller('headerPartial', function ($rootScope, $scope, compareItemSync, cartItemSync, $interval) {
              $scope.compareItems = compareItemSync;

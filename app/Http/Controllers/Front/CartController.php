@@ -308,7 +308,7 @@ class CartController extends Controller
             }
 
 
-            $lastId = Order::query()->latest('id')->first()->id ?? 1;
+            $lastId = FinanceOrder::query()->latest('id')->first()->id ?? 1;
 
             $order = new FinanceOrder();
 

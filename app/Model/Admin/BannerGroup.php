@@ -87,7 +87,7 @@ class BannerGroup extends BaseModel
             $deleted = BannerGroupGallery::where('group_id', $this->id)->whereNotIn('id', $exist_ids)->get();
             foreach ($deleted as $item) {
                 if ($item->image) {
-                    FileHelper::forceDeleteFiles($item->image->id, $item->id, BannerGroupGallery::class);
+                    FileHelper::deleteFileFromCloudflare($item->image, $item->id, BannerGroupGallery::class);
                 }
                 $item->removeFromDB();
             }
@@ -104,19 +104,18 @@ class BannerGroup extends BaseModel
 
                 if (isset($g['image'])) {
                     if ($gallery->image) {
-                        FileHelper::forceDeleteFiles($gallery->image->id, $gallery->id, BannerGroupGallery::class);
+                        FileHelper::deleteFileFromCloudflare($gallery->image, $gallery->id, BannerGroupGallery::class);
                         $gallery->image->removeFromDB();
                     }
                     $file = $g['image'];
-                    FileHelper::uploadFile($file, 'banner_groups', $gallery->id, BannerGroupGallery::class, 'image');
-
+                    FileHelper::uploadFileToCloudflare($file, $gallery->id, BannerGroupGallery::class, null);
                 }
             }
         } else {
             $deleted = BannerGroupGallery::where('group_id', $this->id)->get();
             foreach ($deleted as $item) {
                 if ($item->image) {
-                    FileHelper::forceDeleteFiles($item->image->id, $item->id, BannerGroupGallery::class,'image');
+                    FileHelper::deleteFileFromCloudflare($item->image, $item->id, BannerGroupGallery::class);
                 }
                 $item->removeFromDB();
             }

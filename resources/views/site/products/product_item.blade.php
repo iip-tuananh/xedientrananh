@@ -6,20 +6,22 @@
             </div>
             <div class="product--image">
                 <div class="lazy-img first-image">
+                    @php
+                        $variant = $product->variants[0];
+                        $img = @$variant->image->path ?? '';
+                        $imageSecond = @$variant->galleries[0]->image->path ?? (@$variant->image->path ?? '');
+                    @endphp
                     <picture>
-                        <source media="(max-width: 480px)" data-srcset="{{ $product->image->path ?? "" }}"
+                        <source media="(max-width: 480px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <source media="(min-width: 481px)" data-srcset="{{ $product->image->path ?? "" }}"
+                        <source media="(min-width: 481px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <img class="lazyload img-loop " data-src="{{ $product->image->path ?? "" }}"
+                        <img class="lazyload img-loop " data-src="{{ $img }}"
                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                              alt=" {{ $product->name }}"  />
                     </picture>
                 </div>
                 <div class="lazy-img second-image hovered-img d-none d-lg-block">
-                    @php
-                        $imageSecond = @$product->galleries[0]->image->path ?? ($product->image->path ?? '');
-                    @endphp
                     <picture>
                         <source media="(min-width: 481px) and (max-width:767px)" data-srcset="{{ $imageSecond }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">

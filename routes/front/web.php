@@ -57,7 +57,7 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/dat-hang-thanh-cong.html','CartController@checkoutSuccess')->name('cart.checkout.success');
         Route::post('/apply-voucher','CartController@applyVoucher')->name('cart.apply.voucher');
 
-        Route::get('/tra-gop','CartController@tragop')->name('cart.index');
+        Route::get('/tra-gop','CartController@tragop')->name('cart.finance');
         Route::post('/checkout-finance','CartController@checkoutFinance')->name('cart.checkoutFinance');
 
     // });

@@ -26,7 +26,7 @@
                         @foreach($banners as $banner)
                             <div class="slider-item">
                                 <div class="slide--image">
-                                    <a href="/collections/all" title="ALt banner 1">
+                                    <a href="" title="ALt banner 1">
                                         <picture>
                                             <source media="(max-width: 767px)" srcset="{{ $banner->image->path ?? '' }}" />
                                             <source media="(min-width: 768px)" srcset="{{ $banner->image->path ?? '' }}" />
@@ -39,6 +39,8 @@
                     </div>
                 </div>
                 </div>
+
+
                 <div class="col-lg-4 col-md-12 col-12 right-banner">
                 <div id="group-banner-right">
                     @foreach($smallBanners as $smallBanner)
@@ -54,6 +56,7 @@
                                 </picture>
                             </a>
                         </div>
+
                     @endforeach
 
                 </div>
@@ -74,7 +77,7 @@
                         <div class="category-item col-lg col-md-6 col-6">
                             <div class="category-item--inner">
                                 <div class="category-item--image">
-                                    <a href="/collections/all" aria-label="">
+                                    <a href="" aria-label="">
                                         <img class="lazyload" data-src="{{ $bannerGallery->image->path ?? '' }}"
                                              src="{{ $bannerGallery->image->path ?? '' }}"
                                              alt="">
@@ -84,6 +87,7 @@
                                 </div>
                             </div>
                         </div>
+
                     @endforeach
                 </div>
             </div>
@@ -135,214 +139,6 @@
 
 
 
-{{--    <section class="home-coupon coupon-initial ">--}}
-{{--    <div class="container">--}}
-{{--        <div class="title-coupon">--}}
-{{--            <h2>Khuyến mãi dành cho bạn</h2>--}}
-{{--        </div>--}}
-{{--        <div class="listCoupon">--}}
-{{--            <div class="col-12 col-md-6 col-xl-3 coupon-item">--}}
-{{--                <div class="coupon-item__inner">--}}
-{{--                <div class="coupon-item__left">--}}
-{{--                    <div class="cp-img boxlazy-img">--}}
-{{--                        <span class="boxlazy-img__insert">--}}
-{{--                        <img class="lazyload" data-src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_1_img.png?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_1_img.png?v=162" alt="Miễn phí vận chuyển">--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="coupon-item__right">--}}
-{{--                    <button type="button" class="cp-icon"--}}
-{{--                        data-toggle="popover" data-container="body"	data-placement="bottom"--}}
-{{--                        data-popover-content="#cp-tooltip-1"	data-class="coupon-popover" title="Miễn phí vận chuyển ">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve">--}}
-{{--                            <g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,0C114.511,0,0,114.496,0,256c0,141.489,114.496,256,256,256c141.489,0,256-114.496,256-256    C512,114.511,397.504,0,256,0z M256,476.279c-121.462,0-220.279-98.817-220.279-220.279S134.538,35.721,256,35.721    S476.279,134.538,476.279,256S377.462,476.279,256,476.279z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,203.609c-9.864,0-17.86,7.997-17.86,17.86v146.456c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86V221.47    C273.86,211.606,265.864,203.609,256,203.609z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,126.214c-9.864,0-17.86,7.997-17.86,17.86v21.433c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86v-21.433    C273.86,134.211,265.864,126.214,256,126.214z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            </g>--}}
-{{--                        </svg>--}}
-{{--                    </button>--}}
-{{--                    <div class="cp-top">--}}
-{{--                        <h3>Miễn phí vận chuyển</h3>--}}
-{{--                        <p>Đơn hàng từ 300k</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="cp-bottom">--}}
-{{--                        <div class="cp-bottom-detail">--}}
-{{--                            <p>Mã: <strong>A87TYRT55</strong></p>--}}
-{{--                            <p>HSD: 10/04/2022</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="cp-bottom-btn">--}}
-{{--                            <button class="cp-btn button" data-coupon="A87TYRT55">Sao chép mã</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-12 col-md-6 col-xl-3 coupon-item">--}}
-{{--                <div class="coupon-item__inner">--}}
-{{--                <div class="coupon-item__left">--}}
-{{--                    <div class="cp-img boxlazy-img">--}}
-{{--                        <span class="boxlazy-img__insert">--}}
-{{--                        <img class="lazyload" data-src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_2_img.png?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_2_img.png?v=162" alt="Giảm 20%">--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="coupon-item__right">--}}
-{{--                    <button type="button" class="cp-icon"--}}
-{{--                        data-toggle="popover" data-container="body"	data-placement="bottom"--}}
-{{--                        data-popover-content="#cp-tooltip-2"	data-class="coupon-popover" title="Giảm 20% ">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve">--}}
-{{--                            <g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,0C114.511,0,0,114.496,0,256c0,141.489,114.496,256,256,256c141.489,0,256-114.496,256-256    C512,114.511,397.504,0,256,0z M256,476.279c-121.462,0-220.279-98.817-220.279-220.279S134.538,35.721,256,35.721    S476.279,134.538,476.279,256S377.462,476.279,256,476.279z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,203.609c-9.864,0-17.86,7.997-17.86,17.86v146.456c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86V221.47    C273.86,211.606,265.864,203.609,256,203.609z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,126.214c-9.864,0-17.86,7.997-17.86,17.86v21.433c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86v-21.433    C273.86,134.211,265.864,126.214,256,126.214z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            </g>--}}
-{{--                        </svg>--}}
-{{--                    </button>--}}
-{{--                    <div class="cp-top">--}}
-{{--                        <h3>Giảm 20%</h3>--}}
-{{--                        <p>Đơn hàng từ 200k</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="cp-bottom">--}}
-{{--                        <div class="cp-bottom-detail">--}}
-{{--                            <p>Mã: <strong>QH5G8J0Y</strong></p>--}}
-{{--                            <p>HSD: 05/05/2022</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="cp-bottom-btn">--}}
-{{--                            <button class="cp-btn button" data-coupon="QH5G8J0Y">Sao chép mã</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-12 col-md-6 col-xl-3 coupon-item">--}}
-{{--                <div class="coupon-item__inner">--}}
-{{--                <div class="coupon-item__left">--}}
-{{--                    <div class="cp-img boxlazy-img">--}}
-{{--                        <span class="boxlazy-img__insert">--}}
-{{--                        <img class="lazyload" data-src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_3_img.png?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_3_img.png?v=162" alt="Giảm 50k">--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="coupon-item__right">--}}
-{{--                    <button type="button" class="cp-icon"--}}
-{{--                        data-toggle="popover" data-container="body"	data-placement="bottom"--}}
-{{--                        data-popover-content="#cp-tooltip-3"	data-class="coupon-popover" title="Giảm 50k ">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve">--}}
-{{--                            <g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,0C114.511,0,0,114.496,0,256c0,141.489,114.496,256,256,256c141.489,0,256-114.496,256-256    C512,114.511,397.504,0,256,0z M256,476.279c-121.462,0-220.279-98.817-220.279-220.279S134.538,35.721,256,35.721    S476.279,134.538,476.279,256S377.462,476.279,256,476.279z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,203.609c-9.864,0-17.86,7.997-17.86,17.86v146.456c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86V221.47    C273.86,211.606,265.864,203.609,256,203.609z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,126.214c-9.864,0-17.86,7.997-17.86,17.86v21.433c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86v-21.433    C273.86,134.211,265.864,126.214,256,126.214z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            </g>--}}
-{{--                        </svg>--}}
-{{--                    </button>--}}
-{{--                    <div class="cp-top">--}}
-{{--                        <h3>Giảm 50k</h3>--}}
-{{--                        <p>Đơn hàng từ 500k</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="cp-bottom">--}}
-{{--                        <div class="cp-bottom-detail">--}}
-{{--                            <p>Mã: <strong>FT45YUO8H</strong></p>--}}
-{{--                            <p>HSD: 10/05/2022</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="cp-bottom-btn">--}}
-{{--                            <button class="cp-btn button" data-coupon="FT45YUO8H">Sao chép mã</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-12 col-md-6 col-xl-3 coupon-item">--}}
-{{--                <div class="coupon-item__inner">--}}
-{{--                <div class="coupon-item__left">--}}
-{{--                    <div class="cp-img boxlazy-img">--}}
-{{--                        <span class="boxlazy-img__insert">--}}
-{{--                        <img class="lazyload" data-src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_4_img.png?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/home_coupon_4_img.png?v=162" alt="Giảm 10%">--}}
-{{--                        </span>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="coupon-item__right">--}}
-{{--                    <button type="button" class="cp-icon"--}}
-{{--                        data-toggle="popover" data-container="body"	data-placement="bottom"--}}
-{{--                        data-popover-content="#cp-tooltip-4"	data-class="coupon-popover" title="Giảm 10% ">--}}
-{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve">--}}
-{{--                            <g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,0C114.511,0,0,114.496,0,256c0,141.489,114.496,256,256,256c141.489,0,256-114.496,256-256    C512,114.511,397.504,0,256,0z M256,476.279c-121.462,0-220.279-98.817-220.279-220.279S134.538,35.721,256,35.721    S476.279,134.538,476.279,256S377.462,476.279,256,476.279z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,203.609c-9.864,0-17.86,7.997-17.86,17.86v146.456c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86V221.47    C273.86,211.606,265.864,203.609,256,203.609z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            <g xmlns="http://www.w3.org/2000/svg">--}}
-{{--                                <g>--}}
-{{--                                    <path d="M256,126.214c-9.864,0-17.86,7.997-17.86,17.86v21.433c0,9.864,7.997,17.86,17.86,17.86s17.86-7.997,17.86-17.86v-21.433    C273.86,134.211,265.864,126.214,256,126.214z"></path>--}}
-{{--                                </g>--}}
-{{--                            </g>--}}
-{{--                            </g>--}}
-{{--                        </svg>--}}
-{{--                    </button>--}}
-{{--                    <div class="cp-top">--}}
-{{--                        <h3>Giảm 10%</h3>--}}
-{{--                        <p>Đơn hàng từ 100k</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="cp-bottom">--}}
-{{--                        <div class="cp-bottom-detail">--}}
-{{--                            <p>Mã: <strong>A789UYT</strong></p>--}}
-{{--                            <p>HSD: 20/05/2022</p>--}}
-{{--                        </div>--}}
-{{--                        <div class="cp-bottom-btn">--}}
-{{--                            <button class="cp-btn button" data-coupon="A789UYT">Sao chép mã</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    </section>--}}
-
-
-
     @foreach($categorySpecial as $cateSpecial)
         <section class="home-collection-2">
             <div class="container container-pd-parent">
@@ -359,218 +155,6 @@
             </div>
         </section>
     @endforeach
-
-
-
-{{--    <section class="home-categorize home-cate-feature">--}}
-{{--    <div class="container container-pd0">--}}
-{{--        <div class="wrapbox row">--}}
-{{--            <div class="section-heading">--}}
-{{--                <h2 class="hTitle"><a href="#">DANH MỤC NỔI BẬT</a></h2>--}}
-{{--            </div>--}}
-{{--            <div class="wrapbox-right col-lg-12 col-md-12 col-12">--}}
-{{--                <div class="listCategorize row">--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_1_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_1_img.jpg?v=162"--}}
-{{--                            alt="Điện thoại" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Điện thoại</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Điện thoại" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_2_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_2_img.jpg?v=162"--}}
-{{--                            alt="Laptop" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Laptop</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Laptop" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_3_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_3_img.jpg?v=162"--}}
-{{--                            alt="Tablet" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Tablet</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Tablet" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_4_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_4_img.jpg?v=162"--}}
-{{--                            alt="Đồng hồ th&#244;ng minh" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Đồng hồ thông minh</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Đồng hồ th&#244;ng minh" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_5_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_5_img.jpg?v=162"--}}
-{{--                            alt="Ốp lưng điện thoại" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Ốp lưng điện thoại</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Ốp lưng điện thoại" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_6_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_6_img.jpg?v=162"--}}
-{{--                            alt="Chuột m&#225;y t&#237;nh" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Chuột máy tính</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/collections/all" aria-label="Chuột m&#225;y t&#237;nh" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_7_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_7_img.jpg?v=162"--}}
-{{--                            alt="M&#224;ng h&#236;nh m&#225;y t&#237;nh" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Màng hình máy tính</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="M&#224;ng h&#236;nh m&#225;y t&#237;nh" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_8_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_8_img.jpg?v=162"--}}
-{{--                            alt="Loa bluetooth" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Loa bluetooth</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="Loa bluetooth" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_9_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_9_img.jpg?v=162"--}}
-{{--                            alt="Tai nghe" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Tai nghe</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="Tai nghe" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_10_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_10_img.jpg?v=162"--}}
-{{--                            alt="Sạc dự ph&#242;ng" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Sạc dự phòng</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="Sạc dự ph&#242;ng" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_11_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_11_img.jpg?v=162"--}}
-{{--                            alt="Thiết bị mạng" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Thiết bị mạng</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="Thiết bị mạng" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_12_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_12_img.jpg?v=162"--}}
-{{--                            alt="B&#224;n ph&#237;m m&#225;y t&#237;nh" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Bàn phím máy tính</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="B&#224;n ph&#237;m m&#225;y t&#237;nh" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_13_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_13_img.jpg?v=162"--}}
-{{--                            alt="C&#225;p sạc" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Cáp sạc</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="C&#225;p sạc" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col7-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_14_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/cate_feature_14_img.jpg?v=162"--}}
-{{--                            alt="M&#225;y in" class="lazyload">--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3>Máy in</h3>--}}
-{{--                        </div>--}}
-{{--                        <a href="/" aria-label="M&#225;y in" class="item-link"></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    </section>--}}
 
 
 
@@ -596,8 +180,6 @@
     @endif
 
 
-
-
     @foreach($productCategories as $productCate)
         <section class="home-collection-3">
             <div class="container container-pd0">
@@ -610,6 +192,10 @@
                             @foreach($productCate->products->chunk(3) as $productChunk)
                                 <div class="row-product">
                                     @foreach($productChunk as $product)
+                                        @php
+                                            $variant = $product->variants[0];
+                                            $img = @$variant->image->path ?? '';
+                                        @endphp
                                         <div class="product-loop product-horizontal" data-id="108698715{{ $product->id }}">
                                             <div class="product-inner" data-proid="1039990487" id="_loop_1">
                                                 <div class="proloop-image">
@@ -622,11 +208,11 @@
                                                     <div class="product--image">
                                                         <div class="lazy-img">
                                                             <picture>
-                                                                <source media="(max-width: 480px)" data-srcset="{{ $product->image->path ?? '' }}"
+                                                                <source media="(max-width: 480px)" data-srcset="{{ $img }}"
                                                                         srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                                <source media="(min-width: 481px)" data-srcset="{{ $product->image->path ?? '' }}"
+                                                                <source media="(min-width: 481px)" data-srcset="{{ $img }}"
                                                                         srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                                <img class="lazyload img-loop " data-src="{{ $product->image->path ?? '' }}"
+                                                                <img class="lazyload img-loop " data-src="{{ $img }}"
                                                                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                                      alt=" {{ $product->name }} "  />
                                                             </picture>
@@ -705,7 +291,6 @@
                 </div>
             </div>
         </section>
-
     @endforeach
 
     @if(@$bannerGroups[2] && $bannerGroups[2]->galleries->count())
@@ -728,14 +313,13 @@
                 </div>
             </div>
         </section>
-
     @endif
 
     @if($posts->count())
         <section class="home-blogs">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-9 col-md-12 col-12">
+                    <div class="col-lg-12 col-md-12 col-12">
                         <div class="left-news">
                             <div class="section-heading d-flex justify-content-between align-items-center">
                                 <h2 class="hTitle"><a href="/blogs/all">Bài Viết Mới Nhất</a></h2>
@@ -777,7 +361,7 @@
                                                 <h3 class="art-title"><a href="/blogs/news/diem-qua-cac-loai-tivi-co-mat-tren-thi-truong-hien-nay">{{ $postFirst->name }}</a></h3>
                                                 <div class="art-meta">
                                     <span class="art-date">
-                                    <time datetime="2022-11-11">{{ \Illuminate\Support\Carbon::parse($postFirst->created_at)->format('d/m/Y') }}</time>
+                                    <time>{{ \Illuminate\Support\Carbon::parse($postFirst->created_at)->format('d/m/Y') }}</time>
                                     </span>
                                                 </div>
                                             </div>
@@ -806,7 +390,7 @@
                                                             {{ $post->name }}</a></h3>
                                                     <div class="art-meta">
                                     <span class="art-date">
-                                    <time  datetime="2022-06-27">{{ \Illuminate\Support\Carbon::parse($post->created_at)->format('d/m/Y') }}</time>
+                                    <time>{{ \Illuminate\Support\Carbon::parse($post->created_at)->format('d/m/Y') }}</time>
                                     </span>
                                                     </div>
                                                 </div>
@@ -819,158 +403,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-12 cpl-12">
-                        <div class="right-banner">
-                            <a href="/collections/all" class="banner-hover-effect" aria-label="FLYCAM DJI CHÍNH HÃNG">
-                                <img class="lazyload" data-src="//theme.hstatic.net/200000516791/1001206835/14/home_collection_3_banner.jpg?v=162"
-                                     src="//theme.hstatic.net/200000516791/1001206835/14/home_collection_3_banner.jpg?v=162"
-                                     alt="FLYCAM DJI CHÍNH HÃNG">
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
     @endif
 
-
-{{--    <section class="home-categorize home-cate-trend">--}}
-{{--    <div class="container container-pd0">--}}
-{{--        <div class="wrapbox row">--}}
-{{--            <div class="wrapbox-left col-lg-2 col-md-12 col-12">--}}
-{{--                <div class="wrapbox--content">--}}
-{{--                <p class="title-box">Xu hướng tìm kiếm</p>--}}
-{{--                <a href="/collections/all" class="btn-box button">Xem thêm</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="wrapbox-right col-lg-10 col-md-12 col-12">--}}
-{{--                <div class="listCategorize row">--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Điện thoại">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_1_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_1_img.jpg?v=162"--}}
-{{--                            alt="Điện thoại" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Điện thoại	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Laptop">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_2_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_2_img.jpg?v=162"--}}
-{{--                            alt="Laptop" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Laptop	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="M&#225;y t&#237;nh để b&#224;n">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_3_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_3_img.jpg?v=162"--}}
-{{--                            alt="M&#225;y t&#237;nh để b&#224;n" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Máy tính để bàn	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Tablet">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_4_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_4_img.jpg?v=162"--}}
-{{--                            alt="Tablet" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Tablet	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Đồng hồ th&#244;ng minh">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_5_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_5_img.jpg?v=162"--}}
-{{--                            alt="Đồng hồ th&#244;ng minh" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Đồng hồ thông minh	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="M&#224;ng h&#236;nh">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_6_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_6_img.jpg?v=162"--}}
-{{--                            alt="M&#224;ng h&#236;nh" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Màng hình	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Phụ kiện">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_7_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_7_img.jpg?v=162"--}}
-{{--                            alt="Phụ kiện" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Phụ kiện	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col8-cus">--}}
-{{--                    <div class="item-icon">--}}
-{{--                        <div class="item-img boxlazy-img">--}}
-{{--                            <span class="boxlazy-img__insert">--}}
-{{--                            <a href="/" aria-label="Thiết bị th&#244;ng minh">--}}
-{{--                            <img data-src="//theme.hstatic.net/200000516791/1001206835/14/categorize_8_img.jpg?v=162" src="//theme.hstatic.net/200000516791/1001206835/14/categorize_8_img.jpg?v=162"--}}
-{{--                            alt="Thiết bị th&#244;ng minh" class="lazyload">--}}
-{{--                            </a>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h3><a href="/">Thiết bị thông minh	</a></h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    </section>--}}
 </main>
 @endsection
-@push('script')
+@push('scripts')
 @endpush

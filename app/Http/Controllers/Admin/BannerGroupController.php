@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Admin\BannerGroupGallery;
+use App\Model\Common\File;
 use Illuminate\Http\Request;
 use App\Model\Admin\BannerGroup as ThisModel;
 use Yajra\DataTables\DataTables;
@@ -28,6 +29,7 @@ class BannerGroupController extends Controller
     {
         return view($this->view.'.index');
     }
+
     // Hàm lấy data cho bảng list
     public function searchData(Request $request)
     {
@@ -157,7 +159,8 @@ class BannerGroupController extends Controller
 
         if($object->galleries) {
             foreach ($object->galleries as $gallery) {
-                FileHelper::forceDeleteFiles($gallery->image, $gallery->id, BannerGroupGallery::class);
+                FileHelper::deleteFileFromCloudflare($gallery->image, $gallery->id, BannerGroupGallery::class);
+
                 $gallery->removeFromDB();
             }
         }

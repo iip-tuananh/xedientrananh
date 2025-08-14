@@ -48,10 +48,8 @@ class FrontController extends Controller
     public function homePage()
     {
         $data['banners'] = Banner::with(['image'])->where('position', 1)->get();
-        // $data['reviews'] = Review::query()->with(['image'])->orderBy('id', 'desc')->get();
-        $data['smallBanners'] = Banner::with(['image'])->where('position', 2)->orderBy('id', 'desc')->limit(4)->get();
-        // $data['partners'] = Partner::with(['image'])->limit(3)->get();
-        // $data['newProducts'] = Product::with(['image'])->where('status', 1)->limit(6)->orderBy('id', 'DESC')->inRandomOrder()->get();
+
+        $data['smallBanners'] = Banner::with(['image'])->where('position', 2)->orderBy('id', 'desc')->limit(2)->get();
         $data['categorySpecialPost'] = CategorySpecial::query()->with([
             'posts' => function ($q) {
                 $q->where('status', 1);
@@ -71,18 +69,12 @@ class FrontController extends Controller
             ->where('show_home_page', 1)
             ->orderBy('order_number')
             ->with([
-                'products' => function ($query) {
-                    $query->where('status', 1)
-                        ->with([
-                            'image',
-                            'category',
-                            'galleries' => function ($q) {
-                                $q->select(['id', 'product_id', 'sort'])
-                                    ->with(['image'])
-                                    ->orderBy('sort', 'ASC');
-                            },
-                        ])->inRandomOrder();
-                }
+              'products' => function ($q) {
+                $q->with(['variants' => function ($q) {
+                   $q->with(['image', 'galleries.image'])->where('is_default', 1);
+                }])
+                    ->where('status', 1);
+              }
             ])
             ->whereNotNull('end_date')
             ->get();
@@ -90,15 +82,10 @@ class FrontController extends Controller
         // lấy danh mục đặc biệt (end_date = null)
         $data['categorySpecial'] = CategorySpecial::query()->with([
             'products' => function ($q) {
-                $q->with([
-                    'image',
-                    'category',
-                    'galleries' => function ($q) {
-                        $q->select(['id', 'product_id', 'sort'])
-                            ->with(['image'])
-                            ->orderBy('sort', 'ASC');
-                    },
-                ])->where('status', 1)->inRandomOrder();
+                $q->with(['variants' => function ($q) {
+                    $q->with(['image', 'galleries.image'])->where('is_default', 1);
+                }])
+                    ->where('status', 1);
             }
         ])
             ->whereHas('products', function ($q) {
@@ -118,13 +105,12 @@ class FrontController extends Controller
             ->whereHas('products', function ($q) {
                 $q->where('status', 1);
             })->with([
-            'products' => function ($query) {
-                $query->where('status', 1)
-                    ->with([
-                        'image',
-                        'category',
-                    ])->inRandomOrder();
-            }
+                'products' => function ($q) {
+                    $q->with(['variants' => function ($q) {
+                        $q->with(['image', 'galleries.image'])->where('is_default', 1);
+                    }])
+                        ->where('status', 1);
+                }
         ])->where(['show_home_page' => 1, 'level' => 1])
             ->orderBy('order_number')->get()->map(function ($query) {
                 $query->setRelation('products', $query->products()->where('status', 1)
@@ -138,32 +124,6 @@ class FrontController extends Controller
         // bài viết mới nhất
         $data['posts'] = Post::query()->with(['image'])->latest()->get()->take(5);
 
-        // $productCategories = Category::query()->with([
-        //     'childs' => function ($q) {
-        //         $q->with([
-        //             'childs'
-        //         ]);
-        //     }
-        // ])
-        // ->where('show_home_page', 1)
-        // ->orderBy('sort_order')
-        // ->get();
-        // foreach ($productCategories as $category) {
-        //     $category_parent_id = $category->parent ? $category->parent->id : null;
-        //     $arr_category_id = array_merge($category->childs->pluck('id')->toArray(), [$category->id, $category_parent_id]);
-        //     if ($category->childs) {
-        //         foreach ($category->childs as $child) {
-        //             $arr_category_id = array_merge($arr_category_id, $child->childs->pluck('id')->toArray());
-        //         }
-        //     }
-        //     $category->products = Product::query()->where('status', 1)->whereIn('cate_id', $arr_category_id)->inRandomOrder()->limit(12)->select(['id', 'name', 'slug', 'price', 'base_price', 'unit_id', 'cate_id'])->get();
-        // }
-        // $data['productCategories'] = $productCategories;
-
-        // $data['vouchers'] = Voucher::query()->where('status', 1)->where('quantity', '>', 0)->where('to_date', '>=', now())->orderBy('created_at', 'desc')->get();
-        // block khối ảnh cuối trang
-        // $block = Block::query()->find(1);
-        // $data['block'] = $block;
 
         return view('site.home', $data);
     }
@@ -271,6 +231,12 @@ class FrontController extends Controller
         });
 
         $data['attributes'] = $out;
+
+        $data['productLienquan'] = Product::query()->with([ 'category',
+            'variants' => function ($q) {
+                $q->with(['image', 'galleries.image'])->where('is_default', 1);
+            }
+        ])->where('cate_id', $data['product']->cate_id)->latest()->get()->take(5);
 
         return view('site.products.product_detail', $data);
     }

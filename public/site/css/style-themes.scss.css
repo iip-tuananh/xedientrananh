@@ -7312,7 +7312,8 @@ img.lazyload:not([src]) {
   padding: 12px 20px;
   outline: none;
   font-weight: 600;
-  font-size: 15px; }
+  /*font-size: 15px;*/
+}
 
 .productDetail--content .product-actions .select-actions .addcart-area button + button {
   margin-left: 15px; }

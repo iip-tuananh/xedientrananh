@@ -317,43 +317,122 @@
                                         </span>
                                     </div>
                                     <div class="header-action_dropdown">
+{{--                                        <div class="header-dropdown_content">--}}
+{{--                                            <div class="sitenav-content sitenav-cart">--}}
+{{--                                                <p class="boxtitle">Giỏ hàng</p>--}}
+{{--                                                <div class="cart-view clearfix">--}}
+{{--                                                    <div class="cart-view-scroll">--}}
+{{--                                                        <table class="clone-item-cart table-clone-cart">--}}
+{{--                                                            <tr class="mini-cart__item d-none">--}}
+{{--                                                                <td class="mini-cart__left"><a class="mnc-link"--}}
+{{--                                                                        href="#" title=""><img--}}
+{{--                                                                            src="/" alt="" /></a></td>--}}
+{{--                                                                <td class="mini-cart__right">--}}
+{{--                                                                    <p class="mini-cart__title">--}}
+{{--                                                                        <a class="mnc-title mnc-link" href="#"--}}
+{{--                                                                            title=""></a>--}}
+{{--                                                                        <span class="mnc-variant"> </span>--}}
+{{--                                                                    </p>--}}
+{{--                                                                    <div class="mini-cart__quantity">--}}
+{{--                                                                        <button class="qty-btn mnc-minus">--}}
+{{--                                                                            <svg width="18" height="18"--}}
+{{--                                                                                viewBox="0 0 20 20"--}}
+{{--                                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                                <rect height="1" width="18"--}}
+{{--                                                                                    y="9" x="1"></rect>--}}
+{{--                                                                            </svg>--}}
+{{--                                                                        </button>--}}
+{{--                                                                        <input class="qty-value" type="text"--}}
+{{--                                                                            readonly="" name="mnc-quantity"--}}
+{{--                                                                            value="">--}}
+{{--                                                                        <button class="qty-btn mnc-plus">--}}
+{{--                                                                            <svg width="18" height="18"--}}
+{{--                                                                                viewBox="0 0 20 20"--}}
+{{--                                                                                xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                                                <rect x="9" y="1" width="1"--}}
+{{--                                                                                    height="17"></rect>--}}
+{{--                                                                                <rect x="1" y="9" width="17"--}}
+{{--                                                                                    height="1"></rect>--}}
+{{--                                                                            </svg>--}}
+{{--                                                                        </button>--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <div class="mini-cart__price">--}}
+{{--                                                                        <span class="mnc-price">0₫</span>--}}
+{{--                                                                        <del class="mnc-ori-price"></del>--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <div class="mini-cart__remove"></div>--}}
+{{--                                                                </td>--}}
+{{--                                                            </tr>--}}
+{{--                                                        </table>--}}
+{{--                                                        <table class="table-cart-view">--}}
+{{--                                                            <tr class="mini-cart__empty">--}}
+{{--                                                                <td>--}}
+{{--                                                                    <div class="svgico-mini-cart">--}}
+{{--                                                                        <svg width="81" height="70"--}}
+{{--                                                                            viewBox="0 0 81 70">--}}
+{{--                                                                            <g transform="translate(0 2)"--}}
+{{--                                                                                stroke-width="4" fill="none"--}}
+{{--                                                                                fill-rule="evenodd">--}}
+{{--                                                                                <circle stroke-linecap="square"--}}
+{{--                                                                                    cx="34" cy="60"--}}
+{{--                                                                                    r="6"></circle>--}}
+{{--                                                                                <circle stroke-linecap="square"--}}
+{{--                                                                                    cx="67" cy="60"--}}
+{{--                                                                                    r="6"></circle>--}}
+{{--                                                                                <path--}}
+{{--                                                                                    d="M22.9360352 15h54.8070373l-4.3391876 30H30.3387146L19.6676025 0H.99560547">--}}
+{{--                                                                                </path>--}}
+{{--                                                                            </g>--}}
+{{--                                                                        </svg>--}}
+{{--                                                                    </div>--}}
+{{--                                                                    Hiện chưa có sản phẩm--}}
+{{--                                                                </td>--}}
+{{--                                                            </tr>--}}
+{{--                                                        </table>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="cart-view-line"></div>--}}
+{{--                                                    <div class="cart-view-total">--}}
+{{--                                                        <table class="table-total">--}}
+{{--                                                            <tr>--}}
+{{--                                                                <td class="mnc-total text-left">TỔNG TIỀN:</td>--}}
+{{--                                                                <td class="mnc-total text-right total-view-cart"> 1112220₫--}}
+{{--                                                                </td>--}}
+{{--                                                            </tr>--}}
+{{--                                                            <tr class="mini-cart__button">--}}
+{{--                                                                <td colspan="2"><a href="/cart"--}}
+{{--                                                                        class="linktocart button ">Xem giỏ hàng</a>--}}
+{{--                                                                </td>--}}
+{{--                                                            </tr>--}}
+{{--                                                        </table>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+
                                         <div class="header-dropdown_content">
+
+
+
                                             <div class="sitenav-content sitenav-cart">
                                                 <p class="boxtitle">Giỏ hàng</p>
                                                 <div class="cart-view clearfix">
                                                     <div class="cart-view-scroll">
                                                         <table class="clone-item-cart table-clone-cart">
-                                                            <tr class="mini-cart__item d-none">
-                                                                <td class="mini-cart__left"><a class="mnc-link"
-                                                                        href="#" title=""><img
-                                                                            src="/" alt="" /></a></td>
+                                                            <tbody><tr class="mini-cart__item d-none">
+                                                                <td class="mini-cart__left"><a class="mnc-link" href="#" title=""><img src="/" alt=""></a></td>
                                                                 <td class="mini-cart__right">
                                                                     <p class="mini-cart__title">
-                                                                        <a class="mnc-title mnc-link" href="#"
-                                                                            title=""></a>
-                                                                        <span class="mnc-variant"> </span>
+                                                                        <a class="mnc-title mnc-link" href="#" title=""></a>
+                                                                        <span class="mnc-variant">	</span>
                                                                     </p>
                                                                     <div class="mini-cart__quantity">
                                                                         <button class="qty-btn mnc-minus">
-                                                                            <svg width="18" height="18"
-                                                                                viewBox="0 0 20 20"
-                                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                                <rect height="1" width="18"
-                                                                                    y="9" x="1"></rect>
-                                                                            </svg>
+                                                                            <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect height="1" width="18" y="9" x="1"></rect></svg>
                                                                         </button>
-                                                                        <input class="qty-value" type="text"
-                                                                            readonly="" name="mnc-quantity"
-                                                                            value="">
+                                                                        <input class="qty-value" type="text" readonly="" name="mnc-quantity" value="">
                                                                         <button class="qty-btn mnc-plus">
-                                                                            <svg width="18" height="18"
-                                                                                viewBox="0 0 20 20"
-                                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                                <rect x="9" y="1" width="1"
-                                                                                    height="17"></rect>
-                                                                                <rect x="1" y="9" width="17"
-                                                                                    height="1"></rect>
-                                                                            </svg>
+                                                                            <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="9" y="1" width="1" height="17"></rect> <rect x="1" y="9" width="17" height="1"></rect></svg>
                                                                         </button>
                                                                     </div>
                                                                     <div class="mini-cart__price">
@@ -363,50 +442,69 @@
                                                                     <div class="mini-cart__remove"></div>
                                                                 </td>
                                                             </tr>
-                                                        </table>
+                                                            </tbody></table>
                                                         <table class="table-cart-view">
-                                                            <tr class="mini-cart__empty">
-                                                                <td>
-                                                                    <div class="svgico-mini-cart">
-                                                                        <svg width="81" height="70"
-                                                                            viewBox="0 0 81 70">
-                                                                            <g transform="translate(0 2)"
-                                                                                stroke-width="4" fill="none"
-                                                                                fill-rule="evenodd">
-                                                                                <circle stroke-linecap="square"
-                                                                                    cx="34" cy="60"
-                                                                                    r="6"></circle>
-                                                                                <circle stroke-linecap="square"
-                                                                                    cx="67" cy="60"
-                                                                                    r="6"></circle>
-                                                                                <path
-                                                                                    d="M22.9360352 15h54.8070373l-4.3391876 30H30.3387146L19.6676025 0H.99560547">
-                                                                                </path>
-                                                                            </g>
-                                                                        </svg>
+
+
+                                                            <tbody><tr class="mini-cart__item " data-vid="1086987189" data-pid="1039990494">
+                                                                <td class="mini-cart__left">
+                                                                    <a class="mnc-link" href="/products/ipad-pro-10-5-inch-32gb">
+                                                                        <img src=" //product.hstatic.net/200000516791/product/7a7f_516eeeb1b00f456ab484b9d6d49cde32_1e013add2f444e77b8bcffb2275b496e_cc414ac9b27e4f73951b145192151580_small.jpg  " alt="iPad Pro 10.5 inch 32GB">
+                                                                    </a>
+                                                                </td>
+                                                                <td class="mini-cart__right">
+                                                                    <p class="mini-cart__title">
+                                                                        <a class="mnc-title mnc-link" href="/products/ipad-pro-10-5-inch-32gb" title="iPad Pro 10.5 inch 32GB">iPad Pro 10.5 inch 32GB</a>
+                                                                        <span class="mnc-variant">
+
+									Đen
+
+								</span>
+                                                                    </p>
+                                                                    <div class="mini-cart__quantity">
+
+                                                                        <button class="qty-btn mnc-minus">
+                                                                            <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect height="1" width="18" y="9" x="1"></rect></svg>
+                                                                        </button>
+                                                                        <!--<span class="mnc-value">3</span>-->
+                                                                        <input class="qty-value  " type="text" readonly="" name="mnc-quantity" value="3" data-vid="1086987189">
+                                                                        <button class="qty-btn mnc-plus">
+                                                                            <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="9" y="1" width="1" height="17"></rect> <rect x="1" y="9" width="17" height="1"></rect></svg>
+                                                                        </button>
                                                                     </div>
-                                                                    Hiện chưa có sản phẩm
+                                                                    <div class="mini-cart__price">
+                                                                        <span class="mnc-price">13,450,000₫</span>
+                                                                        <del class="mnc-ori-price"></del>
+                                                                    </div>
+                                                                    <div class="mini-cart__remove">
+                                                                        <a href="javascript:void(0);" onclick="HRT.All.deleteCart(1, 1086987189)">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"> <g><path d="M500,442.7L79.3,22.6C63.4,6.7,37.7,6.7,21.9,22.5C6.1,38.3,6.1,64,22,79.9L442.6,500L22,920.1C6,936,6.1,961.6,21.9,977.5c15.8,15.8,41.6,15.8,57.4-0.1L500,557.3l420.7,420.1c16,15.9,41.6,15.9,57.4,0.1c15.8-15.8,15.8-41.5-0.1-57.4L557.4,500L978,79.9c16-15.9,15.9-41.5,0.1-57.4c-15.8-15.8-41.6-15.8-57.4,0.1L500,442.7L500,442.7z"></path></g> </svg>
+                                                                        </a>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
-                                                        </table>
+
+
+                                                            </tbody></table>
                                                     </div>
                                                     <div class="cart-view-line"></div>
                                                     <div class="cart-view-total">
                                                         <table class="table-total">
-                                                            <tr>
+                                                            <tbody><tr>
                                                                 <td class="mnc-total text-left">TỔNG TIỀN:</td>
-                                                                <td class="mnc-total text-right total-view-cart">0₫
-                                                                </td>
+                                                                <td class="mnc-total text-right total-view-cart">40,350,000₫</td>
                                                             </tr>
                                                             <tr class="mini-cart__button">
-                                                                <td colspan="2"><a href="/cart"
-                                                                        class="linktocart button ">Xem giỏ hàng</a>
-                                                                </td>
+                                                                <td colspan="2"><a href="/cart" class="linktocart button ">Xem giỏ hàng</a></td>
+
                                                             </tr>
-                                                        </table>
+                                                            </tbody></table>
                                                     </div>
                                                 </div>
+
                                             </div>
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -22,6 +22,7 @@ class HeaderComposer
 
         // danh mục sản phẩm
         $productCategories = Category::query()->with(['childs'])
+            ->where('parent_id', 0)
             ->orderBy('sort_order')
             ->get();
 
