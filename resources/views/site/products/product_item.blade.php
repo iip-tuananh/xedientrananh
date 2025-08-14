@@ -12,52 +12,74 @@
                         $imageSecond = @$variant->galleries[0]->image->path ?? (@$variant->image->path ?? '');
                     @endphp
                     <picture>
+<<<<<<< HEAD
                         <source media="(max-width: 480px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
                         <source media="(min-width: 481px)" data-srcset="{{ $img }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
                         <img class="lazyload img-loop " data-src="{{ $img }}"
+=======
+                        <source media="(max-width: 480px)" data-srcset="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
+                                srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+                        <source media="(min-width: 481px)" data-srcset="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
+                                srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+                        <img class="lazyload img-loop " data-src="{{ $product->image ? $product->image->path : "https://placehold.co/600x400" }}"
+>>>>>>> 1ed09bb (xedien)
                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                              alt=" {{ $product->name }}"  />
                     </picture>
                 </div>
                 <div class="lazy-img second-image hovered-img d-none d-lg-block">
+<<<<<<< HEAD
+=======
+                    @php
+                        $imageSecond = @$product->galleries[0] ? $product->galleries[0]->image->path : ($product->image ? $product->image->path : "https://placehold.co/600x400");
+                    @endphp
+>>>>>>> 1ed09bb (xedien)
                     <picture>
-                        <source media="(min-width: 481px) and (max-width:767px)" data-srcset="{{ $imageSecond }}"
+                        <source media="(min-width: 481px) and (max-width:767px)" data-srcset="{{ $imageSecond ? $imageSecond : "https://placehold.co/600x400" }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <source media="(min-width:768px)" data-srcset="{{ $imageSecond }}"
+                        <source media="(min-width:768px)" data-srcset="{{ $imageSecond ? $imageSecond : "https://placehold.co/600x400" }}"
                                 srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                        <img  class="lazyload img-loop " data-src="{{ $imageSecond }}"
+                        <img  class="lazyload img-loop " data-src="{{ $imageSecond ? $imageSecond : "https://placehold.co/600x400" }}"
                               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                               alt="  {{ $product->name }} "/>
                     </picture>
                 </div>
             </div>
             <div class="qv-product">
-                            <span class="icon-quickview" data-handle="/products/dong-ho-thong-minh-smartwatch-dz09" title="Xem nhanh">
+                            <span class="icon-quickview" data-handle="{{ $product->slug }}" title="Xem nhanh">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                             </span>
             </div>
-            <a href="/products/dong-ho-thong-minh-smartwatch-dz09" class="proloop-link quickview-product" data-handle="/products/dong-ho-thong-minh-smartwatch-dz09" title=" {{ $product->name }}" ></a>
+            <a href="{{ route('front.show-product-detail', $product->slug) }}" class="proloop-link quickview-product" data-handle="{{ $product->slug }}" title=" {{ $product->name }}" ></a>
         </div>
         <div class="proloop-detail">
             <div class="proloop--top">
-                <p class="proloop--vendor"><a title="Show vendor" href="/collections/vendors?q=apple">{{ $product->category->name ?? '' }}</a></p>
+                <p class="proloop--vendor"><a title="Show vendor" href="{{ route('front.show-product-category', $product->category->slug) }}">{{ $product->category->name ?? '' }}</a></p>
             </div>
-            <h3><a href="/products/dong-ho-thong-minh-smartwatch-dz09" class="quickview-product" data-handle="/products/dong-ho-thong-minh-smartwatch-dz09"> {{ $product->name }}</a></h3>
+            <h3><a href="{{ route('front.show-product-detail', $product->slug) }}" class="quickview-product" data-handle="{{ $product->slug }}"> {{ $product->name }}</a></h3>
             {{--                                            <div class="proloop--variant">--}}
             {{--                                                <span>+4 Màu sắc</span>--}}
             {{--                                            </div>--}}
             <div class="proloop--price on-sale d-flex">
-                @if($product->base_price > 0)
+                @if($product->base_price > 0 && $product->price > 0)
                     <div class="price-box">
-                        <span class="price">{{ number_format($product->price) }}₫</span>
-                        <span class="price-del">{{ number_format($product->base_price) }}₫</span>
+                        <span class="price">{{ formatCurrency($product->price) }}₫</span>
+                        <span class="price-del">{{ formatCurrency($product->base_price) }}₫</span>
                     </div>
                     <span class="pro-sale">-{{ $product->percent_discount }}%</span>
+                @elseif($product->price > 0 && $product->base_price == 0)
+                    <div class="price-box">
+                        <span class="price">{{ formatCurrency($product->price) }}₫</span>
+                    </div>
+                @elseif($product->price == 0 && $product->base_price > 0)
+                    <div class="price-box">
+                        <span class="price">{{ formatCurrency($product->base_price) }}₫</span>
+                    </div>
                 @else
                     <div class="price-box">
-                        <span class="price">{{ number_format($product->price) }}₫</span>
+                        <span class="price">Liên hệ</span>
                     </div>
                 @endif
 

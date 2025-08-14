@@ -549,7 +549,7 @@
                                             @foreach ($productCategories as $productCategory)
                                                 @if ($productCategory->childs()->count())
                                                     <li class="item submenu " data-menu-root="104673962">
-                                                        <a href="#" title="{{ $productCategory->name }}">
+                                                        <a href="{{ route('front.show-product-category', $productCategory->slug) }}" title="{{ $productCategory->name }}">
                                                             {{ $productCategory->name }}
                                                         </a>
                                                         <div class="dropdown_menu">
@@ -558,7 +558,7 @@
                                                                     <div class="col-lg-3">
                                                                         <ul class="has_submenu">
                                                                             @foreach ($childChunk as $childCate)
-                                                                                <li><a href="#"
+                                                                                <li><a href="{{ route('front.show-product-category', $childCate->slug) }}"
                                                                                         title="{{ $childCate->name }}">{{ $childCate->name }}</a>
                                                                                 </li>
                                                                             @endforeach
@@ -570,7 +570,7 @@
                                                     </li>
                                                 @else
                                                     <li class="item ">
-                                                        <a href="#" title="{{ $productCategory->name }}">
+                                                        <a href="{{ route('front.show-product-category', $productCategory->slug) }}" title="{{ $productCategory->name }}">
                                                             {{ $productCategory->name }}
                                                         </a>
                                                     </li>
