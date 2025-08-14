@@ -140,7 +140,9 @@
                         </div>
                         <div class="listProduct-row owl-carousel owlCarousel-style owlCarousel-dfex icon-arrow">
                             @foreach($cateFlash->products as $product)
-                                @include('site.products.product_item', ['product' => $product])
+                                <div class="product-loop" data-id="{{ $product->id }}">
+                                    @include('site.products.product_item', ['product' => $product])
+                                </div>
                             @endforeach
                         </div>
                         <div class="box-link">
@@ -169,7 +171,9 @@
                 <div class="listProduct-row">
                     <div class="owl-carousel owlCarousel-style owlCarousel-dfex icon-arrow">
                         @foreach($cateSpecial->products as $product)
-                            @include('site.products.product_item', ['product' => $product])
+                            <div class="product-loop" data-id="{{ $product->id }}">
+                                @include('site.products.product_item', ['product' => $product])
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -209,7 +213,9 @@
                 <div class="listProduct-row">
                     <div class="owl-carousel owlCarousel-style owlCarousel-dfex icon-arrow">
                         @foreach($productCate->products as $product)
-                            @include('site.products.product_item', ['product' => $product])
+                            <div class="product-loop" data-id="{{ $product->id }}">
+                                @include('site.products.product_item', ['product' => $product])
+                            </div>
                         @endforeach
                     </div>
                 </div>
