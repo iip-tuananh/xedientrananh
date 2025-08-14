@@ -1127,26 +1127,6 @@ HRT.Main = {
 		}, 300)
 	},
 	searchAutoHeader: function(){
-		$('.ultimate-search').submit(function(e) {
-			e.preventDefault();
-			var q = $(this).find('input[name=q]').val();
-			if(q.indexOf('script') > -1 || q.indexOf('>') > -1){
-				alert('Từ khóa của bạn có chứa mã độc hại ! Vui lòng nhập lại từ khóa khác');
-				$(this).find('input[name=q]').val('');
-			}
-			else{
-				var q_follow = 'product';
-				var query = encodeURIComponent(q);
-				if( !q ) {
-					window.location = '/search?type='+ q_follow +'&q=';
-					return;
-				}
-				else {
-					window.location = '/search?type=' + q_follow +'&q=' + query;
-					return;
-				}
-			}
-		});
 		var $input = $('.ultimate-search input[type="text"]');
 		$input.bind('keyup change paste propertychange', delayTime(function(){
 			var key = $(this).val(),
@@ -1163,13 +1143,13 @@ HRT.Main = {
 					$('.ultimate-search input[type="text"]').val($(this).val());
 					var q_follow = 'product',
 							str = '';
-					str = '/search?type=product&q=' + key + '&view=ultimate-product';
+					str = '/auto-search-complete?keyword=' + key + '&view=ultimate-product';
 					$.ajax({
 						url: str,
 						type: 'GET',
 						async: true,
 						success: function(data){
-							$results.find('.resultsContent').html(data).addClass('resultsdata');
+							$results.find('.resultsContent').html(data.html).addClass('resultsdata');
 						}
 					})
 					if(!$('.header-action_search').hasClass('js-action-show')){

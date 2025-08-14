@@ -244,7 +244,7 @@ class FrontController extends Controller
 
     public function showProductCategory(Request $request, $categorySlug = null)
     {
-        $categories = Category::parent()->with('products')->orderBy('sort_order')->get();
+        $categories = Category::query()->with('products')->orderBy('sort_order')->get();
         $category = Category::with(['childs'])->where('slug', $categorySlug)->first();
 
         $attributes = [];
@@ -673,13 +673,19 @@ class FrontController extends Controller
                 $query->where('name', $request->tag);
             });
         }
+        $product_ids = $query->pluck('id')->toArray();
+        $attributes = Attribute::query()->with(['tags' => function ($q) use ($product_ids) {
+            $q->with(['products' => function ($q) use ($product_ids) {
+                $q->where('products.status', 1)->whereIn('products.id', array_unique($product_ids));
+            }]);
+        }])->get();
         $categories = Category::query()->get();
         $vouchers = Voucher::query()->where('status', 1)->where('quantity', '>', 0)->where('to_date', '>=', now())->orderBy('created_at', 'desc')->get();
         $products = $query->paginate(20);
         $title = 'Tìm kiếm';
         $short_des = 'Kết quả tìm kiếm';
         $title_sub = 'Tìm thấy ' . count($products) . ' kết quả phù hợp';
-        return view('site.products.product_category', compact('products', 'title', 'short_des', 'title_sub', 'categories', 'vouchers'));
+        return view('site.products.product_category', compact('products', 'title', 'short_des', 'title_sub', 'categories', 'vouchers', 'attributes'));
     }
 
     // Chính sách
