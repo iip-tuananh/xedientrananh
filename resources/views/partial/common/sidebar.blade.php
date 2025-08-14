@@ -80,6 +80,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('manufacturers.index') }}" class="nav-link {{ Request::routeIs('manufacturers.index') ? 'active' : '' }}">
+                            <i class="far fas  fa-angle-right nav-icon"></i>
+                            <p>Danh mục hãng sản xuất</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('Product.index') }}"
                             class="nav-link {{ Request::routeIs('Product.index') ? 'active' : '' }}">
                             <i class="far fas  fa-angle-right nav-icon"></i>
@@ -93,6 +100,18 @@
                             <p>Thêm mới hàng hóa</p>
                         </a>
                     </li>
+
+
+                    <li class="nav-item">
+                        <a href="{{ route('attributeGroups.index') }}"
+                           class="nav-link {{ Request::routeIs('attributes.index') ? 'active' : '' }}">
+                            <i class="far fas  fa-angle-right nav-icon"></i>
+                            <p>Danh mục nhóm thuộc tính hàng hóa</p>
+                        </a>
+                    </li>
+
+
+
                     <li class="nav-item">
                         <a href="{{ route('attributes.index') }}"
                             class="nav-link {{ Request::routeIs('attributes.index') ? 'active' : '' }}">
@@ -185,12 +204,12 @@
                             <p>Danh mục nguồn gốc xuất xứ</p>
                         </a>
                     </li> --}}
-                    {{--                    <li class="nav-item"> --}}
-                    {{--                        <a href="{{ route('manufacturers.index') }}" class="nav-link {{ Request::routeIs('manufacturers.index') ? 'active' : '' }}"> --}}
-                    {{--                            <i class="far fas  fa-angle-right nav-icon"></i> --}}
-                    {{--                            <p>Danh mục hãng sản xuất</p> --}}
-                    {{--                        </a> --}}
-                    {{--                    </li> --}}
+{{--                                        <li class="nav-item"> --}}
+{{--                                            <a href="{{ route('manufacturers.index') }}" class="nav-link {{ Request::routeIs('manufacturers.index') ? 'active' : '' }}"> --}}
+{{--                                                <i class="far fas  fa-angle-right nav-icon"></i> --}}
+{{--                                                <p>Danh mục hãng sản xuất</p> --}}
+{{--                                            </a> --}}
+{{--                                        </li> --}}
 
                     {{-- <li class="nav-item">
                         <a href="{{ route('Project.index') }}" class="nav-link {{ Request::routeIs('Project.index') ? 'active' : '' }}">

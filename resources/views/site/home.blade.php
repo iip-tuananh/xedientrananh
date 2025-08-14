@@ -11,6 +11,15 @@
 @section('css')
 @endsection
 @section('content')
+    <style>
+        .flip-js-countdown .soon-target { display:flex; gap:.5rem; }
+        .flip-js-countdown .cd-box { display:flex; flex-direction:column; align-items:center; }
+        .flip-js-countdown .cd-num {
+            display:inline-block; min-width:2.2rem; padding:.25rem .45rem;
+            border-radius:.5rem; background:#ffd400; text-align:center; font-weight:700;
+        }
+        .flip-js-countdown .cd-lbl { margin-top:.2rem; font-size:.75rem; opacity:.85; }
+    </style>
 
 <div class="section-main section-main--index">
     <div class="container">
@@ -102,18 +111,30 @@
                     <div class="box-listprod">
                         <div class="section-heading pd-right">
                             <h2 class="hTitle"><a href="/collections/onsale">{{ $cateFlash->name }}</a></h2>
+{{--                            <div class="box-countdown flip-js-countdown">--}}
+{{--                                <div class="auto-due soon"--}}
+{{--                                     data-end="2024-5-30T10:00:00"--}}
+{{--                                     data-start="2024-5-30T10:00:00"--}}
+{{--                                     data-face="slot"--}}
+{{--                                     data-format="d,h,m,s"--}}
+{{--                                     data-labels-days="Dia,Ngày"--}}
+{{--                                     data-labels-hours="Hora,Giờ"--}}
+{{--                                     data-labels-minutes="Minuto,Phút"--}}
+{{--                                     data-labels-seconds="Segundo,Giây">--}}
+{{--                                    <span id="label-due"></span>--}}
+{{--                                    <div id="soon-espa"></div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                             <div class="box-countdown flip-js-countdown">
-                                <div class="auto-due soon"
-                                     data-end="2024-5-30T10:00:00"
-                                     data-start="2024-5-30T10:00:00"
-                                     data-face="slot"
-                                     data-format="d,h,m,s"
-                                     data-labels-days="Dia,Ngày"
-                                     data-labels-hours="Hora,Giờ"
-                                     data-labels-minutes="Minuto,Phút"
-                                     data-labels-seconds="Segundo,Giây">
-                                    <span id="label-due"></span>
-                                    <div id="soon-espa"></div>
+                                <div class="auto-due"
+                                     data-end="{{ $cateFlash->end_date }}"
+                                     data-labels-days="Ngày"
+                                     data-labels-hours="Giờ"
+                                     data-labels-minutes="Phút"
+                                     data-labels-seconds="Giây">
+                                    <span class="label-due"></span> &nbsp;
+                                    <div class="soon-target"></div>
                                 </div>
                             </div>
                         </div>
@@ -179,114 +200,17 @@
         </section>
     @endif
 
-
     @foreach($productCategories as $productCate)
-        <section class="home-collection-3">
-            <div class="container container-pd0">
-                <div class="wraper--content">
-                    <div class="wraper--content__left">
-                        <div class="section-heading pd-right">
-                            <h2 class="hTitle"><a href="#">{{ $productCate->name }}</a></h2>
-                        </div>
-                        <div class="wraper--content__rowProduct owl-carousel owlCarousel-style icon-arrow">
-                            @foreach($productCate->products->chunk(3) as $productChunk)
-                                <div class="row-product">
-                                    @foreach($productChunk as $product)
-                                        @php
-                                            $variant = $product->variants[0];
-                                            $img = @$variant->image->path ?? '';
-                                        @endphp
-                                        <div class="product-loop product-horizontal" data-id="108698715{{ $product->id }}">
-                                            <div class="product-inner" data-proid="1039990487" id="_loop_1">
-                                                <div class="proloop-image">
-                                                    @if($product->base_price > 0)
-                                                        <div class="pro-sale"><span>-{{ $product->percent_discount }}%</span></div>
-                                                    @endif
-                                                    <div class="gift product_gift_label d-none" data-id="1039990487">
-                                                        <img class="lazyload" data-src="https://file.hstatic.net/1000308580/file/icon-gifbox_21127e78739a40a28f058e5e123d41b1.png" src="https://file.hstatic.net/1000308580/file/icon-gifbox_21127e78739a40a28f058e5e123d41b1.png" alt="icon quà tặng">
-                                                    </div>
-                                                    <div class="product--image">
-                                                        <div class="lazy-img">
-                                                            <picture>
-                                                                <source media="(max-width: 480px)" data-srcset="{{ $img }}"
-                                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                                <source media="(min-width: 481px)" data-srcset="{{ $img }}"
-                                                                        srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-                                                                <img class="lazyload img-loop " data-src="{{ $img }}"
-                                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                                                                     alt=" {{ $product->name }} "  />
-                                                            </picture>
-                                                        </div>
-                                                    </div>
-                                                    <a href="/products/dong-ho-thong-minh-smartwatch-dz09" class="proloop-link quickview-product" data-handle="/products/dong-ho-thong-minh-smartwatch-dz09" title="{{ $product->name }}" ></a>
-                                                </div>
-                                                <div class="proloop-detail">
-                                                    <h3><a href="/products/dong-ho-thong-minh-smartwatch-dz09" class="quickview-product" data-handle="/products/dong-ho-thong-minh-smartwatch-dz09">{{ $product->name }}</a></h3>
-                                                    @if($product->base_price > 0)
-                                                        <p class="proloop--price on-sale">
-                                                            <span class="price">{{ number_format($product->price) }}₫</span>
-                                                            <span class="price-del">{{ number_format($product->base_price) }}₫</span>
-                                                            <span class="pro-percent">-{{ $product->percent_discount }}%</span>
-                                                        </p>
-                                                    @else
-                                                        <p class="proloop--price ">
-                                                            <span class="price">{{ number_format($product->price) }}₫</span>
-                                                        </p>
-                                                    @endif
-
-
-                                                    <div class="proloop-actions" data-vrid="1086987155">
-                                                        <div class="proloop-actions__inner">
-                                                            <div class="actions-primary">
-                                                                <button type="submit" class="btn-proloop-cart add-to-cart  btn-addcart-view " onclick="HRT.All.addCartProdItem('1086987155')" >
-                                                                    <span class="btnadd">  Thêm vào giỏ </span>
-                                                                    <span class="btnico" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Thêm vào giỏ">
-                                            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                <g transform="translate(0 512) scale(.1 -.1)">
-                                                    <path d="m2371 5100c-150-40-306-141-387-248l-35-48-492-58c-271-32-501-63-512-69-31-16-44-39-45-75 0-32 54-516 64-573 5-25 3-27-44-31-27-3-56-11-65-18s-78-117-155-245l-139-232-86-1660c-47-913-85-1692-85-1730 0-60 3-73 23-91l23-22h2125 2126l21 23c18 19 22 35 22 92 0 37-38 815-85 1728l-86 1660-139 232c-77 128-147 238-156 246-11 9-49 15-106 18-86 3-90 4-84 25 3 11 18 74 33 138 29 128 26 152-19 182-13 8-190 54-393 101-204 47-380 90-391 94-14 6-24 22-28 45-11 60-92 208-153 281-76 91-209 181-324 220-73 25-102 29-219 32-111 2-148-1-209-17zm318-176c139-34 279-140 353-265 21-34 36-64 34-66s-51 8-110 22c-113 28-152 27-180-4-8-9-34-96-56-192-23-95-43-182-46-191-4-14-72-44-80-35-1 1-19 139-39 306-19 167-40 311-44 320-21 39-55 45-163 33-56-7-103-10-106-7-8 8 127 68 183 81 72 18 178 17 254-2zm-329-258c0-2 14-117 30-256 17-139 27-256 23-260s-190-51-413-104c-308-74-410-102-427-118-31-29-30-70 7-220 17-67 30-128 30-135 0-10-45-13-203-13h-203l-56 478c-31 262-56 478-55 478 1 1 283 36 627 77s628 75 633 76c4 0 7-1 7-3zm1105-357c242-56 444-105 449-110 6-5-20-134-64-324l-74-315h-246-246l-82 343c-72 301-85 345-107 365-31 26-65 28-147 6-33-8-61-14-63-12-1 2 7 42 18 89l20 86 51-13c28-7 249-58 491-115zm-495-226c0-5 27-120 60-257 33-136 60-252 60-257s-276-9-643-9h-642l-28 117c-15 64-26 117-24 119 2 1 1194 291 1210 293 4 0 7-2 7-6zm-1980-282c0-9 14-119 25-203l5-38h-100c-55 0-100 3-100 6 0 18 145 244 156 244 8 0 14-4 14-9zm3239-110c39-66 71-122 71-125s-74-6-165-6-165 3-165 8c0 4 12 60 27 125l27 117h67 66l72-119zm155-373c3-35 40-733 81-1553s76-1511 78-1537l4-48h-1987-1987l4 48c2 26 37 717 78 1537s78 1518 81 1553l6 62h1818 1818l6-62z"/>
-                                                    <path d="m1850 3209c-168-32-260-248-169-395 24-39 82-92 114-104 23-9 23-10 27-242 4-223 5-236 32-313 85-248 285-432 534-492 88-21 256-21 344 0 249 60 449 244 534 492 27 77 28 90 32 312l4 233 34 16c42 20 101 85 121 133 24 55 21 159-6 214-26 53-87 112-140 134-46 20-156 20-202 0-199-83-215-381-26-479l39-19-4-207c-5-237-17-291-88-400-225-349-715-349-940 0-71 109-83 164-88 400l-4 207 39 19c85 44 132 127 133 232 0 175-145 292-320 259z"/>
-                                                </g>
-                                            </svg>
-                                        </span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="actions-boxqty d-flex">
-                                                                <div class="actions-wrapqty d-flex">
-                                                                    <button class="qty-btn proloop-minus" onclick="HRT.All.minusQtyProdItem('1086987155')">
-                                                                        <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect height="1" width="18" y="9" x="1"></rect>
-                                                                        </svg>
-                                                                    </button>
-                                                                    <input class="proloop-value" type="text" readonly="" name="proloop-quantity" value="">
-                                                                    <button class="qty-btn proloop-plus" onclick="HRT.All.plusQtyProdItem('1086987155')">
-                                                                        <svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect x="9" y="1" width="1" height="17"></rect>
-                                                                            <rect x="1" y="9" width="17" height="1"></rect>
-                                                                        </svg>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="actions-icon">
-                                        <span class="btnico" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Thêm vào giỏ" onclick="HRT.All.addCartProdItem('1086987155')">
-                                            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                <g transform="translate(0 512) scale(.1 -.1)">
-                                                    <path d="m2371 5100c-150-40-306-141-387-248l-35-48-492-58c-271-32-501-63-512-69-31-16-44-39-45-75 0-32 54-516 64-573 5-25 3-27-44-31-27-3-56-11-65-18s-78-117-155-245l-139-232-86-1660c-47-913-85-1692-85-1730 0-60 3-73 23-91l23-22h2125 2126l21 23c18 19 22 35 22 92 0 37-38 815-85 1728l-86 1660-139 232c-77 128-147 238-156 246-11 9-49 15-106 18-86 3-90 4-84 25 3 11 18 74 33 138 29 128 26 152-19 182-13 8-190 54-393 101-204 47-380 90-391 94-14 6-24 22-28 45-11 60-92 208-153 281-76 91-209 181-324 220-73 25-102 29-219 32-111 2-148-1-209-17zm318-176c139-34 279-140 353-265 21-34 36-64 34-66s-51 8-110 22c-113 28-152 27-180-4-8-9-34-96-56-192-23-95-43-182-46-191-4-14-72-44-80-35-1 1-19 139-39 306-19 167-40 311-44 320-21 39-55 45-163 33-56-7-103-10-106-7-8 8 127 68 183 81 72 18 178 17 254-2zm-329-258c0-2 14-117 30-256 17-139 27-256 23-260s-190-51-413-104c-308-74-410-102-427-118-31-29-30-70 7-220 17-67 30-128 30-135 0-10-45-13-203-13h-203l-56 478c-31 262-56 478-55 478 1 1 283 36 627 77s628 75 633 76c4 0 7-1 7-3zm1105-357c242-56 444-105 449-110 6-5-20-134-64-324l-74-315h-246-246l-82 343c-72 301-85 345-107 365-31 26-65 28-147 6-33-8-61-14-63-12-1 2 7 42 18 89l20 86 51-13c28-7 249-58 491-115zm-495-226c0-5 27-120 60-257 33-136 60-252 60-257s-276-9-643-9h-642l-28 117c-15 64-26 117-24 119 2 1 1194 291 1210 293 4 0 7-2 7-6zm-1980-282c0-9 14-119 25-203l5-38h-100c-55 0-100 3-100 6 0 18 145 244 156 244 8 0 14-4 14-9zm3239-110c39-66 71-122 71-125s-74-6-165-6-165 3-165 8c0 4 12 60 27 125l27 117h67 66l72-119zm155-373c3-35 40-733 81-1553s76-1511 78-1537l4-48h-1987-1987l4 48c2 26 37 717 78 1537s78 1518 81 1553l6 62h1818 1818l6-62z"/>
-                                                    <path d="m1850 3209c-168-32-260-248-169-395 24-39 82-92 114-104 23-9 23-10 27-242 4-223 5-236 32-313 85-248 285-432 534-492 88-21 256-21 344 0 249 60 449 244 534 492 27 77 28 90 32 312l4 233 34 16c42 20 101 85 121 133 24 55 21 159-6 214-26 53-87 112-140 134-46 20-156 20-202 0-199-83-215-381-26-479l39-19-4-207c-5-237-17-291-88-400-225-349-715-349-940 0-71 109-83 164-88 400l-4 207 39 19c85 44 132 127 133 232 0 175-145 292-320 259z"/>
-                                                </g>
-                                            </svg>
-                                        </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                </div>
-                            @endforeach
-
-                        </div>
+        <section class="home-collection-2">
+            <div class="container container-pd-parent">
+                <div class="section-heading pd-right">
+                    <h2 class="hTitle"><a href="/collections/dien-thoai">{{ $productCate->name }}</a></h2>
+                </div>
+                <div class="listProduct-row">
+                    <div class="owl-carousel owlCarousel-style owlCarousel-dfex icon-arrow">
+                        @foreach($productCate->products as $product)
+                            @include('site.products.product_item', ['product' => $product])
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -411,4 +335,119 @@
 </main>
 @endsection
 @push('scripts')
+    <script>
+        (function () {
+            // Parse "YYYY-MM-DD[ T]HH:mm:ss" (local) hoặc "YYYY-MM-DD" (=> 23:59:59)
+            function parseLocalEnd(raw) {
+                if (!raw) return null;
+                var s = String(raw).trim();
+
+                // Có timezone (Z hoặc +/-): để Date tự xử lý absolute time
+                if (/[zZ]|[+\-]\d{2}:?\d{2}$/.test(s)) {
+                    var dAbs = new Date(s);
+                    return isNaN(dAbs) ? null : dAbs;
+                }
+
+                // Chỉ ngày
+                if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)) {
+                    var a = s.split("-");
+                    return new Date(+a[0], +a[1]-1, +a[2], 23, 59, 59); // local 23:59:59
+                }
+
+                // Ngày + giờ (có ' ' hoặc 'T')
+                var m = /^(\d{4})-(\d{1,2})-(\d{1,2})[ T](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?$/.exec(s);
+                if (m) {
+                    return new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], +(m[6]||0)); // local
+                }
+                return null;
+            }
+
+            function pad2(n) { n = Math.floor(Math.max(0, n)); return (n < 10 ? '0' : '') + n; }
+
+            function startOne(wrapper) {
+                var endRaw = wrapper.getAttribute('data-end');
+                var end    = parseLocalEnd(endRaw);
+                var label  = wrapper.querySelector('.label-due') || wrapper.querySelector('#label-due');
+                var target = wrapper.querySelector('.soon-target') || wrapper.querySelector('#soon-espa');
+
+                if (!end || isNaN(end.getTime())) {
+                    if (label) label.textContent = 'Thời gian không hợp lệ';
+                    return;
+                }
+                if (!target) {
+                    target = document.createElement('div');
+                    target.className = 'soon-target';
+                    wrapper.appendChild(target);
+                }
+
+                // Lấy label từ data-* (nếu có)
+                function lbl(attr, fallback) {
+                    var v = wrapper.getAttribute(attr);
+                    if (!v) return fallback;
+                    // Nếu dạng "Dia,Ngày" thì lấy phần sau cùng
+                    var parts = v.split(',');
+                    return (parts[parts.length-1] || fallback).trim();
+                }
+                var Ld = lbl('data-labels-days', 'Ngày');
+                var Lh = lbl('data-labels-hours', 'Giờ');
+                var Lm = lbl('data-labels-minutes', 'Phút');
+                var Ls = lbl('data-labels-seconds', 'Giây');
+
+                // Dựng DOM cho 4 ô
+                target.innerHTML =
+                    '<div class="cd-box"><span class="cd-num" data-u="d">00</span><span class="cd-lbl">'+Ld+'</span></div>'+
+                    '<div class="cd-box"><span class="cd-num" data-u="h">00</span><span class="cd-lbl">'+Lh+'</span></div>'+
+                    '<div class="cd-box"><span class="cd-num" data-u="m">00</span><span class="cd-lbl">'+Lm+'</span></div>'+
+                    '<div class="cd-box"><span class="cd-num" data-u="s">00</span><span class="cd-lbl">'+Ls+'</span></div>';
+
+                var $d = target.querySelector('.cd-num[data-u="d"]');
+                var $h = target.querySelector('.cd-num[data-u="h"]');
+                var $m = target.querySelector('.cd-num[data-u="m"]');
+                var $s = target.querySelector('.cd-num[data-u="s"]');
+
+                function render() {
+                    var now  = new Date();
+                    var diff = end - now;
+
+                    if (diff <= 0) {
+                        diff = 0;
+                        clearInterval(timer);
+                        if (label) label.textContent = 'Ưu đãi kết thúc';
+                    } else {
+                        if (label) label.textContent = 'Kết thúc sau: ';
+                    }
+
+                    var totalSec = Math.floor(diff / 1000);
+                    var days     = Math.floor(totalSec / 86400);
+                    var hours    = Math.floor((totalSec % 86400) / 3600);
+                    var minutes  = Math.floor((totalSec % 3600) / 60);
+                    var seconds  = totalSec % 60;
+
+                    // Nếu muốn ngày có thể >99, vẫn cứ hiển thị đầy đủ (không cắt)
+                    $d.textContent = String(days).padStart(2, '0');
+                    $h.textContent = pad2(hours);
+                    $m.textContent = pad2(minutes);
+                    $s.textContent = pad2(seconds);
+                }
+
+                render();
+                var timer = setInterval(render, 1000);
+            }
+
+            function initCountdowns() {
+                var nodes = document.querySelectorAll('.flip-js-countdown .auto-due');
+                if (!nodes.length) return;
+                for (var i = 0; i < nodes.length; i++) startOne(nodes[i]);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initCountdowns);
+            } else {
+                initCountdowns();
+            }
+
+            // Nếu bạn render DOM động (Ajax/Angular), gọi lại: initCountdowns();
+        })();
+    </script>
+
 @endpush

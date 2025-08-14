@@ -105,27 +105,14 @@
                 }
             },
             stateSave: true,
-            columnDefs: [
-                {
-                    'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }
-            ],
-            select: {
-                'style': 'multi'
-            },
             columns: [
-                {data: 'id', orderable: false},
                 {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
                 {data: 'name', title: 'Tên'},
                 {data: 'base_price', title: "Đơn giá chưa giảm"},
                 {data: 'price', title: "Đơn giá bán"},
-                {data: 'unit_id', title: "Đơn vị tính"},
+                {data: 'variants', title: "Biến thể"},
                 {data: 'cate_id', title: 'Danh mục'},
                 {data: 'category_special', title: 'Danh mục đặc biệt'},
-                {data: 'tags', title: 'Thẻ tags phân loại', style: 'width: 15%'},
                 {
                     data: 'status',
                     title: "Trạng thái",
@@ -138,18 +125,6 @@
                     },
                     className: "text-center"
                 },
-                {
-                    data: 'state',
-                    title: "Tình trạng",
-                    render: function (data) {
-                        if (data == 1) {
-                            return `<span class="badge badge-success">Còn hàng</span>`;
-                        } else {
-                            return `<span class="badge badge-warning">Hết hàng</span>`;
-                        }
-                    },
-                    className: "text-center"
-                },
                 {data: 'action', orderable: false, title: "Hành động"}
             ],
             search_columns: [
@@ -157,10 +132,6 @@
                 {
                     data: 'status', search_type: "select", placeholder: "Trạng thái",
                     column_data: [{id: 1, name: "Xuất bản"}, {id: 0, name: "Nháp"}]
-                },
-                {
-                    data: 'state', search_type: "select", placeholder: "Tình trạng",
-                    column_data: [{id: 1, name: "Còn hàng"}, {id: 2, name: "Hết hàng"}]
                 },
                 {
                     data: 'cate_id', search_type: "select", placeholder: "Danh mục",

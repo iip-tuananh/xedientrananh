@@ -11,6 +11,8 @@ use App\Model\Admin\Product;
 use App\Model\Admin\ProductCategorySpecial;
 use App\Model\Admin\ProductVideo;
 use App\Model\Admin\Tag;
+use App\Model\Admin\Tagable;
+use App\Model\Common\ProductCategory;
 use Cassandra\Exception\ProtocolException;
 use Illuminate\Http\Request;
 use App\Model\Admin\Product as ThisModel;
@@ -55,6 +57,28 @@ class ProductController extends Controller
 			->editColumn('price', function ($object) {
 				return formatCurrent($object->price);
 			})
+            ->addColumn('variants', function ($object) {
+                $count = (int) ($object->variants_count ?? $object->variants()->count());
+                $url   = route('product_variants.index') . '?product-id=' . $object->id;
+
+                if ($count === 0) {
+                    return '<a href="'.$url.'" class="btn btn-sm btn-light text-muted"
+                   target="_blank" rel="noopener"
+                   title="Chưa có biến thể - bấm để thêm">
+                    <span class="badge bg-secondary rounded-pill me-2">0</span>
+                    <span>Biến thể</span>
+                </a>';
+                }
+
+                $badgeClass = $count < 5 ? 'bg-success' : ($count < 20 ? 'bg-primary' : 'bg-warning text-dark');
+
+                return '<a href="'.$url.'" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center"
+               target="_blank" rel="noopener"
+               title="Xem & quản lý '.$count.' biến thể">
+                <span class="badge '.$badgeClass.' rounded-pill me-2">'.$count.' </span>
+               &nbsp; <span>Biến thể</span>
+            </a>';
+            })
 			->editColumn('created_at', function ($object) {
 				return Carbon::parse($object->created_at)->format("d/m/Y");
 			})
@@ -96,7 +120,7 @@ class ProductController extends Controller
                 return $result;
 			})
 			->addIndexColumn()
-			->rawColumns(['action', 'tags'])
+			->rawColumns(['action', 'tags', 'variants'])
 			->make(true);
     }
 
@@ -217,8 +241,6 @@ class ProductController extends Controller
 
 	public function delete($id)
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-
 		$object = ThisModel::findOrFail($id);
 		if (!$object->canDelete()) {
 			$message = array(
@@ -226,19 +248,20 @@ class ProductController extends Controller
 				"alert-type" => "warning"
 			);
 		} else {
-            if (isset($object->image)) {
-                FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
+            $variants = $object->variants;
+
+            foreach ($variants as $variant) {
+                $variant->actDelete();
             }
-            if (isset($object->galleries)) {
-                foreach ($object->galleries as $gallery) {
-                    if ($gallery->image) {
-                        FileHelper::forceDeleteFiles($gallery->image->id, $gallery->id, ProductGallery::class);
-                        $gallery->image->removeFromDB();
-                    }
-                    $gallery->removeFromDB();
-                }
-            }
-			$object->delete();
+
+            AttributeValue::query()->where('product_id', $object->id)->delete();
+            ProductCategory::query()->where('product_id', $object->id)->delete();
+            Tagable::query()->where('tagable_type', Product::class)
+                ->where('tagable_id', $object->id)
+                ->delete();
+
+            $object->delete();
+
 			$message = array(
 				"message" => "Thao tác thành công!",
 				"alert-type" => "success"

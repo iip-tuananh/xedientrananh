@@ -51,7 +51,6 @@ Quản lý danh mục đặc biệt
             {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
             {data: 'code', title: 'Mã'},
             {data: 'name', title: 'Tên danh mục'},
-            {data: 'type', title: 'Loại'},
             {data: 'end_date', title: 'Áp dụng đến ngày'},
             {data: 'updated_at', title: 'Ngày cập nhật'},
             {data: 'updated_by', title: 'Người cập nhật'},

@@ -159,7 +159,7 @@ class Product extends BaseModel
     {
         $result = self::with([
             'category',
-            'image',
+            'variants',
         ]);
 
         if (!empty($request->name)) {

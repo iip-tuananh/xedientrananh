@@ -76,7 +76,7 @@ class CategorySpecialController extends Controller
             [
                 'name' => 'required|max:255',
                 'code' => 'required|max:255|unique:category_special,code',
-                'type' => 'required',
+//                'type' => 'required',
                 'show_home_page' => 'required',
                 'image' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
             ]
@@ -144,7 +144,7 @@ class CategorySpecialController extends Controller
             [
                 'name' => 'required|max:255',
                 'code' => 'required|unique:category_special,code,' . $id,
-                'type' => 'required',
+//                'type' => 'required',
                 'show_home_page' => 'required',
                 'image' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
             ]

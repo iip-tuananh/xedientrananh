@@ -21,19 +21,19 @@
                 </div>
             </div>
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group custom-group">
-                    <label class="form-label required-label">Loại danh mục</label>
-                    <select id="my-select" class="form-control custom-select" ng-model="form.type">
-                        <option value="">Chọn loại danh mục</option>
-                        <option ng-repeat="t in types" ng-value="t.id" ng-selected="form.type == t.id"><% t.name %></option>
+{{--            <div class="col-md-12 col-sm-12 col-xs-12">--}}
+{{--                <div class="form-group custom-group">--}}
+{{--                    <label class="form-label required-label">Loại danh mục</label>--}}
+{{--                    <select id="my-select" class="form-control custom-select" ng-model="form.type">--}}
+{{--                        <option value="">Chọn loại danh mục</option>--}}
+{{--                        <option ng-repeat="t in types" ng-value="t.id" ng-selected="form.type == t.id"><% t.name %></option>--}}
 
-                    </select>
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong><% errors.type[0] %></strong>
-                    </span>
-                </div>
-            </div>
+{{--                    </select>--}}
+{{--                    <span class="invalid-feedback d-block" role="alert">--}}
+{{--                        <strong><% errors.type[0] %></strong>--}}
+{{--                    </span>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group custom-group">
@@ -55,12 +55,12 @@
                 </div>
             </div>
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group custom-group">
-                    <label class="form-label">Vị trí</label>
-                    <input class="form-control " type="number" ng-model="form.order_number">
-                </div>
-            </div>
+{{--            <div class="col-md-12 col-sm-12 col-xs-12">--}}
+{{--                <div class="form-group custom-group">--}}
+{{--                    <label class="form-label">Vị trí</label>--}}
+{{--                    <input class="form-control " type="number" ng-model="form.order_number">--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <label class="form-label">Banner danh mục</label>
