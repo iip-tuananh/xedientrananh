@@ -206,6 +206,7 @@
                                                         <div class="addcart-area">
                                                             <button type="button" id="add-to-cart"
                                                                     class=" add-to-cartProduct button dark btn-addtocart addtocart-modal"
+                                                                    ng-click="addToCart({{ $product->id }})"
                                                                     name="add">
                                                                 Thêm vào giỏ
                                                             </button>
@@ -215,6 +216,15 @@
                                                                     name="add">
                                                                 Mua ngay
                                                             </button>
+
+
+                                                            <button type="button"
+                                                                    class="  button dark btn-buynow btnred addtocart-modal" ng-click="addToCompareList({{ $product->id }})"
+                                                                    name="add">
+                                                               Thêm vào so sánh
+                                                            </button>
+
+
 
                                                         </div>
                                                     </div>
@@ -3243,35 +3253,8 @@ nhận h&#224;ng"/>
 
             <script>
                 $(document).ready(function () {
-                    $('#add-to-cart').click(function (e) {
-                        e.preventDefault();
-                        $(this).addClass('clicked_buy');
-                        HRT.All.addItemShowModalCart($('#product-select').val());
-                        //getCartModal();
-                        if ($(window).width() < 992) {
-                            $('body').removeClass('locked-scroll').addClass('body-showcart');
-                            $('.siteCart-mobile').addClass('show-cart');
-                        }
-                    });
-                    $('#buy-now').click(function (e) {
-                        e.preventDefault();
-                        var id = $('#product-select').val();
-                        var quantity = $('#quantity').val();
-                        var params = {
-                            type: 'POST',
-                            url: '/cart/add.js',
-                            async: false,
-                            data: 'quantity=' + quantity + '&id=' + id,
-                            dataType: 'json',
-                            success: function (line_item) {
-                                window.location = '../cart.html';
-                            },
-                            error: function (XMLHttpRequest, textStatus) {
-                                Haravan.onError(XMLHttpRequest, textStatus);
-                            }
-                        };
-                        jQuery.ajax(params);
-                    });
+
+
                 });
             </script>
 
@@ -3417,7 +3400,7 @@ nhận h&#224;ng"/>
 
 
     <script>
-        app.controller('productDetailPage', function ($rootScope, $scope, $interval) {
+        app.controller('productDetailPage', function ($rootScope, $scope, $interval, compareItemSync, cartItemSync) {
             $scope.variant = @json($variantDefault);
             $scope.variants = @json($product->variants);
             $scope.selectedVariantId = ($scope.variant && $scope.variant.id) ? $scope.variant.id : null;
@@ -3437,13 +3420,90 @@ nhận h&#224;ng"/>
                 $scope.getVariant(id);
             };
 
-
             $scope.keySelect = function (e, id) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     $scope.selectVariant(id);
                 }
             };
+
+            // click thêm sp vào list so sánh
+            $scope.addToCompareList = function (productId) {
+                url = "{{route('compare.add.item', ['productId' => 'productId'])}}";
+                url = url.replace('productId', productId);
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': 1
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            $interval.cancel($rootScope.promise);
+
+                            $rootScope.promise = $interval(function () {
+                                compareItemSync.items = response.compareItems;
+                                compareItemSync.count = response.count;
+                            }, 1000);
+                        } else {
+                            toastr.warning(response.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.toastr('Thao tác thất bại !');
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
+            }
+
+
+            $scope.addToCart = function (productId) {
+                var currentVal = parseInt(jQuery('input[name="quantity"]').val());
+                url = "{{route('cart.add.item', ['productId' => 'productId', 'variantId' => 'variantId'])}}";
+                url = url.replace('productId', productId);
+                url = url.replace('variantId', $scope.selectedVariantId);
+                console.log(productId)
+                console.log($scope.selectedVariantId)
+                jQuery.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'qty': currentVal
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $interval.cancel($rootScope.promise);
+                            $rootScope.promise = $interval(function () {
+                                cartItemSync.items = response.items;
+                                cartItemSync.total = response.total;
+                                cartItemSync.count = response.count;
+                            }, 1000);
+
+                            toastr.success('Đã thêm sản phẩm vào giỏ hàng');
+
+                        }
+                    },
+                    error: function () {
+                        jQuery.toast('Thao tác thất bại !')
+                    },
+                    complete: function () {
+                        $scope.$applyAsync();
+                    }
+                });
+            }
+
+
         })
     </script>
 @endpush

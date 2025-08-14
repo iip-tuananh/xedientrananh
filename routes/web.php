@@ -102,12 +102,23 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('/add-home-page', 'Admin\PostCategoryController@addToHomepage')->name('PostCategory.add.home.page');
         });
 
-        // danh mục liên hệ
         Route::group(['prefix' => 'contacts'], function () {
             Route::get('/', 'Admin\ContactController@index')->name('contacts.index');
             Route::get('/searchData', 'Admin\ContactController@searchData')->name('contacts.searchData');
             Route::get('/{id}/detail', 'Admin\ContactController@getContactDetail')->name('contacts.detail');
             Route::get('/{id}/delete', 'Admin\ContactController@delete')->name('contacts.delete');
+        });
+
+        // danh mục liên hệ
+        Route::group(['prefix' => 'finance-companies'], function () {
+            Route::get('/', 'Admin\FinanceCompanyController@index')->name('finance_companies.index');
+            Route::get('/create', 'Admin\FinanceCompanyController@create')->name('finance_companies.create');
+            Route::post('/', 'Admin\FinanceCompanyController@store')->name('finance_companies.store');
+            Route::get('/{id}/edit', 'Admin\FinanceCompanyController@edit')->name('finance_companies.edit');
+            Route::post('/{id}/update', 'Admin\FinanceCompanyController@update')->name('finance_companies.update');
+
+            Route::get('/searchData', 'Admin\FinanceCompanyController@searchData')->name('finance_companies.searchData');
+            Route::get('/{id}/delete', 'Admin\FinanceCompanyController@delete')->name('finance_companies.delete');
         });
 
         Route::group(['prefix' => 'apply-recruitments'], function () {

@@ -482,72 +482,99 @@
     <script src="/site/js/scripts.js?v=162" defer></script>
     <!-- POPUP LOAD -->
     <script>
-        jQuery(document).ready(function(){
-
-
-        setTimeout(function(){
-            if(sessionStorage.mega_popup == null ){
-                $('#popup-contact').modal('show');
-            }
-        },40000);
-            if ($('.popupForm').length > 0){
-                $('.popup-form-customer form.contact-form').submit(function(e){
-                    var self = $(this);
-                    if($(this)[0].checkValidity() == true){
-                        e.preventDefault();
-                        grecaptcha.ready(function() {
-                            grecaptcha.execute('6Le047YqAAAAAKk-dTuIhf_F7L0m3Yp9hOkIxTn1', {action: 'submit'}).then(function(token) {
-                                self.find('input[name="g-recaptcha-response"]').val(token);
-                                $.ajax({
-                                    type: 'POST',
-                                    url:'/account/contact',
-                                    data: $('.popup-form-customer form.contact-form').serialize(),
-                                    success:function(data){
-                                        if($(data).find('#error_customer').length == 0){
-                                            $('.popup-form-customer .succes-popup').addClass('success').html('Cảm ơn bạn đã đăng ký email theo dõi!');
-                                            setTimeout(function(){
-                                                $('#popup-contact').modal('hide');
-                                                location.reload();
-                                            },1500);
-                                        }
-                                        else{
-                                            $('.popup-form-customer .succes-popup').addClass('error').html($(data).find('#error_customer').html());
-                                        }
-                                    }
-                                })
-                            })
-                        });
-                    }
-                    if(sessionStorage.mega_popup == null ){
-                        sessionStorage.mega_popup = 'show' ;
-                    }
-                });
-            }
-            else{
-                $(document).on('click','.linkbanner-popup-contact', function(){
-                    $('#popup-contact').modal('hide');
-                    if(sessionStorage.mega_popup == null ){
-                        sessionStorage.mega_popup = 'show' ;
-                    }
-                });
-            }
-            $(document).on('click','.modal-popupContact .close-popup-contact', function(e){
-                e.preventDefault();
-                $('#popup-contact').modal('hide');
-                if(sessionStorage.mega_popup == null ){
-                    sessionStorage.mega_popup = 'show' ;
-                }
-            });
-            $(".modal-popupContact").on('hidden.bs.modal', function(){
-                if(sessionStorage.mega_popup == null ){
-                    sessionStorage.mega_popup = 'show' ;
-                }
-            });
-        });
+        // jQuery(document).ready(function(){
+        //
+        //
+        // setTimeout(function(){
+        //     if(sessionStorage.mega_popup == null ){
+        //         $('#popup-contact').modal('show');
+        //     }
+        // },40000);
+        //     if ($('.popupForm').length > 0){
+        //         $('.popup-form-customer form.contact-form').submit(function(e){
+        //             var self = $(this);
+        //             if($(this)[0].checkValidity() == true){
+        //                 e.preventDefault();
+        //                 grecaptcha.ready(function() {
+        //                     grecaptcha.execute('6Le047YqAAAAAKk-dTuIhf_F7L0m3Yp9hOkIxTn1', {action: 'submit'}).then(function(token) {
+        //                         self.find('input[name="g-recaptcha-response"]').val(token);
+        //                         $.ajax({
+        //                             type: 'POST',
+        //                             url:'/account/contact',
+        //                             data: $('.popup-form-customer form.contact-form').serialize(),
+        //                             success:function(data){
+        //                                 if($(data).find('#error_customer').length == 0){
+        //                                     $('.popup-form-customer .succes-popup').addClass('success').html('Cảm ơn bạn đã đăng ký email theo dõi!');
+        //                                     setTimeout(function(){
+        //                                         $('#popup-contact').modal('hide');
+        //                                         location.reload();
+        //                                     },1500);
+        //                                 }
+        //                                 else{
+        //                                     $('.popup-form-customer .succes-popup').addClass('error').html($(data).find('#error_customer').html());
+        //                                 }
+        //                             }
+        //                         })
+        //                     })
+        //                 });
+        //             }
+        //             if(sessionStorage.mega_popup == null ){
+        //                 sessionStorage.mega_popup = 'show' ;
+        //             }
+        //         });
+        //     }
+        //     else{
+        //         $(document).on('click','.linkbanner-popup-contact', function(){
+        //             $('#popup-contact').modal('hide');
+        //             if(sessionStorage.mega_popup == null ){
+        //                 sessionStorage.mega_popup = 'show' ;
+        //             }
+        //         });
+        //     }
+        //     $(document).on('click','.modal-popupContact .close-popup-contact', function(e){
+        //         e.preventDefault();
+        //         $('#popup-contact').modal('hide');
+        //         if(sessionStorage.mega_popup == null ){
+        //             sessionStorage.mega_popup = 'show' ;
+        //         }
+        //     });
+        //     $(".modal-popupContact").on('hidden.bs.modal', function(){
+        //         if(sessionStorage.mega_popup == null ){
+        //             sessionStorage.mega_popup = 'show' ;
+        //         }
+        //     });
+        // });
     </script>
 
+    <script>
+        var CSRF_TOKEN = "{{ csrf_token() }}";
+    </script>
 
     @include('site.partials.angular_mix')
+     <script>
+         app.controller('headerPartial', function ($rootScope, $scope, compareItemSync, cartItemSync, $interval) {
+             $scope.compareItems = compareItemSync;
+             $scope.cart = cartItemSync;
+         });
+
+         app.factory('compareItemSync', function ($interval) {
+             var compareList = {items: null, count: null};
+
+             compareList.items = @json($compareListItems);
+             compareList.count = {{$compareListItems->count()}};
+             return compareList;
+         });
+
+         app.factory('cartItemSync', function ($interval) {
+             var cart = {items: null, total: null};
+
+             cart.items = @json($cartItems);
+             cart.count = {{$cartItems->sum('quantity')}};
+             cart.total = {{$totalPriceCart}};
+
+             return cart;
+         });
+     </script>
 
     @stack('scripts')
 </body>

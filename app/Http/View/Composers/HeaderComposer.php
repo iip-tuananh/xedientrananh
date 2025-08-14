@@ -17,18 +17,22 @@ class HeaderComposer
     public function compose(View $view)
     {
         $config = Config::query()->get()->first();
-        $cartItems = \Cart::getContent();
-        $totalPriceCart = \Cart::getTotal();
+        $cartItems = \Cart::session('cartList')->getContent();
+        $totalPriceCart = \Cart::session('cartList')->getTotal();
 
         // danh mục sản phẩm
         $productCategories = Category::query()->with(['childs'])
             ->orderBy('sort_order')
             ->get();
 
+        // list product so sánh
+        $compareListItems = \Cart::session('compareList')->getContent();
+
         $view->with(['config' => $config,
             'cartItems' => $cartItems,
             'totalPriceCart' => $totalPriceCart,
-            'productCategories' => $productCategories
+            'productCategories' => $productCategories,
+            'compareListItems' => $compareListItems
         ]);
     }
 }

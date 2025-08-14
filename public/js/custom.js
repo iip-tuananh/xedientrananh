@@ -92,6 +92,17 @@ function parseNumberString(numberString) {
     return result;
 }
 
+function parseNumberString_(val) {
+    if (val === null || val === undefined) return null;
+    if (typeof val === 'number') return isNaN(val) ? null : val;
+    if (typeof val === 'string') {
+        var s = val.trim().replace(/\s+/g,'').replace(/,/g,'.');
+        var n = parseFloat(s);
+        return isNaN(n) ? null : n;
+    }
+    return null;
+}
+
 function roundNumber(number, decimlPlace = 1) {
     number = parseNumberString(number);
     return (

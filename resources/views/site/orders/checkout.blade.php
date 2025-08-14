@@ -2602,69 +2602,8 @@
                             <div class="order-summary-section order-summary-section-discount"
                                 data-order-summary-section="discount">
                                     <div class="fieldset">
-                                        <div class="field  ">
-                                            <div class="field-input-btn-wrapper">
-                                                <div class="field-input-wrapper">
-                                                    <label class="field-label">Mã giảm giá</label>
-                                                    <input placeholder="Mã giảm giá" class="field-input" size="30"
-                                                        type="text"
-                                                        ng-model="discount.code"
-                                                        value="" />
-                                                </div>
-                                                <button type="submit" ng-click="applyVoucher()" style="cursor: pointer;"
-                                                    class="field-input-btn btn btn-default btn-disabled">
-                                                    <span class="btn-content">Sử dụng</span>
-                                                    <i class="btn-spinner icon icon-button-spinner"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+
                                     </div>
-                            </div>
-                            <div class="order-summary-section order-summary-section-display-discount"
-                                data-order-summary-section="discount-display">
-                                <div>
-                                    <div class="hrv-discount-choose-coupons">
-                                        <div ng-click="showVouchers()">
-                                            <svg width="15" height="10" viewBox="0 0 18 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M17.3337 5.3335V2.00016C17.3337 1.07516 16.5837 0.333496 15.667 0.333496H2.33366C1.41699 0.333496 0.675326 1.07516 0.675326 2.00016V5.3335C1.59199 5.3335 2.33366 6.0835 2.33366 7.00016C2.33366 7.91683 1.59199 8.66683 0.666992 8.66683V12.0002C0.666992 12.9168 1.41699 13.6668 2.33366 13.6668H15.667C16.5837 13.6668 17.3337 12.9168 17.3337 12.0002V8.66683C16.417 8.66683 15.667 7.91683 15.667 7.00016C15.667 6.0835 16.417 5.3335 17.3337 5.3335ZM15.667 4.11683C14.6753 4.69183 14.0003 5.77516 14.0003 7.00016C14.0003 8.22516 14.6753 9.3085 15.667 9.8835V12.0002H2.33366V9.8835C3.32533 9.3085 4.00033 8.22516 4.00033 7.00016C4.00033 5.76683 3.33366 4.69183 2.34199 4.11683L2.33366 2.00016H15.667V4.11683ZM9.83366 9.50016H8.16699V11.1668H9.83366V9.50016ZM8.16699 6.16683H9.83366V7.8335H8.16699V6.16683ZM9.83366 2.8335H8.16699V4.50016H9.83366V2.8335Z"
-                                                    fill="#318DBB"></path>
-                                            </svg>
-                                            <span>Xem thêm mã giảm giá</span>
-                                        </div>
-                                        <div id="list_short_coupon">
-                                            {{-- <span ng-repeat="voucher in vouchers">
-                                                <span data-code="<% voucher.code %>"><% voucher.name %></span>
-                                            </span> --}}
-                                            <div class="item-info item-voucher" ng-repeat="voucher in vouchers" style="display: flex; align-items: center; gap: 3px; padding: 0px; border-radius: 5px; background-color: #fff6a2; color: #06a3e480; cursor: pointer; margin-right: 10px; height: 35px; font-weight: 600;">
-                                                <img src="/site/images/voucher.svg" alt="voucher" width="30" height="30"/>
-                                                <% voucher.name %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="hrv-coupons-popup">
-                                    <div class="hrv-title-coupons-popup">
-                                        <p>Chọn giảm giá</p>
-                                        <div class="hrv-coupons-close-popup">
-                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M17.1663 2.4785L15.5213 0.833496L8.99968 7.35516L2.47801 0.833496L0.833008 2.4785L7.35468 9.00016L0.833008 15.5218L2.47801 17.1668L8.99968 10.6452L15.5213 17.1668L17.1663 15.5218L10.6447 9.00016L17.1663 2.4785Z"
-                                                    fill="#424242"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="hrv-content-coupons-code">
-                                        <h3 class="coupon_heading">Mã giảm giá của shop</h3>
-                                        <div class="hrv-discount-code-web">
-                                        </div>
-                                        <div class="hrv-discount-code-external">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="hrv-coupons-popup-site-overlay"></div>
                             </div>
                         </div>
                     </div>
@@ -2760,52 +2699,7 @@
                                         </div>
                                     </div>
                             </div>
-                            <div class="order-summary-section order-summary-section-discount"
-                                data-order-summary-section="discount">
-                                    <div class="fieldset">
-                                        <div class="field  ">
-                                            <div class="field-input-btn-wrapper">
-                                                <div class="field-input-wrapper">
-                                                    <label class="field-label">Mã giảm giá</label>
-                                                    <input placeholder="Mã giảm giá" class="field-input" size="30"
-                                                        type="text"
-                                                        ng-model="discount.code"
-                                                        value="" />
-                                                </div>
-                                                <button type="submit" ng-click="applyVoucher()" style="cursor: pointer;"
-                                                    class="field-input-btn btn btn-default btn-disabled">
-                                                    <span class="btn-content">Sử dụng</span>
-                                                    <i class="btn-spinner icon icon-button-spinner"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="order-summary-section order-summary-section-display-discount"
-                                data-order-summary-section="discount-display">
-                                <div>
-                                    <div class="hrv-discount-choose-coupons">
-                                        <div ng-click="showVouchers()">
-                                            <svg width="15" height="10" viewBox="0 0 18 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M17.3337 5.3335V2.00016C17.3337 1.07516 16.5837 0.333496 15.667 0.333496H2.33366C1.41699 0.333496 0.675326 1.07516 0.675326 2.00016V5.3335C1.59199 5.3335 2.33366 6.0835 2.33366 7.00016C2.33366 7.91683 1.59199 8.66683 0.666992 8.66683V12.0002C0.666992 12.9168 1.41699 13.6668 2.33366 13.6668H15.667C16.5837 13.6668 17.3337 12.9168 17.3337 12.0002V8.66683C16.417 8.66683 15.667 7.91683 15.667 7.00016C15.667 6.0835 16.417 5.3335 17.3337 5.3335ZM15.667 4.11683C14.6753 4.69183 14.0003 5.77516 14.0003 7.00016C14.0003 8.22516 14.6753 9.3085 15.667 9.8835V12.0002H2.33366V9.8835C3.32533 9.3085 4.00033 8.22516 4.00033 7.00016C4.00033 5.76683 3.33366 4.69183 2.34199 4.11683L2.33366 2.00016H15.667V4.11683ZM9.83366 9.50016H8.16699V11.1668H9.83366V9.50016ZM8.16699 6.16683H9.83366V7.8335H8.16699V6.16683ZM9.83366 2.8335H8.16699V4.50016H9.83366V2.8335Z"
-                                                    fill="#318DBB"></path>
-                                            </svg>
-                                            <span>Xem thêm mã giảm giá</span>
-                                        </div>
-                                        <div id="list_short_coupon">
-                                            {{-- <span ng-repeat="voucher in vouchers">
-                                                <span data-code="<% voucher.code %>"><% voucher.name %></span>
-                                            </span> --}}
-                                            <div class="item-info item-voucher" ng-repeat="voucher in vouchers" style="display: flex; align-items: center; gap: 3px; padding: 0px; border-radius: 5px; background-color: #fff6a2; color: #06a3e480; cursor: pointer; margin-right: 10px; height: 35px; font-weight: 600;">
-                                                <img src="/site/images/voucher.svg" alt="voucher" width="30" height="30"/>
-                                                <% voucher.name %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="order-summary-section order-summary-section-total-lines payment-lines"
                                 data-order-summary-section="payment-lines">
                                 <table class="total-line-table">
@@ -3279,19 +3173,11 @@
     </div>
     <script>
         app.controller('CheckoutController', function($scope, $http, cartItemSync, $interval, $compile) {
-            // let cart_items_selected = JSON.parse(localStorage.getItem('cart_items_selected'));
-            // let total_selected = localStorage.getItem('total_selected');
-            // if (cart_items_selected.length == 0 || total_selected == 0) {
-            //     window.location.href = "{{ route('cart.index') }}";
-            // }
-            // console.log(cart_items_selected, total_selected);
             $scope.cart = @json($cartCollection);
             $scope.total = @json($total);
-            $scope.vouchers = @json($vouchers);
             $scope.provinces = @json($provinces);
             $scope.districts = @json($districts);
             $scope.wards = @json($wards);
-            $scope.currentUser = @json(Auth::guard('client')->user());
             $scope.loading = false;
             $scope.form = {
                 customer_name: '',
@@ -3303,34 +3189,6 @@
                 customer_ward: '',
             };
 
-            if($scope.currentUser) {
-                $scope.form.customer_name = $scope.currentUser.name;
-                $scope.form.customer_phone = $scope.currentUser.phone_number;
-                $scope.form.customer_address = $scope.currentUser.address;
-                $scope.form.customer_email = $scope.currentUser.email;
-                $scope.form.customer_province = $scope.currentUser.province;
-                $scope.form.customer_district = $scope.currentUser.district;
-                $scope.form.customer_ward = $scope.currentUser.ward;
-            }
-
-            $scope.point = $scope.currentUser?.point ?? 0;
-
-            $scope.discount = {
-                code: '',
-                value: 0,
-            }
-
-            $scope.pointInput = '';
-            $scope.pointValue = 0;
-
-            $scope.changePoint = function() {
-                if ($scope.pointInput > $scope.point) $scope.pointInput = $scope.point;
-                if ($scope.pointInput > Math.floor($scope.total / 1000)) $scope.pointInput = Math.floor($scope.total / 1000);
-            }
-
-            $scope.convertPoint = function() {
-                $scope.pointValue = $scope.pointInput * 1000;
-            }
 
             $scope.district_options = [];
             $scope.ward_options = [];
@@ -3347,39 +3205,6 @@
                 });
             }
 
-            $scope.showVoucher = function() {
-                togglePopupCoupons();
-            }
-
-            $scope.applyVoucher = function(code = null) {
-                if (!code) code = $scope.discount.code;
-                $.ajax({
-                    url: '{{ route('cart.apply.voucher') }}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    data: {
-                        code: code,
-                        total: $scope.total,
-                    },
-                    success: function(response) {
-                        if(response.success) {
-                            $scope.discount.code = response.voucher.code;
-                            $scope.discount.value = response.voucher.value;
-                            toastr.success(response.message);
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function(response) {
-                        toastr.error('Thao tác thất bại');
-                    },
-                    complete: function() {
-                        $scope.$applyAsync();
-                    }
-                });
-            }
 
             $scope.clearCart = function() {
                 localStorage.removeItem('cart_items_selected');
@@ -3462,12 +3287,8 @@
             $scope.submitOrder = function() {
                 $scope.loading = true;
                 let data = $scope.form;
-                data.discount_code = $scope.discount.code;
-                data.discount_value = $scope.discount.value;
                 data.items = $scope.cart;
                 data.total = $scope.total;
-                data.point_value = $scope.pointValue;
-                data.point = $scope.pointInput || 0;
 
                 $scope.errors = {};
                 $.ajax({
@@ -3512,75 +3333,7 @@
             return cart;
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            function togglePopupCoupons() {
-                if ($('.hrv-coupons-popup').hasClass('active-popup') && $('.hrv-coupons-popup-site-overlay')
-                    .hasClass('active-popup')) {
-                    $('.hrv-coupons-popup').removeClass('active-popup');
-                    $('.hrv-coupons-popup-site-overlay').removeClass('active-popup');
-                    $('[class*="hrv-discount-code-"]').removeClass('open-more');
-                    if ($(window).width() < 768) {
-                        $('body').css('overflow', '');
-                    }
-                } else {
-                    $('.hrv-coupons-popup').addClass('active-popup');
-                    $('.hrv-coupons-popup-site-overlay').addClass('active-popup');
 
-                    if ($(window).width() < 768) {
-                        $('body').css('overflow', 'hidden');
-                    }
-                }
-            }
-            $(document).on('click', '#show_all_coupon', function() {
-                var coupons = $('.coupon_item').length;
-                var parentDOM = $(this).parents('div[class*="hrv-discount-code-"]');
-                if (!parentDOM.hasClass('open-more')) {
-                    parentDOM.find('.coupon_item').removeClass('hidden');
-                    parentDOM.addClass('open-more');
-                    $(this).find('span:first-child').html('Thu gọn');
-                } else {
-                    parentDOM.find('.coupon_item:nth-child(n+3):nth-child(-n+' + coupons + ')').addClass(
-                        'hidden');
-                    parentDOM.removeClass('open-more');
-                    $(this).find('span:first-child').html('Xem thêm');
-                }
-            });
-
-            $('body').on('click', '.order-summary-section-display-discount .hrv-discount-choose-coupons',
-        function() {
-                togglePopupCoupons();
-                // renderCoupons();
-            })
-
-            $('body').on('click', '.hrv-coupons-close-popup svg', function() {
-                togglePopupCoupons();
-            })
-
-            $('body').on('click', '.hrv-discount-code-web .btn_apply_line_coupon', function() {
-                var codeCoupons = $(this).data('code');
-                togglePopupCoupons();
-                $('input[id="discount.code"]').val(codeCoupons).trigger("change");
-                $('form#form_discount_add button.field-input-btn.btn.btn-default').removeClass(
-                    'btn-disabled');
-                $('form#form_discount_add button.field-input-btn.btn.btn-default').trigger('click');
-            })
-
-            $('body').on('click', '.coupon_layer', function() {
-                $(this).siblings('.btn_apply_line_coupon').trigger('click');
-            });
-
-            $(document).on('click', '.coupon_more', function() {
-                $(this).parent().siblings('.coupon_desc_short').toggleClass('close');
-                $(this).toggleClass('open');
-            });
-
-            $(document).on('click', '.hrv-coupons-popup-site-overlay', function() {
-                togglePopupCoupons();
-            });
-        })
-
-    </script>
 </body>
 
 </html>

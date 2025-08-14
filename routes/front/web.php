@@ -45,10 +45,10 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/load-more/product','FrontController@loadMoreProduct')->name('front.product-load-more');
     Route::get('/get-product-quick-view','FrontController@getProductQuickView')->name('front.get-product-quick-view');
     Route::get('/filter-product','FrontController@filterProduct')->name('front.filter-product');
-    
+
     // giỏ hàng
     // Route::middleware('auth:client')->group(function () {
-        Route::post('/{productId}/add-product-to-cart','CartController@addItem')->name('cart.add.item');
+        Route::post('/products/{productId}/variant/{variantId}/add-product-to-cart','CartController@addItem')->name('cart.add.item');
         Route::get('/remove-product-to-cart','CartController@removeItem')->name('cart.remove.item');
         Route::get('/gio-hang.html','CartController@index')->name('cart.index');
         Route::post('/update-cart','CartController@updateItem')->name('cart.update.item');
@@ -56,7 +56,20 @@ Route::group(['namespace' => 'Front'], function () {
         Route::post('/checkout','CartController@checkoutSubmit')->name('cart.submit.order');
         Route::get('/dat-hang-thanh-cong.html','CartController@checkoutSuccess')->name('cart.checkout.success');
         Route::post('/apply-voucher','CartController@applyVoucher')->name('cart.apply.voucher');
+
+        Route::get('/tra-gop','CartController@tragop')->name('cart.index');
+        Route::post('/checkout-finance','CartController@checkoutFinance')->name('cart.checkoutFinance');
+
     // });
+
+
+    // so sánh sản phẩm
+    Route::post('/{productId}/add-product-to-compare','CompareController@addItem')->name('compare.add.item');
+    Route::get('/remove-product-to-compare','CompareController@removeFromCompareList')->name('compare.remove.item');
+    Route::get('/clear-compare','CompareController@removeAll')->name('compare.remove.allItem');
+    Route::get('/so-sanh.html','CompareController@index')->name('compare.index');
+
+
 
     // Liên hệ
     Route::get('/dang-ky-cong-tac-vien.html','FrontController@connectUs')->name('front.connect-us');
