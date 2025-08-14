@@ -158,6 +158,9 @@
         </div>
         <div class="modal-coupon--backdrop"></div>
         <div id="sitenav-overlay" class="sitenav-overlay"></div>
+
+
+
         <div class="addThis_listSharing_group">
             <div class="addThis_listSharing">
             <div class="listSharing_action">
@@ -288,87 +291,9 @@
             </div>
             </div>
         </div>
-        <div id="addthis-modalContact" class="modal fade modal-addThis modal-contactform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Để lại lời nhắn cho chúng tôi</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body body-popupform">
-                    <form accept-charset='UTF-8' action='/contact' class='contact-form' method='post'>
-                        <input name='form_type' type='hidden' value='contact'>
-                        <input name='utf8' type='hidden' value='✓'>
-                        <input name='__RequestVerificationToken' type='hidden' value='CfDJ8FyFPV59mBtNhmQGz0fYZt9Y033wH19q7XfXlnAPp5J5eMKYDyJsKcTePTDSM9Gu_UBrQcEsOrh9x4aXtcq3n6Gd0Wq1IMAumvlRSWYhpDrExVU6vy-2Cq1_V87BSvM3A8EGK-ohXTCuDLO6jnk16pg'>
-                        <div class="row">
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input required type="text" class="form-control" id="yourname" name="contact[name]" placeholder="Tên của bạn" aria-label="Tên của bạn">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input required type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="youremail" name="contact[email]" placeholder="Email của bạn" aria-label="Email của bạn">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <input required pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" maxlength="18" type="text" id="yourphone"  name="contact[phone]" class="form-control" placeholder="Số điện thoại của bạn" aria-label="Số điện thoại của bạn">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group mb-3">
-                                <textarea required placeholder="Nội dung" class="form-control" id="yourinfor" name="contact[body]" rows="3" aria-label="Nội dung"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="sitebox-recaptcha mb-3">
-                                This site is protected by reCAPTCHA and the Google
-                                <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
-                                and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
-                            </div>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button class="btnSubmit-modal button clearfix" >Gửi cho chúng tôi</button>
-                        </div>
-                        </div>
-                        <input id='361b9251956e4bdd91c7e402a9449743' name='g-recaptcha-response' type='hidden'>
-                        <noscript data-src='https://www.google.com/recaptcha/api.js?render=6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s'></noscript>
-                        <noscript>let recaptchaElm=document.getElementById('361b9251956e4bdd91c7e402a9449743');let recaptchaForm=recaptchaElm.parentNode;recaptchaForm.addEventListener("submit",function(formEvent){if(!recaptchaElm.value){formEvent.preventDefault();grecaptcha.ready(function(){grecaptcha.execute('6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s',{action:'submit'}).then(function(token){recaptchaElm.value=token;recaptchaForm.requestSubmit(formEvent.submitter)})})}})</noscript>
-                    </form>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="modal fade modal-addThis modal-succesform">
-            <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-icon sweet-alert">
-                    <div class="sa-icon sa-success animate">
-                        <span class="sa-line sa-tip animateSuccessTip"></span> <span class="sa-line sa-long animateSuccessLong"></span>
-                        <div class="sa-placeholder"></div>
-                        <div class="sa-fix"></div>
-                    </div>
-                </div>
-                <div class="modal-body text-center">
-                    <p class="modal-title">Đăng kí thông tin thành công</p>
-                    <p>Cảm ơn bạn đã để lại thông tin <br> Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất	</p>
-                    <p class="txtloading">Thông báo sẽ tự động tắt sau 5 giây...</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="modal-live d-none d-lg-block">
-            <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FLazadaVietnam%2Fvideos%2F1699075170452462%2F&show_text=0&width=267" width="267" height="476" style="border:none;overflow:hidden" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            <div class="box-close">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.9" d="M11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0Z" fill="#373535"></path>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.066 11.0007L6.79418 7.72894C6.53605 7.47081 6.53605 7.05231 6.79418 6.79418C7.05231 6.53605 7.47081 6.53605 7.72893 6.79418L11.0007 10.066L14.2713 6.79543C14.5294 6.53731 14.9479 6.53731 15.206 6.79543C15.4641 7.05356 15.4641 7.47206 15.206 7.73019L11.9355 11.0007L15.207 14.2722C15.4651 14.5304 15.4651 14.9489 15.207 15.207C14.9489 15.4651 14.5304 15.4651 14.2722 15.207L11.0007 11.9355L7.72796 15.2082C7.46983 15.4664 7.05133 15.4664 6.7932 15.2082C6.53508 14.9501 6.53508 14.5316 6.7932 14.2735L10.066 11.0007Z" fill="white"></path>
-            </svg>
-            </div>
-        </div>
+
+
+
     </div>
 
 

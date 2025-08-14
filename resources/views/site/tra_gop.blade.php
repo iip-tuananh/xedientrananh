@@ -106,10 +106,15 @@
         .m-row .val{ text-align:right; }
         .danger{ color:#dc2626; }
 
-    </style>
-    <div class="mainBody-theme-container mainBody-modalshow mainBody-product  layoutProduct_scroll ">
 
-        <div class="inst-layout" ng-controller="productDetailPage">
+        @media (min-width: 992px){
+            .tragop-layout{
+                min-width: 992px;
+                margin: 40px;
+            }
+        }
+    </style>
+        <div class="inst-layout tragop-layout" ng-controller="productDetailPage">
             <!-- LEFT: CART (3) -->
             <aside class="cart-card">
                 <div class="cart-row" ng-repeat="it in cartItems">
@@ -293,10 +298,6 @@
                 <p class="footnote">Lưu ý: Số tiền thực tế có thể chênh lệch do làm tròn.</p>
             </section>
         </div>
-
-
-    </div>
-
 @endsection
 
 @push('scripts')

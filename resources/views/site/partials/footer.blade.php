@@ -125,7 +125,7 @@
                 </svg>
                 Đăng ký nhận bản tin
                 </h3>
-                <p>Đế nhận các thông tin mới từ Techgo cũng như các chương trình khuyến mãi</p>
+                <p>Đế nhận các thông tin mới từ {{ $config->web_title }} cũng như các chương trình khuyến mãi</p>
             </div>
             <div class="newsletter-content newsletter-form">
                 <form class='contact-form'>
@@ -182,7 +182,7 @@
                             <a href="/search" title="Tìm kiếm">Tìm kiếm</a>
                         </li>
                         <li class="item">
-                            <a href="/pages/about-us" title="Giới thiệu">Giới thiệu</a>
+                            <a href="/gioi-thieu.html" title="Giới thiệu">Giới thiệu</a>
                         </li>
                         <li class="item">
                             <a href="/pages/chinh-sach-doi-tra" title="Chính sách đổi trả">Chính sách đổi trả</a>
@@ -200,18 +200,15 @@
                 </div>
                 </div>
                 <div class="col-lg-2 col-md-12 col-12 widget-footer">
-                <h4 class="title-footer">Liên kết</h4>
+                <h4 class="title-footer">Danh mục</h4>
                 <div class="content-footer block-collapse">
                     <ul class="footerNav-link">
-                        <li class="item">
-                            <a href="/collections/onsale" title="Sản phẩm khuyến mãi">Sản phẩm khuyến mãi</a>
-                        </li>
-                        <li class="item">
-                            <a href="/collections/hot-products" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
-                        </li>
-                        <li class="item">
-                            <a href="/collections/all" title="Tất cả sản phẩm">Tất cả sản phẩm</a>
-                        </li>
+                        @foreach($productCategories as $pCate)
+                            <li class="item">
+                                <a href="{{ route('front.show-product-category', $pCate->slug) }}" title="{{ $pCate->name }}">{{ $pCate->name }}</a>
+                            </li>
+                        @endforeach
+
                     </ul>
                 </div>
                 </div>

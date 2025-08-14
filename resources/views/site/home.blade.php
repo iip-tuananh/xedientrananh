@@ -145,15 +145,15 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="box-link">
-                            <a href="/collections/onsale" class="button">
-                                Xem tất cả SẢN PHẨM KHUYẾN MÃI
-                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
-                        <circle class="st0" cx="16" cy="16" r="13"/>
-                                    <polyline class="st0" points="14,11.8 18.2,16 14,20.2 "/>
-                    </svg>
-                            </a>
-                        </div>
+{{--                        <div class="box-link">--}}
+{{--                            <a href="/collections/onsale" class="button">--}}
+{{--                                Xem tất cả SẢN PHẨM KHUYẾN MÃI--}}
+{{--                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">--}}
+{{--                        <circle class="st0" cx="16" cy="16" r="13"/>--}}
+{{--                                    <polyline class="st0" points="14,11.8 18.2,16 14,20.2 "/>--}}
+{{--                    </svg>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
