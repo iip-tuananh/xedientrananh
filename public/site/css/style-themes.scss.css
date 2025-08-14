@@ -857,7 +857,7 @@ img.lazyload:not([src]) {
         font-weight: 600;
         padding: 0;
         cursor: pointer; }
-        #pagination .pagination > li > span.current, #pagination .pagination > li a.current {
+        #pagination .pagination > li > span.current, #pagination .pagination > li.active > span {
           background-color: var(--shop-color-main);
           border-color: var(--shop-color-main);
           color: #fff; }
@@ -866,7 +866,9 @@ img.lazyload:not([src]) {
         color: #fff;
         background-color: var(--shop-color-hover);
         border-color: var(--shop-color-hover); }
-
+        #pagination .pagination > li.disabled > span {
+          opacity: 0.5;
+          cursor: not-allowed; }
 /* 2.4 - 404 */
 .layout-pageNot {
   padding: 40px 0; }
@@ -2092,7 +2094,9 @@ img.lazyload:not([src]) {
   -ms-flex-align: center;
   align-items: center;
   flex: 0 0 auto;
-  padding-right: 20px; }
+  padding-right: 40px;
+  font-size: 15px;
+  }
 
 .box-policy ul img {
   height: 20px;
@@ -8399,7 +8403,7 @@ img.lazyload:not([src]) {
 		.combo-item--price {
 		margin: 0;
 		font-weight: 600;
-		color: #ff2c26;    text-align: right;	font-size: 14px;width:110px;						
+		color: #ff2c26;    text-align: right;	font-size: 14px;width:110px;
 		del{display:block;font-size: 88%;color: #878c8f;font-weight: 400;}
 	}
 	}

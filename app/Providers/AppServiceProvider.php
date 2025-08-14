@@ -73,6 +73,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         View::composer(
+            'site.blogs.nav-blog',
+            MenuHomePageComposer::class
+        );
+
+        View::composer(
             'site.partials.footer',
             FooterComposer::class
         );

@@ -128,24 +128,13 @@
                 <p>Đế nhận các thông tin mới từ Techgo cũng như các chương trình khuyến mãi</p>
             </div>
             <div class="newsletter-content newsletter-form">
-                <form accept-charset='UTF-8' action='/account/contact' class='contact-form' method='post'>
-                <input name='form_type' type='hidden' value='customer'>
-                <input name='utf8' type='hidden' value='✓'>
+                <form class='contact-form'>
                 <div class="form-group input-group">
                     <input type="hidden" id="newsletter-tags" name="contact[tags]" value="Đăng kí nhận tin" />
                     <input required type="email" name="contact[email]" class="form-control newsletter-input" id="newsletter-email"
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Vui lòng nhập email của bạn..." aria-label="Email Address">
                     <button type="submit"  class="button dark newsletter-btn">Đăng ký</button>
                 </div>
-                <div class="sitebox-recaptcha d-none" >
-                    This site is protected by reCAPTCHA and the Google
-                    <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
-                    and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
-                </div>
-                <input name='__RequestVerificationToken' type='hidden' value='CfDJ8FyFPV59mBtNhmQGz0fYZt9Y033wH19q7XfXlnAPp5J5eMKYDyJsKcTePTDSM9Gu_UBrQcEsOrh9x4aXtcq3n6Gd0Wq1IMAumvlRSWYhpDrExVU6vy-2Cq1_V87BSvM3A8EGK-ohXTCuDLO6jnk16pg'>
-                <input id='babdf8b7a5d84586923c9d9a1b0b5cc4' name='g-recaptcha-response' type='hidden'>
-                <noscript data-src='https://www.google.com/recaptcha/api.js?render=6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s'></noscript>
-                <noscript>let recaptchaElm=document.getElementById('babdf8b7a5d84586923c9d9a1b0b5cc4');let recaptchaForm=recaptchaElm.parentNode;recaptchaForm.addEventListener("submit",function(formEvent){if(!recaptchaElm.value){formEvent.preventDefault();grecaptcha.ready(function(){grecaptcha.execute('6LchSLkqAAAAABVHBpeFgg8N-WgkYsr5fO6GUF_s',{action:'submit'}).then(function(token){recaptchaElm.value=token;recaptchaForm.requestSubmit(formEvent.submitter)})})}})</noscript>
                 </form>
                 <p class="newsletter-error"></p>
             </div>
@@ -157,16 +146,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-12 col-12 widget-footer">
-                <h4 class="title-footer">Về Techgo</h4>
+                <h4 class="title-footer">Về {{ $config->web_title }}</h4>
                 <div class="content-footer block-collapse row">
                     <div class="col-lg-12 col-md-12 col-12">
-                        <p>Với các giải pháp công nghệ tốt nhất, Haravan là tất cả những gì bạn cần để xây dựng thương hiệu online, thành công trong bán lẻ và marketing đột phá.</p>
+                        <p>{{$config->web_des}}</p>
                         <ul class="footerNav-social">
-                            <li><a href="/" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="/" target="_blank" rel="noopener" title="Twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="/" target="_blank" rel="noopener" title="Google Plus" aria-label="Google Plus"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="/" target="_blank" rel="noopener" title="Youtube" aria-label="Youtube"><i class="fa fa-youtube-play"></i></a></li>
+                            <li><a href="{{ $config->facebook }}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{ $config->twitter }}" target="_blank" rel="noopener" title="Twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="{{ $config->instagram }}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="{{ $config->google_plus }}" target="_blank" rel="noopener" title="Google Plus" aria-label="Google Plus"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="{{ $config->youtube }}" target="_blank" rel="noopener" title="Youtube" aria-label="Youtube"><i class="fa fa-youtube-play"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -177,9 +166,9 @@
                     <div class="col-lg-12 col-md-12 col-12">
                         <div class="address-footer">
                             <ul>
-                            <li class="contact-1"><i class="fa fa-map-marker" aria-hidden="true"></i> Tầng 4, tòa nhà Flemington, số 182, đường Lê Đại Hành, phường 15, quận 11, Tp. Hồ Chí Minh.</li>
-                            <li class="contact-2"><i class="fa fa-phone" aria-hidden="true"></i> 1900.000.XXX</li>
-                            <li class="contact-4"><i class="fa fa-envelope" aria-hidden="true"></i> hi@techgo.abc</li>
+                            <li class="contact-1"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $config->address_company }}</li>
+                            <li class="contact-2"><i class="fa fa-phone" aria-hidden="true"></i> {{ $config->hotline }}</li>
+                            <li class="contact-4"><i class="fa fa-envelope" aria-hidden="true"></i> {{ $config->email }}</li>
                             </ul>
                         </div>
                     </div>
@@ -230,15 +219,11 @@
                 <h4 class="title-footer">Chính sách</h4>
                 <div class="content-footer block-collapse">
                     <ul class="footerNav-link">
+                        @foreach ($policies as $policy)
                         <li class="item">
-                            <a href="/" title="Chính sách đổi trả">Chính sách đổi trả</a>
+                            <a href="{{ route('front.policy-detail', $policy->slug) }}" title="{{ $policy->title }}">{{ $policy->title }}</a>
                         </li>
-                        <li class="item">
-                            <a href="/" title="Chính sách bán hàng">Chính sách bán hàng</a>
-                        </li>
-                        <li class="item">
-                            <a href="/" title="Chính sách giao hàng">Chính sách giao hàng</a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
                 </div>
@@ -248,8 +233,7 @@
     </div>
     <div class="footer-copyright">
     <div class="container">
-        <p>Copyright © 2025 <a href="https://techgo.myharavan.com"> TechGO</a>.
-            <a target="_blank" href="https://www.haravan.com"  rel="noreferrer">Powered by Haravan</a>
+        <p>Copyright © 2025 <a href="{{ route('front.home-page') }}">{{ $config->web_title }}</a>
         </p>
     </div>
     </div>

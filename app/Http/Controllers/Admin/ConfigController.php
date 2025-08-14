@@ -116,7 +116,7 @@ class ConfigController extends Controller
             $object->revenue_percent_2 = $request->revenue_percent_2;
             $object->revenue_percent_1 = $request->revenue_percent_1;
             $object->text_top_header = $request->text_top_header;
-
+            $object->working_time = $request->working_time;
 			$object->save();
 
 			if($request->image) {

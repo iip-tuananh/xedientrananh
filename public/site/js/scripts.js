@@ -1023,7 +1023,7 @@ HRT.Main = {
 		that.updateMiniCart();
 		that.newsletterForm();
 		that.copyCodeProdCoupon();
-		that.prodPopoverCoupon();
+		// that.prodPopoverCoupon();
 		that.modalLive();
 		that.hiddenBtnLive();
 		that.iconMenuParent();
@@ -2137,13 +2137,13 @@ HRT.Main = {
 HRT.Index = {
 	init: function() {
 		var that = this;
-		that.sliderBannerTop();
-		that.sliderBannerRight();
-		that.sliderCollection_1();
-		that.sliderCollection_2();
+		// that.sliderBannerTop();
+		// that.sliderBannerRight();
+		// that.sliderCollection_1();
+		// that.sliderCollection_2();
 		that.collectionTab1();
-		that.sliderCollection_3();
-		that.sliderLatestBlog();
+		// that.sliderCollection_3();
+		// that.sliderLatestBlog();
 		that.hiddenSeeMore();
 	},
 	sliderBannerTop: function(){
@@ -4025,8 +4025,8 @@ HRT.Article = {
 				},
 				1200: {
 					items: 3,
-					touchDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false,
-					mouseDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false
+					// touchDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false,
+					// mouseDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false
 				}
 			}
 		});

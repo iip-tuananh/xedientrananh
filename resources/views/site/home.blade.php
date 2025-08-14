@@ -23,8 +23,6 @@
                 <div class="col-lg-8 col-md-12 col-12  p-0 left-slider" id="left-slider">
                 <div class="home-slider" id="home-slider">
                     <div class="slider-owl owl-carousel ">
-
-
                         @foreach($banners as $banner)
                             <div class="slider-item">
                                 <div class="slide--image">
