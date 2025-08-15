@@ -20,7 +20,7 @@ class Banner extends BaseModel
     {
         $result = self::with([
             'image',
-        ]);
+        ])->whereNotIn('position', [2]);
 
         if (!empty($request->title)) {
             $result = $result->where('title', 'like', '%' . $request->title . '%');

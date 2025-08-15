@@ -30,7 +30,7 @@
                     <label class="form-label">Vị trí</label>
                     <select class="form-control " ng-model="form.position">
                         <option value="1">Banner lớn</option>
-                        <option value="2">Banner nhỏ</option>
+{{--                        <option value="2">Banner nhỏ</option>--}}
                         <option value="3">Banner top</option>
                     </select>
                     <span class="invalid-feedback d-block" role="alert">

@@ -268,7 +268,7 @@
                                         <style>
                                             .icon-compare { display:inline-block; vertical-align:middle; height: 50px !important; }
                                             .btn-compare .box-icon { line-height:0; }
-                                            .btn-compare { color:#fff !important; }           /* hoặc màu bạn muốn */
+                                            .btn-compare { color:#252a2b !important; }           /* hoặc màu bạn muốn */
                                             .btn-compare:hover { color:#ffd200; }  /* màu hover */
 
                                         </style>
@@ -648,22 +648,27 @@
                                 </div>
                             </div>
                         </div>
+                        <style>
+                            .box-item-a a{
+                                color: #fff !important;
+                            }
+                        </style>
                         <div class="col-lg d-lg-flex d-none justify-content-between align-items-center box-content">
                             <div class="box-policy">
                                 <ul>
-                                    <li class="box-item">
+                                    <li class="box-item box-item-a">
                                         <a class="box-text" href="{{ route('front.home-page') }}">Trang chủ</a>
                                     </li>
-                                    <li class="box-item">
+                                    <li class="box-item box-item-a">
                                         <a class="box-text" href="{{ route('front.about-us') }}">Giới thiệu</a>
                                     </li>
                                     @foreach ($postCategories as $category)
-                                        <li class="box-item">
+                                        <li class="box-item box-item-a">
                                             <a class="box-text"
                                                 href="{{ route('front.list-blog', $category->slug) }}">{{ $category->name }}</a>
                                         </li>
                                     @endforeach
-                                    <li class="box-item">
+                                    <li class="box-item box-item-a">
                                         <a class="box-text" href="{{ route('front.contact-us') }}">Liên hệ</a>
                                     </li>
                                 </ul>

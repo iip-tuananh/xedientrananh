@@ -47,7 +47,7 @@ class BannerController extends Controller
                 return formatDate($object->updated_at);
             })
             ->editColumn('position', function ($object) {
-                return $object->position == 1 ? 'Banner lớn' : 'Banner nhỏ';
+                return $object->position == 1 ? 'Banner lớn' : 'Banner top';
             })
             ->editColumn('link', function ($object) {
                 return '<a href="' . $object->link . '">' . $object->link . '</a>';

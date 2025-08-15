@@ -3117,10 +3117,10 @@ img.lazyload:not([src]) {
       margin-right: 8px; } }
 
 .mainHeader.mainHeader_temp03 .mainHeader-middle {
-  background: #022775; }
+  background: #FFFFFF; }
 
 .mainHeader.mainHeader_temp03 .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-icon svg {
-  fill: #ffffff; }
+  fill: #252a2b; }
 
 .mainHeader.mainHeader_temp03 .header-menu-desktop {
   background: #263342;
@@ -3142,7 +3142,7 @@ img.lazyload:not([src]) {
   top: 13px; }
 
 .mainHeader.mainHeader_temp03 .header-wrap-action.header-wrap-iconav .header-action .header-action-item.header-action_menu .box-icon .hamburger-menu .bar, .mainHeader.mainHeader_temp03 .header-wrap-action.header-wrap-iconav .header-action .header-action-item.header-action_menu .box-icon .hamburger-menu .bar:after, .mainHeader.mainHeader_temp03 .header-wrap-action.header-wrap-iconav .header-action .header-action-item.header-action_menu .box-icon .hamburger-menu .bar:before {
-  background: #ffffff; }
+  background: #black; }
 
 .mainHeader.mainHeader_temp03 .header-wrap-action.header-wrap-iconav .header-action .header-action-item.header-action_menu .box-text {
   display: block; }
@@ -3160,11 +3160,11 @@ img.lazyload:not([src]) {
     color: #262626; }
 
 .mainHeader.mainHeader_temp03:not(.hSticky-nav) .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-text {
-  color: #ffffff;
+  color: #252a2b;
   margin: 3px 0; }
 
 .mainHeader.mainHeader_temp03:not(.hSticky-nav) .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-icon svg {
-  fill: #ffffff; }
+  fill: #252a2b; }
 
 @media (min-width: 992px) {
   .mainHeader.mainHeader_temp03 .mainHeader-middle {
@@ -3221,7 +3221,7 @@ img.lazyload:not([src]) {
     padding-left: 15px;
     padding-right: 140px; }
   .mainHeader.mainHeader_temp03.hSticky-nav .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-text {
-    color: #ffffff; } }
+    color: #252a2b; } }
 
 @media (max-width: 991px) {
   .mainHeader.mainHeader_temp03 .header-wrap-logo {
@@ -4999,7 +4999,7 @@ img.lazyload:not([src]) {
 .header-bottom {
   position: relative;
   z-index: 101;
-  background: #fff; }
+  background: #233D86; }
   .header-bottom .title-menu {
     display: flex;
     align-items: center;
