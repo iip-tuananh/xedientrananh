@@ -1,16 +1,107 @@
 <div id="templateHeader" ng-controller="headerPartial">
     <div class="mainHeader--height">
+        <style>
+            .topbar-banner{
+                position: relative;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                margin-right: calc(50% - 50vw);
+                line-height: 0;            /* bỏ khoảng trắng dưới ảnh inline */
+                z-index: 50;
+            }
+            .topbar-banner picture,
+            .topbar-banner img{
+                display: block;
+                width: 100%;
+                height: 56px;              /* chỉnh theo ý bạn */
+                object-fit: cover;         /* phủ kín ngang, cắt bớt chiều cao nếu cần */
+                border-radius: 0;
+            }
+
+            /* Nút đóng */
+            .topbar-banner .close-icon{
+                position: absolute;
+                top: 8px; right: 8px;
+                width: 28px; height: 28px;
+                display: grid; place-items: center;
+                background: rgba(0,0,0,.35);
+                border-radius: 999px;
+                cursor: pointer;
+            }
+            .topbar-banner .close-icon svg{ width: 14px; height: 14px; }
+
+
+
+            @media (max-width: 767.98px){
+                .topbar-banner{
+                    position: relative;
+                    width: 100vw;
+                    margin-left: calc(50% - 50vw);
+                    margin-right: calc(50% - 50vw);
+                    line-height: 0;
+                    z-index: 50;
+                }
+
+                .topbar-banner a{ display:block; }
+                .topbar-banner picture,
+                .topbar-banner img{
+                    display:block;
+                    width:100%;
+                    height:52px;              /* chỉnh 46–60px tùy mắt */
+                    object-fit:cover;         /* phủ kín, cắt bớt phần thừa */
+                }
+
+                /* Gradient nhẹ bên phải để nút đóng nổi hơn */
+                .topbar-banner::after{
+                    content:"";
+                    position:absolute;
+                    top:0; right:0; bottom:0;
+                    width:96px;
+                    background:linear-gradient(90deg, transparent 0, rgba(0,0,0,.18) 100%);
+                    pointer-events:none;
+                }
+
+                /* Nút đóng lớn, dễ bấm */
+                .topbar-banner .close-icon{
+                    position:absolute;
+                    top:6px;
+                    right:max(6px, env(safe-area-inset-right));
+                    width:32px; height:32px;
+                    display:grid; place-items:center;
+                    border-radius:999px;
+                    background:rgba(0,0,0,.45);
+                    box-shadow:0 2px 10px rgba(0,0,0,.15);
+                    cursor:pointer;
+                    -webkit-tap-highlight-color:transparent;
+                }
+                .topbar-banner .close-icon svg{ width:16px; height:16px; }
+
+                /* Màn rất nhỏ */
+                @media (max-width: 360px){
+                    .topbar-banner img{ height:46px; }
+                    .topbar-banner .close-icon{
+                        width:28px; height:28px; top:4px; right:max(4px, env(safe-area-inset-right));
+                    }
+                    .topbar-banner .close-icon svg{ width:14px; height:14px; }
+                }
+            }
+
+            /* (Tuỳ chọn) muốn dính trên cùng khi cuộn thì thêm class .sticky vào .topbar-banner */
+            .topbar-banner.sticky{ position: sticky; top: 0; }
+
+
+        </style>
         <header class="mainHeader  mainHeader_temp03  " id="site-header">
             <div class="topbar-banner text-center">
                 <a href="/collections/all">
                     <picture>
                         <source media="(max-width: 767px)"
-                            srcset="//theme.hstatic.net/200000516791/1001206835/14/topbar_img_mb.jpg?v=162" />
+                            srcset="{{$bannerTop->image->path ?? ''}}" />
                         <source media="(min-width: 768px)"
-                            srcset="//theme.hstatic.net/200000516791/1001206835/14/topbar_img.jpg?v=162" />
+                            srcset="{{$bannerTop->image->path ?? ''}}" />
                         <img class="lazyload"
-                            data-src="//theme.hstatic.net/200000516791/1001206835/14/topbar_img.jpg?v=162"
-                            src="//theme.hstatic.net/200000516791/1001206835/14/topbar_img.jpg?v=162"
+                            data-src="{{$bannerTop->image->path ?? ''}}"
+                            src="{{$bannerTop->image->path ?? ''}}"
                             alt="banner-topbar" />
                     </picture>
                 </a>
@@ -27,7 +118,7 @@
                     <div class="box-content d-flex align-items-center justify-content-between">
                         <div class="box-left d-flex flex-wrap align-items-center">
                             <div class="hotline">
-                                <span>Hotline: <b>{{ $config->hotline }}</b> (8h - 12h, 13h30 - 17h)</span>
+                                <span>Hotline: <b>{{ $config->hotline }}</b> {{ $config->working_time }}</span>
                             </div>
                         </div>
                         <div class="box-right">
@@ -173,14 +264,47 @@
                                                 <span class="txtbl">Giỏ hàng</span>
                                             </span>
                                         </button>
-                                        <span class="box-triangle">
-                                            <svg viewBox="0 0 20 9" role="presentation">
-                                                <path
-                                                    d="M.47108938 9c.2694725-.26871321.57077721-.56867841.90388257-.89986354C3.12384116 6.36134886 5.74788116 3.76338565 9.2467995.30653888c.4145057-.4095171 1.0844277-.40860098 1.4977971.00205122L19.4935156 9H.47108938z"
-                                                    fill="#ffffff"></path>
-                                            </svg>
-                                        </span>
+
+                                        <style>
+                                            .icon-compare { display:inline-block; vertical-align:middle; height: 50px !important; }
+                                            .btn-compare .box-icon { line-height:0; }
+                                            .btn-compare { color:#fff !important; }           /* hoặc màu bạn muốn */
+                                            .btn-compare:hover { color:#ffd200; }  /* màu hover */
+
+                                        </style>
+
+
+                                        <a href="{{ route('compare.index') }}">
+                                            <button class="header-action__link  btn-compare"
+                                                    id="site-cart-handle" aria-label="Giỏ hàng" title="so sánh"
+                                                    type="button">
+                                            <span class="box-icon">
+                                              <svg class="icon-compare" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+  <rect x="3"  y="7" width="11" height="11" rx="2" ry="2" fill="currentColor" opacity="0.8"/>
+  <rect x="10" y="3" width="11" height="11" rx="2" ry="2" fill="currentColor"/>
+</svg>
+
+
+                                                <span class="box-icon--close">
+                                                    <svg viewBox="0 0 19 19" role="presentation">
+                                                        <path
+                                                            d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
+                                                            fill-rule="evenodd"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="count-holder">
+                                                    <span class="count"><% compareItems.count %></span>
+                                                </span>
+                                            </span>
+                                                <span class="box-text">
+                                                <span class="txtbl">So sánh</span>
+                                            </span>
+                                            </button>
+                                        </a>
                                     </div>
+
+
+
                                     <div class="header-action_dropdown">
                                         <div class="header-dropdown_content" ng-if="!cart.count">
                                             <div class="sitenav-content sitenav-cart">
@@ -544,9 +668,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="box-live">
-                                <button type="button" class="btn-live">So sánh</button>
-                            </div>
+{{--                            <div class="box-live">--}}
+{{--                                <button type="button" class="btn-live">So sánh</button>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>

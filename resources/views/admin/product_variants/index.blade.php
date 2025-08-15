@@ -154,7 +154,6 @@
                     column_data: [{id: 1, name: "Mặc định"}, {id: 0, name: "Không"}]
                 },
             ],
-            act: true,
         }).datatable;
 
         app.controller('Product', function ($scope, $rootScope, $http) {

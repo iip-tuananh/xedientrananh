@@ -29,7 +29,7 @@
         </div>
         <div class="col-lg block-slider">
             <div class="row">
-                <div class="col-lg-8 col-md-12 col-12  p-0 left-slider" id="left-slider">
+                <div class="col-lg-12 col-md-12 col-12  p-0 left-slider" id="left-slider">
                 <div class="home-slider" id="home-slider">
                     <div class="slider-owl owl-carousel ">
                         @foreach($banners as $banner)
@@ -50,27 +50,30 @@
                 </div>
 
 
-                <div class="col-lg-4 col-md-12 col-12 right-banner">
-                <div id="group-banner-right">
-                    @foreach($smallBanners as $smallBanner)
-                        <div class="box-banner effect-shine">
-                            <a href="/" aria-label="banner top 1">
-                                <picture>
-                                    <source class="lazyload" media="(max-width: 991px)" data-srcset="{{ $smallBanner->image->path ?? '' }}"
-                                            srcset="{{ $smallBanner->image->path ?? '' }}" />
-                                    <source class="lazyload" media="(min-width: 992px)" data-srcset="{{ $smallBanner->image->path ?? '' }}"
-                                            srcset="{{ $smallBanner->image->path ?? '' }}" />
-                                    <img class="lazyload" data-src="{{ $smallBanner->image->path ?? '' }}" alt="banner top 1"
-                                         src="{{ $smallBanner->image->path ?? '' }}" />
-                                </picture>
-                            </a>
-                        </div>
+{{--                <div class="col-lg-4 col-md-12 col-12 right-banner">--}}
+{{--                <div id="group-banner-right">--}}
+{{--                    @foreach($smallBanners as $smallBanner)--}}
+{{--                        <div class="box-banner effect-shine">--}}
+{{--                            <a href="/" aria-label="banner top 1">--}}
+{{--                                <picture>--}}
+{{--                                    <source class="lazyload" media="(max-width: 991px)" data-srcset="{{ $smallBanner->image->path ?? '' }}"--}}
+{{--                                            srcset="{{ $smallBanner->image->path ?? '' }}" />--}}
+{{--                                    <source class="lazyload" media="(min-width: 992px)" data-srcset="{{ $smallBanner->image->path ?? '' }}"--}}
+{{--                                            srcset="{{ $smallBanner->image->path ?? '' }}" />--}}
+{{--                                    <img class="lazyload" data-src="{{ $smallBanner->image->path ?? '' }}" alt="banner top 1"--}}
+{{--                                         src="{{ $smallBanner->image->path ?? '' }}" />--}}
+{{--                                </picture>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
 
-                    @endforeach
+{{--                    @endforeach--}}
 
-                </div>
-                </div>
+{{--                </div>--}}
+{{--                </div>--}}
             </div>
+
+
+
         </div>
     </div>
     </div>
@@ -231,7 +234,7 @@
                     @foreach($bannerGroups[2]->galleries as $bannerGallery)
                         <div class="col-lg-6 col-md-12 col-12 banner__inner--block">
                             <div class="banner__inner--img effect-shine">
-                                <a href="collections/all" aria-label="home banner 1">
+                                <a href="#" aria-label="home banner 1">
                                     <img class="lazyload" data-src="{{ $bannerGallery->image->path ?? '' }}"
                                          src="{{ $bannerGallery->image->path ?? '' }}"
                                          alt="home banner 1">
@@ -252,9 +255,9 @@
                     <div class="col-lg-12 col-md-12 col-12">
                         <div class="left-news">
                             <div class="section-heading d-flex justify-content-between align-items-center">
-                                <h2 class="hTitle"><a href="/blogs/all">Bài Viết Mới Nhất</a></h2>
+                                <h2 class="hTitle"><a href="#">Bài Viết Mới Nhất</a></h2>
                                 <div class="more-news">
-                                    <a href="/blogs/all">Xem thêm</a>
+                                    <a href="{{ route('front.list-blog', @$posts->first()->category->slug ?? '') }}">Xem thêm</a>
                                 </div>
                             </div>
                             @php
@@ -268,7 +271,7 @@
                                         <div class="article-item__block flow-zoom">
                                             <div class="article-item__image">
                                                 <div class="art-image">
-                                                    <a href="/blogs/news/diem-qua-cac-loai-tivi-co-mat-tren-thi-truong-hien-nay"
+                                                    <a href="{{ route('front.detail-blog', $postFirst->slug) }}"
                                                        title="{{ $postFirst->name }}"
                                                        aria-label="{{ $postFirst->name }}">
                                                         <picture>
@@ -288,7 +291,7 @@
                                                 </div>
                                             </div>
                                             <div class="article-item__detail">
-                                                <h3 class="art-title"><a href="/blogs/news/diem-qua-cac-loai-tivi-co-mat-tren-thi-truong-hien-nay">{{ $postFirst->name }}</a></h3>
+                                                <h3 class="art-title"><a href="{{ route('front.detail-blog', $postFirst->slug) }}">{{ $postFirst->name }}</a></h3>
                                                 <div class="art-meta">
                                     <span class="art-date">
                                     <time>{{ \Illuminate\Support\Carbon::parse($postFirst->created_at)->format('d/m/Y') }}</time>
@@ -305,7 +308,7 @@
                                             <div class="article-item__block flow-zoom">
                                                 <div class="article-item__image">
                                                     <div class="art-image">
-                                                        <a href="/blogs/news/may-loc-khong-khi-la-gi-cac-cong-nghe-hien-dai-cua-may-loc-khong-khi"
+                                                        <a href="{{ route('front.detail-blog', $post->slug) }}"
                                                            title="{{ $post->name }}"
                                                            aria-label="{{ $post->name }}">
                                                             <img class="lazyload"
@@ -316,7 +319,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="article-item__detail">
-                                                    <h3 class="art-title"><a href="/blogs/news/may-loc-khong-khi-la-gi-cac-cong-nghe-hien-dai-cua-may-loc-khong-khi">
+                                                    <h3 class="art-title"><a href="{{ route('front.detail-blog', $post->slug) }}">
                                                             {{ $post->name }}</a></h3>
                                                     <div class="art-meta">
                                     <span class="art-date">
@@ -482,6 +485,7 @@
                                 compareItemSync.items = response.compareItems;
                                 compareItemSync.count = response.count;
                             }, 1000);
+
                         } else {
                             toastr.warning(response.message);
                         }

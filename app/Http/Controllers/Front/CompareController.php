@@ -25,6 +25,7 @@ class CompareController extends Controller
             $product = [
                 'id' => $product->id,
                 'name' => $product->name,
+                'slug' => $product->slug,
                 'image' => @$product->variants[0]->image->path ?? '',
                 'manufacture' => $product->manufacturer->name ?? '',
                 'base_price' => $product->base_price,

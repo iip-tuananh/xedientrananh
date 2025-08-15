@@ -242,7 +242,9 @@
                         <tr class="row-cta">
                             <th class="sticky-col label-col"></th>
                             <td ng-repeat="p in compareProducts">
-                                <button class="btn btn-primary w-100" ng-click="addToCart(p)">Thêm vào giỏ hàng</button>
+                               <a href="/san-pham/<% p.slug %>.html" target="_blank">
+                                   <button class="btn btn-primary w-100">Xem chi tiết</button>
+                               </a>
                             </td>
                         </tr>
                         </tbody>

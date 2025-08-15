@@ -2124,23 +2124,18 @@
                                     <td class="product-image">
                                     <div class="product-thumbnail">
                                         <div class="product-thumbnail-wrapper">
-                                            <img class="product-thumbnail-image" alt="{{$detail->product ? $detail->product->name : 'Không có sản phẩm'}}" src="{{$detail->product ? $detail->product->image->path : '/site/images/no-image.png'}}" />
+                                            <img class="product-thumbnail-image" alt="{{$detail->product ? $detail->product->name : 'Không có sản phẩm'}}" src="{{$detail->product_variant ? $detail->product_variant->image->path : '/site/images/no-image.png'}}" />
                                             </div>
                                             <span class="product-thumbnail-quantity" aria-hidden="true">{{$detail->qty}}</span>
                                         </div>
                                     </td>
                                     <td class="product-description">
                                     <span class="product-description-name order-summary-emphasis">{{$detail->product ? $detail->product->name : 'Không có sản phẩm'}}</span>
-                                    @php
-                                    $attributes = json_decode($detail->attributes, true);
-                                    @endphp
-                                    @if($attributes)
-                                    <span class="product-description-variant order-summary-small-text">
-                                    @foreach($attributes as $attribute)
-                                    {{$attribute['name']}}: <span style="font-weight: 400; color: #338dbc;">{{$attribute['value']}}</span>
-                                    @endforeach
+                                        <span class="product-description-variant order-summary-small-text">
+
+                                            Phân loại: <span style="font-weight: 400; color: #338dbc;">{{$detail->product_variant->name ?? ''}}</span>
+
                                     </span>
-                                    @endif
                                     </td>
                                     <td class="product-quantity visually-hidden">{{$detail->qty}}</td>
                                     <td class="product-price">
@@ -2280,49 +2275,12 @@
                     </div>
                     <div class="section thank-you-checkout-info">
                         <div class="section-content">
-                        <div class="content-box">
-                            <div class="content-box-row content-box-row-padding content-box-row-no-border">
-                                <h2 class="text-center">Hãy follow Zalo Oa của Demua để nhận được ưu đãi khuyến mại và các chế độ bảo hành một cách nhanh nhất</h2>
-                            </div>
-                            <div class="content-box-row content-box-row-padding">
-                                <div class="section-content">
-                                    <a href="https://zalo.me/{{$config->zalo}}" target="_blank">
-                                        <img src="/site/images/zalo-oa.jpg" width="100%" height="100%">
-                                    </a>
-                                    {{-- <div class="section-content-column">
-                                    <h3>Bước 1: Chuyển khoản</h3>
-                                    <p>
-                                        - Bạn vui lòng chuyển khoản với số tiền tương ứng với đơn hàng đã được tạo.
-                                    </p>
-                                    <p>
-                                        - Số tiền cần chuyển: <b>{{formatCurrency($order->total_after_discount)}}₫</b>
-                                    </p>
-                                    <p>
-                                        - Nội dung chuyển khoản: <b>#{{$order->code}}</b>
-                                    </p>
-                                    <h3>Bước 2: Chụp hình giao dịch</h3>
-                                    <p>
-                                        - Bạn vui lòng chụp hình giao dịch và gửi lại cho chúng tôi qua các số zalo:
-                                        @php
-                                            $zalo_chat = json_decode($config->zalo_chat, true);
-                                        @endphp
-                                        @foreach ($zalo_chat as $zalo)
-                                        <p style="padding-left: 50px;">{{$zalo['title']}}: <a href="https://zalo.me/{{$zalo['phone']}}" target="_blank">{{$zalo['phone']}}</a></p>
-                                        @endforeach
-                                    </p>
-                                    <h3>Bước 3: Chờ xác nhận</h3>
-                                    <p>
-                                        - Chúng tôi sẽ xác nhận giao dịch và cập nhật đơn hàng cho bạn.
-                                    </p>
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
+
                         </div>
                     </div>
                     <div class="step-footer">
                         <a href="{{route('front.home-page')}}" class="step-footer-continue-btn btn">
-                        <span class="btn-content">Xác nhận mua hàng</span>
+                        <span class="btn-content">Tiếp tục mua sắm</span>
                         </a>
                         <p class="step-footer-info">
                         <i class="icon icon-os-question"></i>

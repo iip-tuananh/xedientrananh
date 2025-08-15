@@ -26,6 +26,10 @@ class Attribute extends Model
             $result = $result->where('name', 'like', '%' . $request->name . '%');
         }
 
+        if (!empty($request->group_id)) {
+            $result = $result->where('group_id', $request->group_id);
+        }
+
         $result = $result->orderBy('created_at', 'desc')->get();
         return $result;
     }

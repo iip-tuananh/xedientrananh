@@ -2538,6 +2538,7 @@ HRT.Quickview = {
 		that.addCartProductQuickview();
 		//that.closeQuickView();
 		that.iconQuickView();
+		// that.slideProdQuickview();
 	},
 	slideProdQuickview: function(){
 		var qv_slider = $('#quickview-sliderproduct');

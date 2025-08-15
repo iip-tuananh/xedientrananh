@@ -52,6 +52,31 @@ Quản lý nhóm thuộc tính
             box-shadow:0 1px 0 rgba(0,0,0,.04);
         }
 
+
+        .chip-badge{
+            display:inline-block;
+            padding:4px 8px;
+            margin:2px 4px 2px 0;
+            font-size:12px;
+            line-height:1;
+            border-radius:999px;
+            background:#f1f5f9;       /* xám nhạt */
+            color:#0f172a;            /* xám đậm */
+            border:1px solid #e2e8f0;
+        }
+        .chip-more{
+            display:inline-block;
+            padding:4px 8px;
+            margin:2px 0;
+            font-size:12px;
+            line-height:1;
+            border-radius:999px;
+            background:#eef2ff;       /* xanh nhạt */
+            color:#3730a3;            /* xanh đậm */
+            border:1px solid #c7d2fe;
+            cursor:help;
+        }
+
     </style>
 </div>
 @endsection
@@ -83,6 +108,7 @@ Quản lý nhóm thuộc tính
                     return `<span class="order-chip" aria-label="Thứ tự ${val}">${String(val).padStart(2,'0')}</span>`;
                 }
             },
+            {data: 'attributes', title: 'Thuộc tính hiện có'},
             {data: 'updated_at', title: 'Ngày cập nhật', className: "text-center"},
             {data: 'updated_by', title: 'Người cập nhật', className: "text-center"},
             {data: 'action', orderable: false, title: "Hành động"}

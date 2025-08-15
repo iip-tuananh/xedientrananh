@@ -2,6 +2,7 @@
 
 namespace App\Http\View\Composers;
 
+use App\Model\Admin\Banner;
 use App\Model\Admin\Category;
 use App\Model\Admin\Config;
 use App\Model\Admin\Store;
@@ -29,11 +30,13 @@ class HeaderComposer
         // list product so sánh
         $compareListItems = \Cart::session('compareList')->getContent();
 
+        $bannerTop = Banner::query()->with('image')->where('position', 3)->first();
         $view->with(['config' => $config,
             'cartItems' => $cartItems,
             'totalPriceCart' => $totalPriceCart,
             'productCategories' => $productCategories,
-            'compareListItems' => $compareListItems
+            'compareListItems' => $compareListItems,
+            'bannerTop' => $bannerTop
         ]);
     }
 }

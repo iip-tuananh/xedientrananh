@@ -142,7 +142,6 @@
                     column_data: @json(App\Model\Admin\CategorySpecial::getForSelectForProduct())
                 }
             ],
-            act: true,
         }).datatable;
 
         app.controller('Product', function ($scope, $rootScope, $http) {

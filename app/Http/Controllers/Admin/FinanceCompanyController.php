@@ -40,16 +40,20 @@ class FinanceCompanyController extends Controller
             ->editColumn('created_at', function ($object) {
                 return formatDate($object->updated_at);
             })
-            ->editColumn('content', function ($object) {
-                return Str::limit($object->content, 100);
+            ->editColumn('updated_at', function ($object) {
+                return formatDate($object->updated_at);
+            })
+            ->editColumn('status', function ($object) {
+                return $object->status == 10 ? '<span class="label label-success">Hoạt động</span>' : '<span class="label label-danger">Khóa</span>';
             })
             ->addColumn('action', function ($object) {
                 $result = '';
-                $result .= '<a href="'.route('contacts.delete', $object->id).'" title="Xóa" class="btn btn-sm btn-danger confirm"><i class="fas fa-times"></i></a>';
-                $result .= '&nbsp;<a href="javascript:void(0)" title="Chi tiết" class="btn btn-sm btn-primary show-detail"><i class="fas fa-eye"></i></a>';
+                $result .= '<a href="'.route('finance_companies.edit', $object->id).'" title="Sửa" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
+                $result .= ' <a href="'.route('finance_companies.delete', $object->id).'" title="Xóa" class="btn btn-sm btn-danger confirm"><i class="fas fa-times"></i></a>';
                 return $result;
             })
             ->addIndexColumn()
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
 
@@ -201,6 +205,7 @@ class FinanceCompanyController extends Controller
     {
         $object = ThisModel::findOrFail($id);
 
+        $object->packages()->delete();
         $object->delete();
 
         $message = array(

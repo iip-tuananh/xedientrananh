@@ -97,7 +97,6 @@ Quản lý bài viết
                 }
             },
             {data: 'cate_id', title: 'Danh mục'},
-            {data: 'category_special', title: 'Danh mục đặc biệt'},
             {data: 'created_at', title: "Ngày cập nhật"},
             {data: 'updated_by', title: "Người cập nhật"},
             {

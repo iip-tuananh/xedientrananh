@@ -29,6 +29,8 @@ class ProductVariantUpdateRequest extends BaseRequest
             'name' => 'required',
             'sku' => 'required|max:255|unique:product_variants,sku,'.$id,
             'is_default' => 'required',
+            'qty' => 'required',
+            'status' => 'required',
         ];
 
         return $rules;

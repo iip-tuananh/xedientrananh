@@ -28,7 +28,7 @@
             $scope.loading = {};
             $scope.form = new FinanceCompany({}, {scope: $scope});
 
-            $scope.statuses = @json(\App\Model\Admin\Order::STATUSES);
+            $scope.statuses = @json(\App\Model\Admin\FinanceCompany::STATUSES);
             $scope.termOptions = [6, 8, 9, 12, 15, 18];
 
             $scope.submit = function () {
@@ -46,7 +46,7 @@
                     success: function (response) {
                         if (response.success) {
                             toastr.success(response.message);
-                            {{--window.location.href = "{{ route('product_variants.index') }}";--}}
+                            window.location.href = "{{ route('finance_companies.index') }}";
                         } else {
                             toastr.warning(response.message);
                             $scope.errors = response.errors;

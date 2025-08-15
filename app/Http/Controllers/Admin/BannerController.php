@@ -53,7 +53,7 @@ class BannerController extends Controller
                 return '<a href="' . $object->link . '">' . $object->link . '</a>';
             })
             ->addColumn('image', function ($object) {
-                return '<img class="thumbnail img-preview" src="' . ($object->image ? $object->image->path : '') . '">';
+                return '<img class="thumbnail img-preview" src="' . ($object->image ? $object->image->path : '') . '" width="300" >';
             })
             ->addColumn('action', function ($object) {
                 $result = '';
@@ -78,7 +78,7 @@ class BannerController extends Controller
             [
                 'title' => 'required',
                 'image' => 'required|file|mimes:jpg,jpeg,png,gif|max:10240',
-                'position' => 'required|in:1,2',
+                'position' => 'required|in:1,2,3',
             ]
         );
 
@@ -133,7 +133,7 @@ class BannerController extends Controller
             [
                 'title' => 'required',
                 'image' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
-                'position' => 'required|in:1,2',
+                'position' => 'required|in:1,2,3',
             ]
         );
         $json = new stdClass();

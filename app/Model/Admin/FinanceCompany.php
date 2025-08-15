@@ -9,6 +9,20 @@ class FinanceCompany extends BaseModel
 {
     protected $table = 'finance_companies';
 
+    public const STATUSES = [
+        [
+            'id' => 10,
+            'name' => 'Hoạt động',
+            'type' => 'success'
+        ],
+        [
+            'id' => 20,
+            'name' => 'Khóa',
+            'type' => 'warning'
+        ],
+    ];
+
+
     public function packages()
     {
         return $this->hasMany(FinancePackage::class, 'company_id');

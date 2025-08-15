@@ -184,20 +184,64 @@
             .card .inline-3{ grid-template-columns: 1fr 1fr 1fr; }
         }
 
+
+
+
+
+
+        .form-alert{
+            display:flex; align-items:flex-start; gap:10px;
+            margin-top:12px; padding:12px 14px;
+            border-radius:10px; position:relative;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+            animation:fadeSlideIn .25s ease-out both;
+        }
+        .form-alert__icon{
+            width:28px; height:28px; flex:0 0 28px;
+            display:grid; place-items:center;
+            border-radius:50%;
+        }
+        .form-alert__content{ line-height:1.5; }
+        .form-alert__close{
+            position:absolute; top:8px; right:10px;
+            border:0; background:transparent; font-size:20px; line-height:1;
+            cursor:pointer; color:inherit; opacity:.6;
+        }
+        .form-alert__close:hover{ opacity:1; }
+
+        /* Success theme */
+        .form-alert--success{
+            background:#f0fff5; color:#14532d; /* xanh lá trầm dễ đọc */
+            border:1px solid #bbf7d0;
+        }
+        .form-alert--success .form-alert__icon{
+            background:#22c55e; color:#fff;
+        }
+
+        /* nhỏ gọn hơn trên mobile */
+        @media (max-width:480px){
+            .form-alert{ padding:10px 12px; border-radius:8px; }
+        }
+
+        /* hiệu ứng xuất hiện */
+        @keyframes fadeSlideIn{
+            from{ opacity:0; transform:translateY(6px); }
+            to  { opacity:1; transform:translateY(0); }
+        }
+
     </style>
     <div class="mainBody-theme-container mainBody-modalshow mainBody-product  layoutProduct_scroll ">
 
         <div class="inst-layout" ng-controller="productDetailPage">
             <div class="emi-wrap">
                 <div class="emi-header">
-                    <a href="#" id="backLink">⟵ Quay lại giỏ hàng</a>
                     <h2>Đặt mua trả góp</h2>
                 </div>
 
                 <div class="emi-grid">
                     <!-- LEFT: Cart summary -->
                     <section class="card" id="cartCard">
-                        <div class="card-hd">Chọn lại phương thức</div>
+                        <div class="card-hd"><a href="/tra-gop">Chọn lại phương thức</a></div>
                         <div class="card-bd">
                             <div class="cart-list" id="cartList">
                                 <!-- Item mẫu (render động hoặc server-side). Giữ data-price để JS tính -->
@@ -225,7 +269,7 @@
 
                             <div class="stack" id="summary">
                                 <div class="row-flex">
-                                    <span class="muted">Công ty: <% financeSelected.company.name %></span>
+                                    <span class="muted">Công ty tài chính: <% financeSelected.company.name %></span>
                                 </div>
                                 <div class="row-flex">
                                     <span class="muted">Trả trước (<span id="downLabel"><% financeSelected.sophantram %></span>%)</span>
@@ -325,8 +369,35 @@
                         </div>
 
                         <div class="actions">
-                            <button class="btn-primary" id="submitBtn" ng-click="submit()">ĐẶT MUA TRẢ GÓP</button>
+                            <button class="btn-primary" id="submitBtn" ng-click="submit()" ng-disabled="isSubmitting">
+                                <span ng-if="!isSubmitting">ĐẶT MUA TRẢ GÓP</span>
+                                <span ng-if="isSubmitting">Đang gửi…</span>
+                            </button>
                             <div class="tiny-help">Duyệt hồ sơ qua điện thoại</div>
+
+                            <div class="form-alert form-alert--success"
+                                 ng-if="submitSuccess"
+                                 role="status"
+                                 aria-live="polite"
+                                 id="installmentSuccess">
+    <span class="form-alert__icon" aria-hidden="true">
+      <!-- check icon -->
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path fill="currentColor" d="M9.0 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/>
+      </svg>
+    </span>
+                                <div class="form-alert__content">
+                                    <strong>Gửi thành công!</strong><br>
+                                    chúng tôi đã nhận được thông tin hồ sơ mua trả góp của bạn.
+                                    Nhân viên hỗ trợ sẽ sớm liên hệ lại với bạn.
+                                </div>
+                                <button type="button"
+                                        class="form-alert__close"
+                                        ng-click="submitSuccess=false"
+                                        aria-label="Ẩn thông báo">×</button>
+                            </div>
+
+
                         </div>
                     </section>
                 </div>
@@ -340,8 +411,11 @@
 
 @push('scripts')
     <script>
-        app.controller('productDetailPage', ['$scope','$window', function($scope, $window){
+        app.controller('productDetailPage', ['$scope','$window', '$timeout', function($scope, $window, $timeout){
             var saved = angular.fromJson($window.localStorage.getItem('financeSelected'));
+            $scope.isSubmitting = false;
+            $scope.submitSuccess = false;
+
             $scope.form = {}
             $scope.financeSelected = saved || null;
             $scope.items = @json($cartCollection);
@@ -356,7 +430,9 @@
 
             console.log($scope.financeSelected);
             $scope.submit = function () {
+                if ($scope.isSubmitting) return;
                 $scope.isSubmitting = true;
+
                 $.ajax({
                     type: 'POST',
                     url: "/checkout-finance",
@@ -378,13 +454,23 @@
                         if (response.success) {
                             $scope.errors = [];
                             toastr.success(response.message);
-                            $scope.sendSuccess = true;
-                            $scope.$applyAsync();
+
+                            $scope.form = {};
                             $window.localStorage.removeItem('financeSelected');
 
-                            // setTimeout(function() {
-                            //     window.location.href = '/';
-                            // }, 1000);
+
+                            $scope.isSubmitting = false;
+                            $scope.submitSuccess = true;
+
+                            $timeout(function(){
+                                var el = document.getElementById('installmentSuccess');
+                                if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+                            }, 0);
+
+                            $timeout(function(){ $scope.submitSuccess = false; }, 7000);
+
+
+                            $scope.$applyAsync();
                         } else {
                             $scope.errors = response.errors;
                             toastr.warning(response.message);

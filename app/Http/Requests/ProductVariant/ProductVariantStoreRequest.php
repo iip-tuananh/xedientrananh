@@ -27,6 +27,8 @@ class ProductVariantStoreRequest extends BaseRequest
             'name' => 'required',
             'sku' => 'required|max:255|unique:product_variants,sku',
             'is_default' => 'required',
+            'qty' => 'required',
+            'status' => 'required',
             'image' => 'required|file|mimes:jpg,jpeg,png,webp|max:3000',
         ];
 

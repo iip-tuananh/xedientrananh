@@ -48,12 +48,16 @@ Quản lý danh mục thuộc tính
             {data: 'DT_RowIndex', orderable: false, title: "STT", className: "text-center"},
             {data: 'name', title: 'Tên thuộc tính'},
             {data: 'group_id', title: 'Nhóm thuộc tính'},
-            {data: 'products', title: 'Sản phẩm đã áp dụng'},
+            {data: 'products', title: 'Sản phẩm đã áp dụng', className: "text-center"},
             {data: 'updated_at', title: 'Ngày cập nhật'},
             {data: 'action', orderable: false, title: "Hành động"}
         ],
         search_columns: [
             {data: 'name', search_type: "text", placeholder: "Tên thuộc tính"},
+            {
+                data: 'group_id', search_type: "select", placeholder: "Nhóm thuộc tính",
+                column_data: @json(App\Model\Admin\AttributeGroup::getForSelect())
+            },
         ],
     }).datatable;
 

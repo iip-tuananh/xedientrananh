@@ -170,10 +170,29 @@ class FrontController extends Controller
             $q->with(['image', 'galleries.image']);
         }])->where('slug', $slug)->first();
 
+
+        foreach ($data['product']->variants as $variant) {
+            $thumb = [$variant->image->path];
+            foreach ($variant->galleries as $gallery) {
+                $thumb[] = $gallery->image->path;
+            }
+
+            $variant['thumb'] = $thumb;
+        }
+
+
         $data['variantDefault'] = ProductVariant::query()->with(['image', 'galleries.image'])
             ->where('product_id', $data['product']->id)
             ->where('is_default', 1)
             ->first();
+
+        $thumb = [$data['variantDefault']->image->path];
+
+        foreach ($data['variantDefault']->galleries as $gallery) {
+            $thumb[] = $gallery->image->path;
+        }
+
+        $data['variantDefault']['thumb'] = $thumb;
 
         $groups = [];
 

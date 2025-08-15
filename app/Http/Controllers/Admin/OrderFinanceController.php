@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\ExcelExports\OrderExcel;
 use App\ExcelImports\OrderImport;
+use App\Model\Admin\FinanceOrder;
 use App\Model\Admin\Order;
 use Illuminate\Http\Request;
-use App\Model\Admin\Order as ThisModel;
+use App\Model\Admin\FinanceOrder as ThisModel;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -24,10 +25,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\Common\Customer;
 use Maatwebsite\Excel\Facades\Excel;
 
-class OrderController extends Controller
+class OrderFinanceController extends Controller
 {
-    protected $view = 'admin.orders';
-    protected $route = 'orders';
+    protected $view = 'admin.finace_orders';
+    protected $route = 'orders-finance';
 
     public function index()
     {
@@ -39,20 +40,20 @@ class OrderController extends Controller
     {
         $objects = ThisModel::searchByFilter($request);
         return Datatables::of($objects)
-            ->addColumn('total_price', function ($object) {
-                return number_format($object->total_price);
+            ->editColumn('tongtien', function ($object) {
+                return number_format($object->tongtien);
+            })
+            ->editColumn('fullname', function ($object) {
+                return $object->display_name;
             })
             ->editColumn('code', function ($object) {
-                return '<a href = "'.route('orders.show', $object->id).'" title = "Xem chi tiết">' . $object->code . '</a>';
-            })
-            ->editColumn('type', function ($object) {
-                return $object->type == 0 ? 'Đơn hàng thường' : 'Đơn hàng affiliate';
+                return '<a href = "'.route('orders-finance.show', $object->id).'" title = "Xem chi tiết">' . $object->code . '</a>';
             })
             ->editColumn('code_client', function ($object) {
                 return '<a href = "javascript:void(0)" title = "Xem chi tiết" class="show-order-client">' . $object->code . '</a>';
             })
             ->editColumn('created_at', function ($object) {
-                return $object->type == 0 ? formatDate($object->created_at) : formatDate($object->aff_order_at);
+                return formatDate($object->created_at);
             })
             ->addColumn('action', function ($object) {
                 $result = '<div class="btn-group btn-action">
@@ -61,50 +62,45 @@ class OrderController extends Controller
                 </button>
                 <div class="dropdown-menu">';
                 $result = $result . ' <a href="" title="đổi trạng thái" class="dropdown-item update-status"><i class="fa fa-angle-right"></i>Đổi trạng thái</a>';
-                $result = $result . ' <a href="'.route('orders.show', $object->id).'" title="xem chi tiết" class="dropdown-item"><i class="fa fa-angle-right"></i>Xem chi tiết</a>';
-
+                if ($object->type == 0) {
+                    $result = $result . ' <a href="'.route('orders-finance.show', $object->id).'" title="xem chi tiết" class="dropdown-item"><i class="fa fa-angle-right"></i>Xem chi tiết</a>';
+                }
                 $result = $result . '</div></div>';
                 return $result;
             })
-
+            ->addColumn('action_client', function ($object) {
+                $result = '<div class="btn-group btn-action">
+                <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class = "fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu">';
+                if ($object->type == 0) {
+                    $result = $result . ' <a href="" title="Hủy đơn hàng" class="dropdown-item update-status"><i class="fa fa-angle-right"></i>Hủy đơn hàng</a>';
+                    $result = $result . ' <a href="'.route('orders-finance.show', $object->id).'" title="xem chi tiết" class="dropdown-item"><i class="fa fa-angle-right"></i>Xem chi tiết</a>';
+                }
+                $result = $result . '</div></div>';
+                return $result;
+            })
             ->addIndexColumn()
             ->rawColumns(['code', 'action', 'action_client', 'code_client'])
             ->make(true);
     }
 
     public function show(Request $request, $id) {
-        $order = Order::query()->with(['details.product', 'details.product_variant'])->find($id);
-//        $order->payment_method_name = Order::PAYMENT_METHODS[$order->payment_method];
+        $order = FinanceOrder::query()->with(['details' => function ($q) {
+            $q->with(['product','variant']);
+        }])->find($id);
+        $order->customer_name = $order->display_name;
 
         return view($this->view . '.show', compact('order'));
     }
 
     public function updateStatus(Request $request)
     {
-        $order = Order::query()->find($request->order_id);
-        $config = \App\Model\Admin\Config::where('id',1)->select('revenue_percent_1')->first();
+        $order = FinanceOrder::query()->find($request->order_id);
         $order->status = $request->status;
         $order->save();
-        // TODO: Tính điểm thưởng khi admin duyệt đơn hàng
-        $current_user = User::query()->where('email', $order->customer_email)->where('status', 1)->where('type', 10)->first();
-        if ($current_user) {
-            $new_point = ($order->total_after_discount * $config->revenue_percent_1 / 100) / 1000;
-            $current_user->point += floor($new_point);
-            $current_user->save();
-        }
-        // $order_revenue_details = OrderRevenueDetail::query()->where('order_id', $order->id)->get();
-        // foreach ($order_revenue_details as $order_revenue_detail) {
-        //     if ($order->status == Order::MOI) {
-        //         $order_revenue_detail->status = OrderRevenueDetail::STATUS_PENDING;
-        //     } else if ($order->status == Order::DUYET) {
-        //         $order_revenue_detail->status = OrderRevenueDetail::STATUS_PAID;
-        //     } else if ($order->status == Order::THANH_CONG) {
-        //         $order_revenue_detail->status = OrderRevenueDetail::STATUS_WAIT_QUYET_TOAN;
-        //     } else if ($order->status == Order::HUY) {
-        //         $order_revenue_detail->status = OrderRevenueDetail::STATUS_CANCEL;
-        //     }
-        //     $order_revenue_detail->save();
-        // }
+
 
         return Response::json(['success' => true, 'message' => 'cập nhật trạng thái đơn hàng thành công']);
     }
@@ -122,20 +118,20 @@ class OrderController extends Controller
     }
 
     // Import Excel
-	public function importExcel(Request $request) {
-		$validate = Validator::make(
-			$request->all(),
-			[
+    public function importExcel(Request $request) {
+        $validate = Validator::make(
+            $request->all(),
+            [
                 'file' => 'required|file|mimes:xlsx,xls,csv,txt',
-			],
-			[
-				'file.required' => 'Không được để trống',
-				'file.file' => 'Không hợp lệ',
-				'file.mimes' => 'Không hợp lệ',
-			]
-		);
+            ],
+            [
+                'file.required' => 'Không được để trống',
+                'file.file' => 'Không hợp lệ',
+                'file.mimes' => 'Không hợp lệ',
+            ]
+        );
 
-		$json = new stdClass();
+        $json = new stdClass();
 
         if ($validate->fails()) {
             $json->success = false;
@@ -145,8 +141,8 @@ class OrderController extends Controller
         }
         DB::beginTransaction();
         try {
-			$import = new OrderImport;
-			Excel::import($import, $request->file('file'));
+            $import = new OrderImport;
+            Excel::import($import, $request->file('file'));
 
             DB::commit();
 
@@ -164,5 +160,5 @@ class OrderController extends Controller
             $json->message = "Đã có lỗi xảy ra!";
             return Response::json($json);
         }
-	}
+    }
 }

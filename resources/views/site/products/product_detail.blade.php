@@ -69,7 +69,7 @@
 
 
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                                    <a href="../collections/tivi.html" target="_self" itemprop="item"><span itemprop="name"></span></a>
+                                    <a href="{{ route('front.show-product-category', $product->category->slug) }}" target="_self" itemprop="item"><span itemprop="name">{{ $product->category->name ?? '' }}</span></a>
                                     <meta itemprop="position" content="2"/>
                                 </li>
 
@@ -88,6 +88,135 @@
                 </div>
                 <section class="productDetail-information productDetail_style__01">
                     <div class="container container-pd0">
+
+
+                        <style>
+                            /* đảm bảo vùng ảnh là mốc định vị */
+                            #quickview-sliderproduct {
+                                position: relative;
+                            }
+
+                            /* đặt thanh nav ở giữa theo trục dọc, phủ toàn chiều ngang */
+                            #quickview-sliderproduct .owl-nav {
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                right: 0;
+                                transform: translateY(-50%);
+                                display: flex;
+                                justify-content: space-between;
+                                padding: 0 8px;              /* khoảng cách mép ảnh */
+                                pointer-events: none;        /* nav container không bắt click */
+                                z-index: 5;
+                            }
+
+                            /* nút prev/next: to, rõ, dễ bấm */
+                            #quickview-sliderproduct .owl-nav button.owl-prev,
+                            #quickview-sliderproduct .owl-nav button.owl-next {
+                                pointer-events: auto;        /* chỉ nút mới bắt click */
+                                width: 44px;
+                                height: 44px;
+                                border-radius: 999px;
+                                border: 1px solid rgba(255,255,255,0.35);
+                                background: rgba(0,0,0,0.55);
+                                color: #fff;
+                                font-size: 22px;             /* cỡ mũi tên ‹ › */
+                                line-height: 1;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+                                transition: transform .18s ease, background .18s ease, opacity .18s ease;
+                            }
+
+                            /* hover/focus */
+                            #quickview-sliderproduct .owl-nav button.owl-prev:hover,
+                            #quickview-sliderproduct .owl-nav button.owl-next:hover,
+                            #quickview-sliderproduct .owl-nav button.owl-prev:focus,
+                            #quickview-sliderproduct .owl-nav button.owl-next:focus {
+                                background: rgba(0,0,0,0.85);
+                                transform: scale(1.06);
+                                outline: none;
+                            }
+
+                            /* trạng thái disabled */
+                            #quickview-sliderproduct .owl-nav button.disabled {
+                                opacity: .35;
+                                cursor: default;
+                                transform: none;
+                            }
+
+                            /* mobile: thu gọn một chút */
+                            @media (max-width: 767.98px) {
+                                #quickview-sliderproduct .owl-nav button.owl-prev,
+                                #quickview-sliderproduct .owl-nav button.owl-next {
+                                    width: 36px;
+                                    height: 36px;
+                                    font-size: 18px;
+                                }
+                            }
+
+
+
+
+                            /* khối thumb cơ bản */
+                            #quickview-thumbproduct .product-thumb__item {
+                                display: block;
+                                position: relative;
+                                border-radius: 8px;
+                                overflow: hidden;
+                                transition: box-shadow .18s ease, transform .12s ease;
+                            }
+
+                            #quickview-thumbproduct .product-thumb__item img {
+                                display: block;
+                                width: 100%;
+                                height: 72px;         /* bạn có thể chỉnh 60–80px */
+                                object-fit: cover;
+                                border-radius: inherit;
+                            }
+
+                            /* viền khi đang được chọn */
+                            #quickview-thumbproduct .owl-item.current .product-thumb__item {
+                                box-shadow: 0 0 0 1px var(--primary, #022775), 0 2px 8px rgba(0,0,0,.12);
+                            }
+
+                            /* hover nhẹ cho item chưa chọn */
+                            #quickview-thumbproduct .owl-item:not(.current):hover .product-thumb__item {
+                                box-shadow: 0 0 0 2px rgba(255,255,255,.5);
+                                transform: translateY(-1px);
+                            }
+
+                            /* nếu muốn dùng viền thật thay vì box-shadow (có thể gây nhảy layout) */
+                            /*
+                            #quickview-thumbproduct .owl-item.current img {
+                              outline: 2px solid var(--primary, #e21b1b);
+                              outline-offset: -2px;
+                              border-radius: 8px;
+                            }
+                            */
+
+
+                            #quickview-thumbproduct .product-thumb__item {
+                                display:block; border-radius:8px; overflow:hidden;
+                                transition: box-shadow .18s ease, transform .12s ease;
+                            }
+                            #quickview-thumbproduct .product-thumb__item img {
+                                width:100%; height:72px; object-fit:cover; border-radius:inherit;
+                            }
+                            /* ô đang chọn */
+                            #quickview-thumbproduct .owl-item.current .product-thumb__item {
+                                box-shadow: 0 0 0 1px var(--primary, #022775), 0 2px 8px rgba(0,0,0,.12);
+                            }
+
+                            #quickview-thumbproduct .product-thumb {
+                                padding-bottom: 10px;
+                                padding-top: 10px;
+                            }
+
+                            #quickview-thumbproduct.owl-carousel .owl-stage { margin-left:10px !important; }
+
+                        </style>
                         <div class="productDetail--main">
                             <div class="productDetail--gallery">
                                 <div class="product-container-gallery">
@@ -95,28 +224,84 @@
 
                                         <div class="wrapbox-image">
 
-                                            <div class="product-gallery">
-                                                <img ng-src="<% (variant && variant.image && variant.image.path) ? variant.image.path : '' %>"
-                                                     alt="{{ $product->name }}">
-                                            </div>
+                                            <ul class="quickview-sliderproduct owl-carousel" id="quickview-sliderproduct">
+
+{{--                                                <li class="product-gallery" data-image="<% img %>" ng-repeat="img in variant.thumb track by $index"--}}
+
+{{--                                                >--}}
+{{--                                                    <a class="gallery-item" data-image="<% img %>">--}}
+{{--                                                        <img ng-src="<% img %>" alt="">--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+
+                                            </ul>
+                                            <ul class="quickview-sliderthumb  owl-carousel" id="quickview-thumbproduct" style="margin-top: 10px">
+
+{{--                                                <li class="product-thumb" data-image="<% img %>" ng-repeat="img in variant.thumb track by $index"--}}
+{{--                                                >--}}
+{{--                                                    <a class="product-thumb__item" href="javascript:void(0);">--}}
+{{--                                                        <img ng-src="<% img %>" alt="">--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+
+
+
+                                            </ul>
 
                                         </div>
+
+
+{{--                                        <div class="wrapbox-image">--}}
+
+{{--                                            <div class="product-gallery" id="quickview-sliderproduct">--}}
+{{--                                                <img ng-src="<% (variant && variant.image && variant.image.path) ? variant.image.path : '' %>"--}}
+{{--                                                     alt="{{ $product->name }}">--}}
+{{--                                            </div>--}}
+
+{{--                                        </div>--}}
 
                                         @if($product->base_price > 0)
                                             <div class="product-percent">
                                                 <span class="pro-sale">-{{$product->percent_discount}}%<br> OFF </span>
                                             </div>
                                         @endif
-
-
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <div class="productDetail--content">
                                 <div class="wrapbox-inner">
                                     <div class="wrapbox-detail">
                                         <div class="product-heading">
                                             <h1>{{ $product->name }}</h1>
+
+                                            <span class="pro-soldold">SKU:
+
+									<strong><% variant.sku  %></strong>
+
+								</span>
 
                                             <span class="pro-soldold">Tình trạng:
 
@@ -124,7 +309,7 @@
 
 								</span>
                                             <span class="pro-vendor">Hãng sản xuất:
-                                                <strong><a title="Show vendor" href="../collections/vendorsca3d.html?q=sony">{{ $product->manufacturer->name ?? '' }}</a></strong></span>
+                                                <strong><a title="Show vendor" href="#">{{ $product->manufacturer->name ?? '' }}</a></strong></span>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-wrap">
@@ -300,8 +485,8 @@
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_1_ico70ea.png?v=162"
-                                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_1_ico.png?v=162"
+                                                             src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_1_ico.png?v=162"
                                                              alt="Cam kết 100% ch&#237;nh h&#227;ng"/>
 													</span>
                                                                 Cam kết 100% chính hãng
@@ -311,7 +496,7 @@
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_2_ico70ea.png?v=162"
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_2_ico.png?v=162"
                                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                              alt="Miễn ph&#237; giao h&#224;ng"/>
 													</span>
@@ -322,7 +507,7 @@
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_3_ico70ea.png?v=162"
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_3_ico.png?v=162"
                                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                              alt="Hỗ trợ 24/7"/>
 													</span>
@@ -342,7 +527,7 @@
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_4_ico70ea.png?v=162"
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_4_ico.png?v=162"
                                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                              alt="Ho&#224;n tiền
 111%
@@ -357,7 +542,7 @@ nếu h&#224;ng giả"/>
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_5_ico70ea.png?v=162"
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_5_ico.png?v=162"
                                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                              alt="Mở hộp
 kiểm tra
@@ -372,7 +557,7 @@ nhận h&#224;ng"/>
                                                             <div class="deliverly-item">
 													<span>
 														<img class="lazyload"
-                                                             data-src="../../theme.hstatic.net/200000516791/1001206835/14/product_deliverly_6_ico70ea.png?v=162"
+                                                             data-src="//theme.hstatic.net/200000516791/1001206835/14/product_deliverly_6_ico.png?v=162"
                                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                                                              alt="Đổi trả trong
 7 ng&#224;y"/>
@@ -385,12 +570,7 @@ nhận h&#224;ng"/>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="product-banner">
-                                                    <a href="../collections/all.html">
-                                                        <img src="../../theme.hstatic.net/200000516791/1001206835/14/product_banner70ea.jpg?v=162"
-                                                             alt="product banner">
-                                                    </a>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -890,254 +1070,6 @@ nhận h&#224;ng"/>
             </div>
 
 
-            <script>
-                var swatch_size = parseInt($('#add-item-form .select-swatch .swatch').length);
-                jQuery(document).on('click', '#add-item-form .swatch input', function (e) {
-                    e.preventDefault();
-                    var $this = $(this);
-                    var _available = '';
-                    $this.parent().siblings().find('label').removeClass('sd');
-                    $this.next().addClass('sd');
-                    var name = $this.attr('name');
-                    var value = $this.val();
-                    $('#add-item-form select[data-option=' + name + ']').val(value).trigger('change');
-                    if (swatch_size == 2) {
-                        if (name.indexOf('1') != -1) {
-                            $('#add-item-form #variant-swatch-1 .swatch-element').find('input').prop('disabled', false);
-                            $('#add-item-form #variant-swatch-2 .swatch-element').find('input').prop('disabled', false);
-                            $('#add-item-form #variant-swatch-1 .swatch-element label').removeClass('sd');
-                            $('#add-item-form #variant-swatch-1 .swatch-element').removeClass('soldout');
-                            $('#add-item-form .selector-wrapper .single-option-selector').eq(1).find('option').each(function () {
-                                var _tam = $(this).val();
-                                $(this).parent().val(_tam).trigger('change');
-                                if (check_variant) {
-                                    if (_available == '') {
-                                        _available = _tam;
-                                    }
-                                } else {
-                                    $('#add-item-form #variant-swatch-1 .swatch-element[data-value="' + _tam + '"]').addClass('soldout');
-                                    $('#add-item-form #variant-swatch-1 .swatch-element[data-value="' + _tam + '"]').find('input').prop('disabled', true);
-                                }
-                            })
-                            $('#add-item-form .selector-wrapper .single-option-selector').eq(1).val(_available).trigger('change');
-                            $('#add-item-form #variant-swatch-1 .swatch-element[data-value="' + _available + '"] label').addClass('sd');
-                        }
-                    } else if (swatch_size == 3) {
-                        var _count_op2 = $('#add-item-form #variant-swatch-1 .swatch-element').length;
-                        var _count_op3 = $('#add-item-form #variant-swatch-2 .swatch-element').length;
-                        if (name.indexOf('1') != -1) {
-                            $('#add-item-form #variant-swatch-1 .swatch-element').find('input').prop('disabled', false);
-                            $('#add-item-form #variant-swatch-2 .swatch-element').find('input').prop('disabled', false);
-                            $('#add-item-form #variant-swatch-1 .swatch-element label').removeClass('sd');
-                            $('#add-item-form #variant-swatch-1 .swatch-element').removeClass('soldout');
-                            $('#add-item-form #variant-swatch-2 .swatch-element label').removeClass('sd');
-                            $('#add-item-form #variant-swatch-2 .swatch-element').removeClass('soldout');
-                            var _avi_op1 = '';
-                            var _avi_op2 = '';
-                            $('#add-item-form #variant-swatch-1 .swatch-element').each(function (ind, value) {
-                                var _key = $(this).data('value');
-                                var _unavi = 0;
-                                $('#add-item-form .single-option-selector').eq(1).val(_key).change();
-                                $('#add-item-form #variant-swatch-2 .swatch-element label').removeClass('sd');
-                                $('#add-item-form #variant-swatch-2 .swatch-element').removeClass('soldout');
-                                $('#add-item-form #variant-swatch-2 .swatch-element').find('input').prop('disabled', false);
-                                $('#add-item-form #variant-swatch-2 .swatch-element').each(function (i, v) {
-                                    var _val = $(this).data('value');
-                                    $('#add-item-form .single-option-selector').eq(2).val(_val).change();
-                                    if (check_variant == true) {
-                                        if (_avi_op1 == '') {
-                                            _avi_op1 = _key;
-                                        }
-                                        if (_avi_op2 == '') {
-                                            _avi_op2 = _val;
-                                        }
-                                        //console.log(_avi_op1 + ' -- ' + _avi_op2)
-                                    } else {
-                                        _unavi += 1;
-                                    }
-                                })
-                                if (_unavi == _count_op3) {
-                                    $('#add-item-form #variant-swatch-1 .swatch-element[data-value = "' + _key + '"]').addClass('soldout');
-                                    setTimeout(function () {
-                                        $('#add-item-form #variant-swatch-1 .swatch-element[data-value = "' + _key + '"] input').attr('disabled', 'disabled');
-                                    })
-                                }
-                            })
-                            $('#add-item-form #variant-swatch-1 .swatch-element[data-value="' + _avi_op1 + '"] input').click();
-                        } else if (name.indexOf('2') != -1) {
-                            $('#add-item-form #variant-swatch-2 .swatch-element label').removeClass('sd');
-                            $('#add-item-form #variant-swatch-2 .swatch-element').removeClass('soldout');
-                            $('#add-item-form #variant-swatch-2 .swatch-element').find('input').prop('disabled', false);
-                            $('#add-item-form .selector-wrapper .single-option-selector').eq(2).find('option').each(function () {
-                                var _tam = $(this).val();
-                                $(this).parent().val(_tam).trigger('change');
-                                if (check_variant) {
-                                    if (_available == '') {
-                                        _available = _tam;
-                                    }
-                                } else {
-                                    $('#add-item-form #variant-swatch-2 .swatch-element[data-value="' + _tam + '"]').addClass('soldout');
-                                    $('#add-item-form #variant-swatch-2 .swatch-element[data-value="' + _tam + '"]').find('input').prop('disabled', true);
-                                }
-                            })
-                            $('#add-item-form .selector-wrapper .single-option-selector').eq(2).val(_available).trigger('change');
-                            $('#add-item-form #variant-swatch-2 .swatch-element[data-value="' + _available + '"] label').addClass('sd');
-                        }
-                    } else {
-
-                    }
-                    if (pro_template == "style_02") {
-                        //check img style 2
-                        if (check_scrollstyle2 != '' && $(window).width() > 991 && fIndex == true) {
-                            var indeximg2 = $("div.product-gallery[data-image='" + check_scrollstyle2 + "']").index();
-                            $('html, body').animate({
-                                scrollTop: $('#productScroll-slider div.product-gallery:eq(' + indeximg2 + ')').offset().top - 15
-                            }, 800);
-                        }
-                    }
-                })
-                $(document).ready(function () {
-                    var _chage = '';
-                    $('#add-item-form .swatch-element[data-value="' + $('#add-item-form .selector-wrapper .single-option-selector').eq(0).val() + '"]').find('input').click();
-                    $('#add-item-form .swatch-element[data-value="' + $('#add-item-form .selector-wrapper .single-option-selector').eq(1).val() + '"]').find('input').click();
-                    if (swatch_size == 2) {
-                        var _avi_op1 = '';
-                        var _avi_op2 = '';
-                        var _count = $('#add-item-form #variant-swatch-1 .swatch-element').length;
-                        $('#add-item-form #variant-swatch-0 .swatch-element').each(function (ind, value) {
-                            var _key = $(this).data('value');
-                            var _unavi = 0;
-                            $('#add-item-form .single-option-selector').eq(0).val(_key).change();
-                            $('#add-item-form #variant-swatch-1 .swatch-element').each(function (i, v) {
-                                var _val = $(this).data('value');
-                                $('#add-item-form .single-option-selector').eq(1).val(_val).change();
-                                if (check_variant == true) {
-                                    if (_avi_op1 == '') {
-                                        _avi_op1 = _key;
-                                    }
-                                    if (_avi_op2 == '') {
-                                        _avi_op2 = _val;
-                                    }
-                                } else {
-                                    _unavi += 1;
-                                }
-                            })
-                            if (_unavi == _count) {
-                                //$('#add-item-form #variant-swatch-0 .swatch-element[data-value = "'+_key+'"]').addClass('soldout');
-                                /*	$('#add-item-form #variant-swatch-0 .swatch-element[data-value = "'+_key+'"]').find('input').attr('disabled','disabled');*/
-                            }
-                        })
-                        $('#add-item-form #variant-swatch-1 .swatch-element[data-value = "' + _avi_op2 + '"] input').click();
-                        $('#add-item-form #variant-swatch-0 .swatch-element[data-value = "' + _avi_op1 + '"] input').click();
-                    } else if (swatch_size == 3) {
-                        var _avi_op1 = '';
-                        var _avi_op2 = '';
-                        var _avi_op3 = '';
-                        var _size_op2 = $('#add-item-form #variant-swatch-1 .swatch-element').length;
-                        var _size_op3 = $('#add-item-form #variant-swatch-2 .swatch-element').length;
-                        $('#add-item-form #variant-swatch-0 .swatch-element').each(function (ind, value) {
-                            var _key_va1 = $(this).data('value');
-                            var _count_unavi = 0;
-                            $('#add-item-form .single-option-selector').eq(0).val(_key_va1).change();
-                            $('#add-item-form #variant-swatch-1 .swatch-element').each(function (i, v) {
-                                var _key_va2 = $(this).data('value');
-                                var _unavi_2 = 0;
-                                $('#add-item-form .single-option-selector').eq(1).val(_key_va2).change();
-                                $('#add-item-form #variant-swatch-2 .swatch-element').each(function (j, z) {
-                                    var _key_va3 = $(this).data('value');
-                                    $('#add-item-form .single-option-selector').eq(2).val(_key_va3).change();
-                                    if (check_variant == true) {
-                                        if (_avi_op1 == '') {
-                                            _avi_op1 = _key_va1;
-                                        }
-                                        if (_avi_op2 == '') {
-                                            _avi_op2 = _key_va2;
-                                        }
-                                        if (_avi_op3 == '') {
-                                            _avi_op3 = _key_va3;
-                                        }
-                                    } else {
-                                        _unavi_2 += 1;
-                                    }
-                                })
-                                if (_unavi_2 == _size_op3) {
-                                    _count_unavi += 1;
-                                }
-                            })
-                            if (_size_op2 == _count_unavi) {
-                                //$('#add-item-form #variant-swatch-0 .swatch-element[data-value = "'+_key_va1+'"]').addClass('soldout');
-                                /*$('#add-item-form #variant-swatch-0 .swatch-element[data-value = "'+_key_va1+'"]').find('input').attr('disabled','disabled');*/
-                            }
-                        })
-                        $('#add-item-form #variant-swatch-0 .swatch-element[data-value = "' + _avi_op1 + '"] input').click();
-                    }
-                    if (pro_template == "style_02") {
-                        //stye 2
-                        fIndex = true;
-                        if (check_scrollstyle2 != '' && $(window).width() > 991) {
-                            var indeximg2 = $("div.product-gallery[data-image='" + check_scrollstyle2 + "']").index();
-                            if ($(window).scrollTop() > $('.productDetail-information').offset().top) {
-                                $('html, body').animate({
-                                    scrollTop: $('#productScroll-slider div.product-gallery:eq(' + indeximg2 + ')').offset().top - 15
-                                }, 800);
-                            }
-                        }
-                    }
-                });
-                $(document).ready(function () {
-                    var vl = $('#add-item-form .swatch .color input').val();
-                    $('#add-item-form .swatch .color input').parents(".swatch").find(".header strong").html(vl);
-                    $("#add-item-form .select-swap .color").hover(function () {
-                        var value = $(this).data("value");
-                        $(this).parents(".swatch").find(".header strong").html(value);
-                    }, function () {
-                        var value = $("#add-item-form .select-swap .color label.sd span").html();
-                        $(this).parents(".swatch").find(".header strong").html(value);
-                    });
-                });
-
-                $(document).ready(function () {
-                    var vl = $('#add-item-form .swatch .color input').val();
-                    $('#add-item-form .swatch .color input').parents(".swatch").find(".header span").html(vl);
-                    $("#add-item-form .select-swap .color").hover(function () {
-                        var value = $(this).data("value");
-                        $(this).parents(".swatch").find(".header span").html(value);
-                    }, function () {
-                        var value = $("#add-item-form .select-swap .color label.sd span").html();
-                        $(this).parents(".swatch").find(".header span").html(value);
-                    });
-                });
-
-                $(document).ready(function () {
-                    var expandable_content_height = $('.expandable-toggle .description-productdetail').height();
-                    if (expandable_content_height > 220) {
-                        $('.expandable-toggle .description-productdetail').css({
-                            "height": "220px",
-                            "overflow": "hidden"
-                        });
-                    } else {
-                        $('.expandable-content_toggle').addClass('d-none');
-                    }
-                    $('body').on('click', '.js_expandable_content', function (e) {
-                        if (!$('.expandable-toggle').hasClass('opened')) {
-                            $('.expandable-content_toggle').removeClass('btn-closemore').addClass('btn-viewmore').find('.expandable-content_toggle-text').html('Xem thêm nội dung');
-                            var curHeight = $('.expandable-toggle .description-productdetail').height();
-                            expandable_content_height = 220;
-                            $('.expandable-toggle .description-productdetail').height(curHeight).animate({
-                                height: expandable_content_height
-                            }, 300, function () {
-                                $(this).parent().addClass('opened');
-                            });
-                            var x = $('.product-description').offset().top;
-                            HRT.All.smoothScroll(x - 90, 250);
-                        } else {
-                            $('.expandable-toggle .description-productdetail').css('height', 'auto');
-                            $('.expandable-toggle').removeClass('opened');
-                            $('.expandable-content_toggle').removeClass('btn-viewmore').addClass('btn-closemore').find('.expandable-content_toggle-text').html('Rút gọn nội dung');
-                        }
-                    });
-                });
-            </script>
 
             <script>
                 $(document).ready(function () {
@@ -1288,25 +1220,25 @@ nhận h&#224;ng"/>
 
 
     <script>
-        app.controller('productDetailPage', function ($rootScope, $scope, $interval, compareItemSync, cartItemSync) {
+        app.controller('productDetailPage', function ($rootScope, $scope, $interval, $timeout, compareItemSync, cartItemSync) {
             $scope.variant = @json($variantDefault);
+
             $scope.variants = @json($product->variants);
             $scope.selectedVariantId = ($scope.variant && $scope.variant.id) ? $scope.variant.id : null;
 
-            $scope.getVariant = function (variantId) {
-                var v = ($scope.variants || []).find(function (item) {
-                    return item.id == variantId;
-                });
+            // $scope.getVariant = function (variantId) {
+            //     var v = ($scope.variants || []).find(function (item) {
+            //         return item.id == variantId;
+            //     });
+            //
+            //     if (v) {
+            //         $scope.variant = angular.copy(v);
+            //     }
+            //
+            //     console.log($scope.variant)
+            // }
 
-                if (v) {
-                    $scope.variant = angular.copy(v);
-                }
-            }
 
-            $scope.selectVariant = function (id) {
-                $scope.selectedVariantId = id;
-                $scope.getVariant(id);
-            };
 
             $scope.keySelect = function (e, id) {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -1467,6 +1399,110 @@ nhận h&#224;ng"/>
                 });
             }
 
+            //
+
+// Đặt ở scope global (hoặc trong object của bạn)
+
+            var $main  = $('#quickview-sliderproduct');
+            var $thumb = $('#quickview-thumbproduct');
+            var DUR = 500;
+
+            function ensureInit(){
+                if (!$main.data('owl.carousel')) {
+                    $main.owlCarousel({
+                        items:1, nav:true, dots:true, loop:false, smartSpeed:1000,
+                        responsive:{0:{dots:true},768:{dots:false}}
+                    });
+
+                    $thumb.owlCarousel({
+                        loop:false, nav:false, dots:false, margin:5, center:false,
+                        responsive:{0:{items:5, margin:7},768:{items:6},992:{items:6},1200:{items:6}}
+                    });
+
+                    // sync
+                    $main.on('changed.owl.carousel', function(e){
+                        var i = (e.item && typeof e.item.index === 'number') ? e.item.index : 0;
+                        $thumb.trigger('to.owl.carousel', [i, DUR, true]);
+                        $thumb.find('.owl-item').removeClass('current').eq(i).addClass('current');
+                    });
+                    $thumb.on('click', '.owl-item', function(e){
+                        e.preventDefault();
+                        var i = $(this).index();
+                        $thumb.find('.owl-item').removeClass('current'); $(this).addClass('current');
+                        $main.trigger('to.owl.carousel', [i, DUR, true]);
+                    });
+                    $thumb.on('initialized.owl.carousel', function(){
+                        $thumb.find('.owl-item').eq(0).addClass('current');
+                    });
+                }
+            }
+
+            // thay toàn bộ slides bằng API của Owl (không để Angular đụng DOM bên trong)
+            function setSlides(imgs){
+                ensureInit();
+                var htmlMain  = (imgs||[]).map(function(src){
+                    return '<li class="product-gallery"><a class="gallery-item"><img src="'+src+'" alt=""></a></li>';
+                }).join('');
+                var htmlThumb = (imgs||[]).map(function(src){
+                    return '<li class="product-thumb"><a class="product-thumb__item"><img src="'+src+'" alt=""></a></li>';
+                }).join('');
+
+                $main.trigger('replace.owl.carousel',  [htmlMain]).trigger('refresh.owl.carousel');
+                $thumb.trigger('replace.owl.carousel', [htmlThumb]).trigger('refresh.owl.carousel');
+            }
+
+            function refresh(){
+                var imgs = ($scope.variant && $scope.variant.thumb) || [];
+                // chạy sau digest để chắc chắn container đã có width > 0
+                $timeout(function(){ setSlides(imgs); }, 0);
+            }
+
+            // đổi biến thể / đổi mảng ảnh → cập nhật slides
+            $scope.$watch('variant.id', function(n, o){ if(n!==o) refresh(); });
+            $scope.$watchCollection('variant.thumb', function(){ refresh(); });
+
+            // lần đầu
+            $timeout(refresh, 0);
+
+            // hàm của bạn — chỉ set dữ liệu, không đụng Owl
+            $scope.getVariant = function (variantId) {
+                var v = ($scope.variants || []).find(function (it) { return it.id == variantId; });
+                if (v) { $scope.variant = angular.copy(v); refresh(); }
+            };
+
+            $scope.selectVariant = function (id) {
+                $scope.selectedVariantId = id;
+                $scope.getVariant(id);
+            };
+
+
+
+
+
+            // helper: đánh dấu current theo index
+            function markThumbCurrent(i){
+                var $thumb = $('#quickview-thumbproduct');
+                $thumb.find('.owl-item').removeClass('current')
+                    .eq(i).addClass('current');
+            }
+
+// sau khi KHỞI TẠO hoặc REFRESH hoặc đổi slide -> cập nhật viền
+            var $main  = $('#quickview-sliderproduct');
+            var $thumb = $('#quickview-thumbproduct');
+
+            $main.on('initialized.owl.carousel.qv refreshed.owl.carousel.qv changed.owl.carousel.qv', function(e){
+                var api = $main.data('owl.carousel');
+                var idx = (e.item && typeof e.item.index==='number') ? e.item.index
+                    : (api ? api.relative(api.current()) : 0);
+                markThumbCurrent(idx);
+            });
+
+// đảm bảo lần đầu vừa init xong cũng set viền
+            $thumb.on('initialized.owl.carousel.qv refreshed.owl.carousel.qv', function(){
+                var api = $main.data('owl.carousel');
+                var idx = api ? api.relative(api.current()) : 0;
+                markThumbCurrent(idx);
+            });
 
         })
     </script>

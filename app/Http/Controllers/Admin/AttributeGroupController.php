@@ -46,6 +46,31 @@ class AttributeGroupController extends Controller
             ->editColumn('updated_at', function ($object) {
                 return formatDate($object->updated_at);
             })
+            ->addColumn('attributes', function ($row) {
+                $attrs = collect($row->attributes ?? []);
+                if ($attrs->isEmpty()) {
+                    return '<span class="text-muted">—</span>';
+                }
+
+                // Lấy tên thuộc tính (đổi 'name' theo field của bạn)
+                $names = $attrs->pluck('name')->filter()->values();
+
+                $first = $names->take(4);
+                $more  = max($names->count() - $first->count(), 0);
+
+                // Render chip
+                $chips = $first->map(function ($n) {
+                    return '<span class="chip-badge">'.$n.'</span>';
+                })->implode('');
+
+                // Nếu còn nhiều, hiển thị +N và tooltip full
+                if ($more > 0) {
+                    $title = e($names->implode(', ')); // tooltip danh sách đầy đủ
+                    $chips .= '<span class="chip-more" data-bs-toggle="tooltip" title="'.$title.'">+'. $more .'</span>';
+                }
+
+                return $chips;
+            })
             ->addColumn('action', function ($object) {
                 $result = '';
                 $result .= '<a href="javascript:void(0)" title="Sửa" class="btn btn-sm btn-primary edit"><i class="fas fa-pencil-alt"></i></a> ';
@@ -53,7 +78,7 @@ class AttributeGroupController extends Controller
                 return $result;
             })
             ->addIndexColumn()
-            ->rawColumns(['name', 'action', 'image', 'products'])
+            ->rawColumns(['name', 'action', 'image', 'products', 'attributes'])
             ->make(true);
     }
 

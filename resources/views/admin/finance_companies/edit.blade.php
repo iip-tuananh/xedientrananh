@@ -25,7 +25,7 @@
         app.controller('EditFinance', function ($scope, $http) {
             $scope.arrayInclude = arrayInclude;
             $scope.edit = true;
-            $scope.statuses = @json(\App\Model\Admin\Order::STATUSES);
+            $scope.statuses = @json(\App\Model\Admin\FinanceCompany::STATUSES);
             $scope.loading = {};
 
             $scope.termOptions = [6, 8, 9, 12, 15, 18];
@@ -56,7 +56,7 @@
                     success: function (response) {
                         if (response.success) {
                             toastr.success(response.message);
-                            {{--window.location.href = "{{ route('product_variants.index') }}?product-id={{ $object->product_id }}";--}}
+                            window.location.href = "{{ route('finance_companies.index') }}";
                         } else {
                             toastr.warning(response.message);
                             $scope.errors = response.errors;

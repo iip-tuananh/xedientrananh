@@ -33,11 +33,13 @@
                     </picture>
                 </div>
             </div>
-{{--            <div class="qv-product">--}}
-{{--                            <span class="icon-quickview" data-handle="{{ $product->slug }}" title="Xem nhanh">--}}
-{{--                            <i class="fa fa-eye" aria-hidden="true"></i>--}}
-{{--                            </span>--}}
-{{--            </div>--}}
+
+            <div class="qv-product"  ng-click="addToCompareList({{ $product->id }})">
+                            <span class="icon-quickview" data-handle="{{ $product->slug }}" title="Thêm vào so sánh">
+    <i class="fa fa-clone" aria-hidden="true"></i>
+                            </span>
+            </div>
+
             <a href="{{ route('front.show-product-detail', $product->slug) }}" class="proloop-link quickview-product" data-handle="{{ $product->slug }}" title=" {{ $product->name }}" ></a>
         </div>
         <div class="proloop-detail">

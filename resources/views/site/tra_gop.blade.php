@@ -530,6 +530,9 @@
                 };
 
                 $window.localStorage.setItem('financeSelected', angular.toJson(data));
+
+                $window.location.href = '/tra-gop?accept=true';
+
             };
 
 

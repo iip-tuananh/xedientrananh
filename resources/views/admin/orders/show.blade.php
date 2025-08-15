@@ -97,9 +97,7 @@
                                 <td class="text-center"><% $index + 1 %></td>
                                 <td class="text-center"><% detail.product.name %></td>
                                 <td class="text-center">
-                                    <div ng-repeat="attribute in detail.attributes">
-                                        <% attribute.name %> : <span style="font-weight: 600; font-size: 14px;"><% attribute.value %></span>
-                                    </div>
+                                    <% detail.product_variant.name %>
                                 </td>
                                 <td class="text-center"><% detail.product.price | number %></td>
                                 <td class="text-center"><% detail.qty | number %></td>
@@ -118,10 +116,7 @@
                                 </td>
                                 <td class="text-right"><b><% form.discount_value | number %></b></td>
                             </tr>
-                            <tr>
-                                <td colspan="5" class="text-right"><b>Điểm quy đổi (<% form.point %> điểm): </b></td>
-                                <td class="text-right"><b><% form.point_value | number %></b></td>
-                            </tr>
+
                             <tr>
                                 <td colspan="5" class="text-right"><b>Thành tiền sau giảm: </b></td>
                                 <td class="text-right"><b><% form.total_after_discount | number %></b></td>

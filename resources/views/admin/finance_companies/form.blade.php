@@ -1,78 +1,109 @@
 <div class="row">
+    <style>
+        /* Grid gọn gàng */
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:16px 24px;
+        }
+        .fg .form-label{ font-weight:600; color:#374151; margin-bottom:6px; }
+        .req{ color:#ef4444; }
+
+        /* Trường dài chiếm 2 cột */
+        .fg.span-2{ grid-column:1 / -1; }
+
+        /* Input đồng đều */
+        .form-control{ height:42px; }
+        textarea.form-control{ height:auto; }
+
+        /* Lỗi form */
+        .is-invalid{ border-color:#dc3545; }
+        .invalid-feedback{ display:block; font-size:12px; }
+
+        /* Ảnh đại diện */
+        .thumb{
+            width:100%;
+            max-width:380px;
+            margin:0 auto;
+            aspect-ratio: 16 / 9;
+            background:#f8fafc;
+            display:flex; align-items:center; justify-content:center;
+            border-radius:8px;
+        }
+        .preview-border{ border:1px dashed #cbd5e1; }
+        .thumb img{ width:100%; height:100%; object-fit:contain; border-radius:8px; }
+
+        /* Mobile */
+        @media (max-width: 767.98px){
+            .form-grid{ grid-template-columns:1fr; gap:12px 16px; }
+            .form-control{ height:40px; }
+        }
+
+    </style>
     <div class="col-md-12">
+        <!-- CARD: Thông tin chung -->
         <div class="card">
-            <div class="card-header">
-                <h6>Thông tin chung</h6>
-            </div>
+            <div class="card-header"><h6 class="mb-0">Thông tin chung</h6></div>
             <div class="card-body">
-                <div class="row">
-                    <div class="form-group custom-group mb-4">
-                        <label class="form-label required-label">Tên công ty</label>
-                        <input class="form-control" ng-model="form.name" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-				<strong><% errors.name[0] %></strong>
-			</span>
+                <div class="form-grid">
+                    <div class="fg">
+                        <label class="form-label">Tên công ty <span class="req">*</span></label>
+                        <input class="form-control" type="text"
+                               ng-model="form.name" ng-class="{'is-invalid': errors.name}">
+                        <small class="invalid-feedback" ng-if="errors.name"><% errors.name[0] %></small>
                     </div>
 
-                    <div class="form-group custom-group mb-4">
-                        <label class="form-label required-label">Hotline</label>
-                        <input class="form-control" ng-model="form.hotline" type="text">
-                        <span class="invalid-feedback d-block" role="alert">
-				<strong><% errors.hotline[0] %></strong>
-			</span>
+                    <div class="fg">
+                        <label class="form-label">Hotline <span class="req">*</span></label>
+                        <input class="form-control" type="tel"
+                               ng-model="form.hotline" ng-class="{'is-invalid': errors.hotline}">
+                        <small class="invalid-feedback" ng-if="errors.hotline"><% errors.hotline[0] %></small>
                     </div>
 
-
-                    <div class="form-group custom-group mb-4">
+                    <div class="fg">
                         <label class="form-label">Website</label>
-                        <input class="form-control" ng-model="form.website" type="text">
+                        <input class="form-control" type="url" placeholder="https://..."
+                               ng-model="form.website">
                     </div>
 
+                    <div class="fg">
+                        <label class="form-label">Trạng thái <span class="req">*</span></label>
+                        <select class="form-control" ng-model="form.status"
+                                ng-options="s.id as s.name for s in statuses">
+                            <option value="">-- Chọn trạng thái --</option>
+                        </select>
+                        <small class="invalid-feedback" ng-if="errors.status"><% errors.status[0] %></small>
 
-                    <div class="form-group custom-group mb-4">
+                    </div>
+
+                    <div class="fg span-2">
                         <label class="form-label">Ghi chú</label>
-                        <input class="form-control" ng-model="form.note" type="text">
+                        <textarea class="form-control" rows="2" ng-model="form.note"></textarea>
                     </div>
 
-                    <div class="form-group custom-group mb-4">
-                        <label class="form-label">Giấy tờ cần có(thực hiện thủ tục cho vay)</label>
-                        <input class="form-control" ng-model="form.document" type="text">
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="align-items-center">
-                            <label class="form-label required-label me-3 mb-0">Trạng thái</label>
-                            <select class="form-control" ng-model="form.status">
-                                <option value="">Chọn danh mục</option>
-                                <option ng-repeat="s in statuses" ng-value="s.id" ng-selected="s.id == form.status">
-                                    <% s.name %>
-                                </option>
-                            </select>
-                        </div>
+                    <div class="fg span-2">
+                        <label class="form-label">Giấy tờ cần có (thủ tục vay)</label>
+                        <textarea class="form-control" rows="3" placeholder="Ví dụ: CCCD, Hộ khẩu, Sao kê lương..."
+                                  ng-model="form.document"></textarea>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header text-center">Ảnh đại diện</div>
+        <!-- CARD: Ảnh đại diện -->
+        <div class="card mt-3">
+            <div class="card-header text-center"><h6 class="mb-0">Ảnh đại diện</h6></div>
             <div class="card-body text-center">
-                <img class="img-fluid mb-2"
-                     ng-src="<% form.image.path %>"
-                     style="max-height: 150px; border:1px solid #ddd; border-radius:4px;">
-                <div class="mt-2">
-                    <label class="btn btn-outline-primary mb-0">
-                        <i class="fa fa-upload"></i> Chọn ảnh
-                        <input type="file" accept=".jpg,.png,.jpeg" class="d-none"
-                               id="<% form.image.element_id %>">
-                    </label>
+                <div class="thumb preview-border">
+                    <img ng-src="<% form.image.path %>" alt="preview" />
                 </div>
-                <div class="text-danger mt-1" ng-if="errors.image">
-                    <% errors.image[0] %>
-                </div>
+                <label class="btn btn-outline-primary mt-2 mb-0">
+                    <i class="fa fa-upload me-1"></i> Chọn ảnh
+                    <input type="file" accept=".jpg,.png,.jpeg" class="d-none" id="<% form.image.element_id %>">
+                </label>
+                <div class="text-danger mt-1" ng-if="errors.image"><% errors.image[0] %></div>
             </div>
         </div>
-
     </div>
 
     <div class="col-md-12">
@@ -108,11 +139,9 @@
                                         required>
                                     <option value="">-- Chọn kỳ hạn --</option>
                                 </select>
-
                                 <span class="text-danger" ng-if="errors['packages.' + $index + '.term_months']">
                                                 <% errors['packages.' + $index + '.term_months'][0]  %>
                                             </span>
-
                             </td>
 
                             <!-- Khoảng % trả trước -->
@@ -128,6 +157,10 @@
                                            required>
                                     <span class="input-group-text">%</span>
                                 </div>
+                                <span class="text-danger" ng-if="errors['packages.' + $index + '.down_pct_min']">
+                                                <% errors['packages.' + $index + '.down_pct_min'][0]  %>
+                                            </span>
+
                                 <small class="text-danger" ng-if="p.down_pct_min > p.down_pct_max">
                                     Min không được lớn hơn Max
                                 </small>
@@ -139,7 +172,11 @@
                                     <input type="number" class="form-control" placeholder="VD: 2.20"
                                            ng-model="p.interest_monthly" min="0" max="100" step="0.01" required>
                                     <span class="input-group-text">%</span>
+
                                 </div>
+                                <span class="text-danger" ng-if="errors['packages.' + $index + '.interest_monthly']">
+                                                <% errors['packages.' + $index + '.interest_monthly'][0]  %>
+                                            </span>
                                 <small class="text-muted">
                                     Thập phân: <b><% (p.interest_monthly || 0)/100 | number:4 %></b>
                                 </small>

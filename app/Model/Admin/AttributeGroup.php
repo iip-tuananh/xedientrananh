@@ -9,7 +9,6 @@ use DB;
 
 class AttributeGroup extends BaseModel
 {
-
     public function attributes()
     {
         return $this->hasMany(Attribute::class, 'group_id');

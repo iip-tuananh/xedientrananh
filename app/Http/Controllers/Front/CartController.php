@@ -57,6 +57,7 @@ class CartController extends Controller
             'quantity' => $request->qty ? (int)$request->qty : 1,
             'attributes' => [
                 'product_id' => $product->id,
+                'product_slug' => $product->slug,
                 'variant_id' => $variant->id,
                 'variant_name' => $variant->name,
                 'image' => $variant->image->path ?? '',
@@ -104,9 +105,13 @@ class CartController extends Controller
     public function checkout(Request $request) {
         $cartCollection = \Cart::session('cartList')->getContent();
         $total = \Cart::session('cartList')->getTotal();
+
+        if(! $total) return redirect()->route('front.home-page');
+
         $provinces = Vanthao03596Province::all();
         $districts = District::all();
         $wards = Ward::all();
+
 
         return view('site.orders.checkout', compact('cartCollection', 'total', 'provinces', 'districts', 'wards'));
     }
@@ -216,23 +221,27 @@ class CartController extends Controller
         }
 
         $orderId = session('order_id') ?? 39;
-        $order = Order::query()->with('details', 'details.product', 'details.product.image')->find($orderId);
+        $order = Order::query()->with('details', 'details.product', 'details.product_variant.image')->find($orderId);
         session()->forget('order_id');
         return view('site.orders.checkout_success', compact('order'));
     }
 
     public function tragop(Request $request) {
-        if($request->accept) {
-            $cart = \Cart::session('cartList');
+        $cart = \Cart::session('cartList');
+        $total = \Cart::session('cartList')->getTotal();
 
+        if(! $total) return redirect()->route('front.home-page');
+
+        if($request->accept) {
             $cartCollection = $cart->getContent();
 
             return view('site.thanh_toan_tra_gop', compact('cartCollection'));
         }
-        $cart = \Cart::session('cartList');
+
         $data['cartItems'] = $cart->getContent()->values()->toArray();
         $data['total_price'] = $cart->getTotal();
         $data['companies'] = FinanceCompany::query()->with('packages', 'image')
+            ->where('status',10)
            ->get();
 
         $companiesForJs = ($data['companies'])->map(function ($c) {

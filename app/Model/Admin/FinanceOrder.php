@@ -53,10 +53,6 @@ class FinanceOrder extends Model
             $result = $result->where('code', 'like', '%' . $request->code . '%');
         }
 
-        if (!empty($request->employee_email)) {
-            $result = $result->where('customer_email', $request->employee_email);
-        }
-
         if (!empty($request->startDate)) {
             $result = $result->where('created_at', '>=', $request->startDate);
         }
@@ -69,20 +65,33 @@ class FinanceOrder extends Model
             $result = $result->where('status', $request->status);
         }
 
-        if (!empty($request->type) || (isset($request->type) && $request->type == 0)) {
-            $result = $result->where('type', $request->type);
-        }
+
 
         if (!empty($request->customer_name)) {
-            $result = $result->where('customer_name', 'like', '%' . $request->customer_name . '%');
+            $result = $result->where('fullname', 'like', '%' . $request->customer_name . '%');
         }
 
         if (!empty($request->customer_phone)) {
-            $result = $result->where('customer_phone', 'like', '%' . $request->customer_phone . '%');
+            $result = $result->where('phone', 'like', '%' . $request->customer_phone . '%');
         }
 
         $result = $result->orderBy('created_at', 'desc')->get();
         return $result;
     }
 
+    public function getTitleLabelAttribute()
+    {
+        return [
+            'Mr'            => 'Anh',
+            'Ms'            => 'Chị',
+            'student'       => 'Sinh viên',
+            'working_adult' => 'Người đi làm',
+            'business'      => 'Doanh nghiệp',
+        ][$this->title] ?? '';
+    }
+
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->fullname . ' ('.trim(($this->title_label ? $this->title_label.' ' : '')).')';
+    }
 }

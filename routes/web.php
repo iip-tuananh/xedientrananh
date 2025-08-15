@@ -359,6 +359,14 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('/importExcel', 'Admin\OrderController@importExcel')->name('orders.importExcel');
         });
 
+        Route::group(['prefix' => 'orders-finance'], function () {
+            Route::get('/', 'Admin\OrderFinanceController@index')->name('orders-finance.index');
+            Route::get('/searchData', 'Admin\OrderFinanceController@searchData')->name('orders-finance.searchData');
+            Route::get('/{id}/show', 'Admin\OrderFinanceController@show')->name('orders-finance.show');
+            Route::post('/update-status','Admin\OrderFinanceController@updateStatus')->name('orders-finance.update.status');
+            Route::get('/exportList','Admin\OrderFinanceController@exportList')->name('orders-finance.exportList');
+            Route::post('/importExcel', 'Admin\OrderFinanceController@importExcel')->name('orders-finance.importExcel');
+        });
         // banner trang chủ
         Route::group(['prefix' => 'banner'], function () {
             Route::get('/', 'Admin\BannerController@index')->name('banners.index');

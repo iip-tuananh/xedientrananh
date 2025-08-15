@@ -20,15 +20,14 @@
         </div>
         <main class="wrapperMain_content">
 
-
-            <div id="layout-cart">
+            <div id="layout-cart" >
                 <div class="breadcrumb-shop">
                     <div class="container">
                         <div class="breadcrumb-list  ">
                             <ol class="breadcrumb breadcrumb-arrows" itemscope
                                 itemtype="http://schema.org/BreadcrumbList">
                                 <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                                    <a href="index.html" target="_self" itemprop="item"><span
+                                    <a href="{{route('front.home-page')}}" target="_self" itemprop="item"><span
                                             itemprop="name">Trang chủ</span></a>
                                     <meta itemprop="position" content="1"/>
                                 </li>
@@ -36,7 +35,7 @@
                                 <li class="active" itemprop="itemListElement" itemscope
                                     itemtype="http://schema.org/ListItem">
                                     <span itemprop="item" content="cart.html"><strong
-                                            itemprop="name">Giỏ hàng (0)</strong></span>
+                                            itemprop="name">Giỏ hàng (<% countItem %>)</strong></span>
                                     <meta itemprop="position" content="2"/>
                                 </li>
 
@@ -53,16 +52,16 @@
                                         <h1 class="heading-cart">Giỏ hàng của bạn</h1>
 
                                         <div class="list-pageform-cart">
-                                            <form action="/cart" method="post" id="cartformpage">
+                                            <form a method="post" id="cartformpage">
                                                 <div class="cart-row">
                                                     <p class="title-number-cart">
                                                         Bạn đang có <strong class="count-cart"><% countItem %> sản phẩm</strong> trong giỏ hàng
                                                     </p>
-                                                    <div class="table-cart">
+                                                    <div class="table-cart"  ng-if="checkCart">
                                                         <div class="media-line-item line-item"  ng-repeat="item in items">
                                                             <div class="media-left">
                                                                 <div class="item-img">
-                                                                    <a href="/products/ipad-pro-10-5-inch-32gb">
+                                                                    <a href="/san-pham/<% item.attributes.product_slug %>.html">
                                                                         <img src="<% item.attributes.image %>" alt="<% item.name %>">
                                                                     </a>
                                                                 </div>
@@ -72,7 +71,7 @@
                                                             </div>
                                                             <div class="media-right">
                                                                 <div class="item-info">
-                                                                    <h3 class="item--title"><a href="/products/ipad-pro-10-5-inch-32gb"><% item.name %></a></h3>
+                                                                    <h3 class="item--title"><a href="/san-pham/<% item.attributes.product_slug %>.html"><% item.name %></a></h3>
 
                                                                     <div class="item--variant">
                                                                         <span><% item.attributes.variant_name %></span>
@@ -166,32 +165,10 @@
                                                                 <label for="note" class="note-label">Ghi chú đơn hàng</label>
                                                                 <textarea class="form-control" id="note" name="note" rows="5"></textarea>
                                                             </div>
-                                                            <button type="submit" id="checkout" class="btn-checkout button d-none " name="checkout" value="">Thanh toán</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="cart-row">
-                                                    <div class="order-invoice-block">
 
-                                                        <div class="bill-field">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control val-f check_change" name="attributes[bill_order_company]" value="" placeholder="Tên công ty...">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="number" pattern=".{10,}" onkeydown="return HRT.All.FilterInput(event)" onpaste="HRT.All.handlePaste(event)" class="form-control val-f val-n check_change" name="attributes[bill_order_tax_code]" value="" placeholder="Mã số thuế...">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="email" class="form-control val-f val-mail check_change" name="attributes[bill_email]" value="" placeholder="Email...">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control val-f check_change" name="attributes[bill_order_address]" value="" placeholder="Địa chỉ công ty...">
-                                                            </div>
-                                                            <div class="form-btn">
-                                                                <a href="javascript:void();" class="button btn-save">Lưu thông tin</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </form>
                                         </div>
 
@@ -212,10 +189,17 @@
                                                 <p>Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.</p>
                                             </div>
                                             <div class="summary-button">
-                                                <a id="btnCart-checkout" class="checkout-btn btnred disabled"
+                                                <a id="btnCart-checkout" class="checkout-btn btnred <% ! checkCart  ? 'disabled' : ''%>"
                                                    data-price-min="400000"
                                                    data-price-total="0"
                                                    href="{{ route('cart.checkout') }}">THANH TOÁN </a>
+                                            </div>
+
+                                            <div class="summary-button">
+                                                <a id="btnCart-checkout" class="checkout-btn btnred <% ! checkCart  ? 'disabled' : ''%>"
+                                                   data-price-min="400000"
+                                                   data-price-total="0"
+                                                   href="{{ route('cart.finance') }}">Mua trả góp online</a>
                                             </div>
                                         </div>
                                         <div class="order-summary-block order-summary-notify ">
@@ -234,126 +218,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-none">
-                <div class="cpi-tooltip__info" id="cp-tooltip-1">
-                    <div class="popover-content__coupon">
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Mã</div>
-                            <div class="dfex-txt--2"><b> A87TYRT55</b> <span class="cpi-trigger"
-                                                                             data-coupon-index="coupon-item__1"
-                                                                             data-coupon="A87TYRT55"></span></div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Hạn sử dụng</div>
-                            <div class="dfex-txt--2">10/04/2022</div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--3">
-                                <ul>
-                                    <li>Dành cho đơn hàng từ 300k</li>
-                                    <li>Mỗi khách hàng được sử dụng tối đa 1 lần.</li>
-                                    <li>Sao chép mã và nhập mã khuyến mãi ở trang thanh toán</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg dfex-none">
-                            <div class="dfex-txt--cta">
-                                <button class="btn-popover btn-popover-code" data-coupon="A87TYRT55">Sao chép mã
-                                </button>
-                                <button class="btn-popover btn-popover-close">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cpi-tooltip__info" id="cp-tooltip-2">
-                    <div class="popover-content__coupon">
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Mã</div>
-                            <div class="dfex-txt--2"><b> QH5G8J0Y</b> <span class="cpi-trigger"
-                                                                            data-coupon-index="coupon-item__2"
-                                                                            data-coupon="QH5G8J0Y"></span></div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Hạn sử dụng</div>
-                            <div class="dfex-txt--2">05/05/2022</div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--3">
-                                <ul>
-                                    <li>Dành cho đơn hàng từ 200k</li>
-                                    <li>Mỗi khách hàng được sử dụng tối đa 1 lần.</li>
-                                    <li>Sao chép mã và nhập mã khuyến mãi ở trang thanh toán</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg dfex-none">
-                            <div class="dfex-txt--cta">
-                                <button class="btn-popover btn-popover-code" data-coupon="QH5G8J0Y">Sao chép mã</button>
-                                <button class="btn-popover btn-popover-close">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cpi-tooltip__info" id="cp-tooltip-3">
-                    <div class="popover-content__coupon">
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Mã</div>
-                            <div class="dfex-txt--2"><b> FT45YUO8H</b> <span class="cpi-trigger"
-                                                                             data-coupon-index="coupon-item__3"
-                                                                             data-coupon="FT45YUO8H"></span></div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Hạn sử dụng</div>
-                            <div class="dfex-txt--2">10/05/2022</div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--3">
-                                <ul>
 
-
-                                    <li>Sao chép mã và nhập mã khuyến mãi ở trang thanh toán</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg dfex-none">
-                            <div class="dfex-txt--cta">
-                                <button class="btn-popover btn-popover-code" data-coupon="FT45YUO8H">Sao chép mã
-                                </button>
-                                <button class="btn-popover btn-popover-close">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cpi-tooltip__info" id="cp-tooltip-4">
-                    <div class="popover-content__coupon">
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Mã</div>
-                            <div class="dfex-txt--2"><b> A789UYT</b> <span class="cpi-trigger"
-                                                                           data-coupon-index="coupon-item__4"
-                                                                           data-coupon="A789UYT"></span></div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--1">Hạn sử dụng</div>
-                            <div class="dfex-txt--2">20/05/2022</div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg">
-                            <div class="dfex-txt--3">
-                                <ul>
-                                    <li>Sao chép mã và nhập mã khuyến mãi ở trang thanh toán</li>
-
-
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dfex-txt dfex-bkg dfex-none">
-                            <div class="dfex-txt--cta">
-                                <button class="btn-popover btn-popover-code" data-coupon="A789UYT">Sao chép mã</button>
-                                <button class="btn-popover btn-popover-close">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
 
@@ -415,6 +280,10 @@
                             $scope.items = response.items;
                             $scope.total = response.total;
                             $scope.countItem = response.count;
+
+                            if ($scope.total == 0) {
+                                $scope.checkCart = false;
+                            }
 
                             $interval.cancel($rootScope.promise);
 

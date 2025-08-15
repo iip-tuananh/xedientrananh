@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Admin\Post;
+use App\Model\Common\File;
 use Illuminate\Http\Request;
 use App\Model\Admin\Post as ThisModel;
 use Illuminate\Support\Facades\Log;
@@ -66,7 +67,6 @@ class PostController extends Controller
 
                 }
 
-                $result = $result . ' <a href="" title="thêm vào danh mục đặc biệt" class="dropdown-item add-category-special"><i class="fa fa-angle-right"></i>Thêm vào danh mục đặc biệt</a>';
                 $result = $result . '</div></div>';
                 return $result;
 			})
@@ -113,7 +113,7 @@ class PostController extends Controller
 			$object->status = $request->status;
 			$object->save();
 
-			FileHelper::uploadFile($request->image, 'posts', $object->id, ThisModel::class, 'image', 3);
+            FileHelper::uploadFileToCloudflare($request->image, $object->id, ThisModel::class, 'image');
 
 			// if ($request->publish == 1 && $object->status == 1) $object->send();
 
@@ -177,12 +177,13 @@ class PostController extends Controller
 			$object->status = $request->status;
 			$object->save();
 
-			if ($request->image) {
-				if (isset($object->image)) {
-					FileHelper::forceDeleteFiles($object->image->id, $object->id, ThisModel::class, 'image');
-				}
-				FileHelper::uploadFile($request->image, 'posts', $object->id, ThisModel::class, 'image', 3);
-			}
+
+            if ($request->image) {
+                if($object->image) {
+                    FileHelper::deleteFileFromCloudflare($object->image, $object->id, ThisModel::class, 'image');
+                }
+                FileHelper::uploadFileToCloudflare($request->image, $object->id, ThisModel::class, 'image');
+            }
 
 			// if ($request->publish == 1 && $object->status == 1) $object->send();
 

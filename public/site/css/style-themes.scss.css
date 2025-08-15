@@ -3117,7 +3117,7 @@ img.lazyload:not([src]) {
       margin-right: 8px; } }
 
 .mainHeader.mainHeader_temp03 .mainHeader-middle {
-  background: #263342; }
+  background: #022775; }
 
 .mainHeader.mainHeader_temp03 .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-icon svg {
   fill: #ffffff; }
@@ -5684,7 +5684,7 @@ img.lazyload:not([src]) {
   padding-bottom: 30px; }
 
 .home-collection-1 .wrapper-content {
-  background: var(--home-collection1-bg);
+  background: #022775;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
