@@ -355,6 +355,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/searchData', 'Admin\OrderController@searchData')->name('orders.searchData');
             Route::get('/{id}/show', 'Admin\OrderController@show')->name('orders.show');
             Route::post('/update-status','Admin\OrderController@updateStatus')->name('orders.update.status');
+            Route::get('/{id}/delete', 'Admin\OrderController@delete')->name('orders.delete');
             Route::get('/exportList','Admin\OrderController@exportList')->name('orders.exportList');
             Route::post('/importExcel', 'Admin\OrderController@importExcel')->name('orders.importExcel');
         });
@@ -364,6 +365,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/searchData', 'Admin\OrderFinanceController@searchData')->name('orders-finance.searchData');
             Route::get('/{id}/show', 'Admin\OrderFinanceController@show')->name('orders-finance.show');
             Route::post('/update-status','Admin\OrderFinanceController@updateStatus')->name('orders-finance.update.status');
+            Route::get('/{id}/delete', 'Admin\OrderFinanceController@delete')->name('orders-finance.delete');
             Route::get('/exportList','Admin\OrderFinanceController@exportList')->name('orders-finance.exportList');
             Route::post('/importExcel', 'Admin\OrderFinanceController@importExcel')->name('orders-finance.importExcel');
         });

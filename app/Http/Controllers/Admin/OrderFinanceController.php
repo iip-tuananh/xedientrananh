@@ -62,9 +62,9 @@ class OrderFinanceController extends Controller
                 </button>
                 <div class="dropdown-menu">';
                 $result = $result . ' <a href="" title="đổi trạng thái" class="dropdown-item update-status"><i class="fa fa-angle-right"></i>Đổi trạng thái</a>';
-                if ($object->type == 0) {
-                    $result = $result . ' <a href="'.route('orders-finance.show', $object->id).'" title="xem chi tiết" class="dropdown-item"><i class="fa fa-angle-right"></i>Xem chi tiết</a>';
-                }
+                $result = $result . ' <a href="'.route('orders-finance.show', $object->id).'" title="xem chi tiết" class="dropdown-item"><i class="fa fa-angle-right"></i>Xem chi tiết</a>';
+                $result = $result . ' <a href="'.route('orders-finance.delete', $object->id).'" title="xóa" class="dropdown-item confirm"><i class="fa fa-angle-right"></i>Xóa</a>';
+
                 $result = $result . '</div></div>';
                 return $result;
             })
@@ -103,6 +103,19 @@ class OrderFinanceController extends Controller
 
 
         return Response::json(['success' => true, 'message' => 'cập nhật trạng thái đơn hàng thành công']);
+    }
+    public function delete($id) {
+        $order = FinanceOrder::query()->where('id', $id)->first();
+        $order->details()->delete();
+
+        $order->delete();
+
+        $message = array(
+            "message" => "Thao tác thành công!",
+            "alert-type" => "success"
+        );
+
+        return redirect()->route($this->route.'.index')->with($message);
     }
 
     public function exportList(Request $request) {

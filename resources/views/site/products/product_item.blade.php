@@ -40,13 +40,13 @@
                             </span>
             </div>
 
-            <a href="{{ route('front.show-product-detail', $product->slug) }}" class="proloop-link quickview-product" data-handle="{{ $product->slug }}" title=" {{ $product->name }}" ></a>
+            <a href="{{ route('front.show-product-detail', $product->slug) }}" class="proloop-link" data-handle="{{ $product->slug }}" title=" {{ $product->name }}" ></a>
         </div>
         <div class="proloop-detail">
             <div class="proloop--top">
                 <p class="proloop--vendor"><a title="Show vendor" href="{{ route('front.show-product-category', $product->category->slug) }}">{{ $product->category->name ?? '' }}</a></p>
             </div>
-            <h3><a href="{{ route('front.show-product-detail', $product->slug) }}" class="quickview-product" data-handle="{{ $product->slug }}"> {{ $product->name }}</a></h3>
+            <h3><a href="{{ route('front.show-product-detail', $product->slug) }}" class="" data-handle="{{ $product->slug }}"> {{ $product->name }}</a></h3>
             {{--                                            <div class="proloop--variant">--}}
             {{--                                                <span>+4 Màu sắc</span>--}}
             {{--                                            </div>--}}
